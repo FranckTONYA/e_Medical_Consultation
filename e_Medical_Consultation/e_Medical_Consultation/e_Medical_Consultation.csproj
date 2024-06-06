@@ -62,14 +62,13 @@
       <DependentUpon>Principal.cs</DependentUpon>
     </Compile>
     <Compile Include="IEtapeConfection.cs" />
-    <Compile Include="Modeles\CategorieParfum.cs" />
-    <Compile Include="Modeles\Confection.Boule.cs" />
-    <Compile Include="Modeles\Confection.cs" />
-    <Compile Include="Modeles\Nappage.cs" />
-    <Compile Include="Modeles\Parfum.cs" />
-    <Compile Include="Modeles\Saupoudrage.cs" />
-    <Compile Include="Modeles\TailleSupport.cs" />
-    <Compile Include="Modeles\TypeSupport.cs" />
+    <Compile Include="Modeles\Hopital.cs" />
+    <Compile Include="Modeles\RoleUtilisateur.cs" />
+    <Compile Include="Modeles\StatutRendezVous.cs" />
+    <Compile Include="Modeles\Utilisateur.cs" />
+    <Compile Include="Modeles\RendezVous.cs" />
+    <Compile Include="Modeles\Consultation.cs" />
+    <Compile Include="Modeles\DossierPatient.cs" />
     <Compile Include="Modeles\_EntiteBase.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

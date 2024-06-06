@@ -59,7 +59,7 @@ namespace ConsultationMedicale
     */
 
     /// <summary>
-    /// Définit l'API de l'application Glacier (côté client)
+    /// Définit l'API de l'application e-Medical Consultation (côté client)
     /// </summary>
     public class ApiConsultationMedicale
     {

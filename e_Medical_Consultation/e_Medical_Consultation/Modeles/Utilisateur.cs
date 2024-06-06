@@ -33,7 +33,7 @@ namespace ConsultationMedicale
             /// <summary>
             /// Rôle de l'utilisateur
             /// </summary>
-            ROLE Role { get; }
+            IRoleUtilisateur Role { get; }
 
             /// <summary>
             /// Token d'authentification
@@ -59,6 +59,13 @@ namespace ConsultationMedicale
             /// Adresse
             /// </summary>
             string Adresse { get; }
+
+            /// <summary>
+            /// Permet de (re)définir le Rôle de l'Utilisateur
+            /// </summary>
+            /// <param name="role">Rôle à attribuer à cet Utilisateur</param>
+            /// <returns>Vrai si la modification de cette information a pu se faire, sinon faux</returns>
+            bool DefinirRole(IRoleUtilisateur role);
         }
 
         /// <summary>
@@ -92,9 +99,9 @@ namespace ConsultationMedicale
             public string Token { get; private set; }
 
             /// <summary>
-            /// Rôle de l'utilisateur
+            /// Rôle
             /// </summary>
-            public ROLE Role { get; private set; }
+            public IRoleUtilisateur Role { get; private set; }
 
             /// <summary>
             /// Nom
@@ -124,13 +131,29 @@ namespace ConsultationMedicale
             /// <summary>
             /// Constructeur
             /// </summary>
+            /// 
+
+
+            /// <summary>
+            /// Permet de (re)définir le Rôle de l'Utilisateur
+            /// </summary>
+            /// <param name="role">Rôle à attribuer à cet Utilisateur</param>
+            /// <returns>Vrai si la modification de cette information a pu se faire, sinon faux</returns>
+            public bool DefinirRole(IRoleUtilisateur role)
+            {
+                if (role == null) return false;
+                Role = role;
+                return true;
+            }
+
+
             public Utilisateur()
                 : base(EntiteBase.NouveauCode, $"Utilisateur le {DateTime.Now.ToString("d/MM/yyyy à H:mm:ss").Replace('-', '/')}")
             {
                 Email = null;
                 MotDePasse = null;
                 Token = null;
-                Role = ROLE.VISITEUR;
+                Role = null;
                 Nom = null;
                 Prenom = null;
                 Telephone = null;

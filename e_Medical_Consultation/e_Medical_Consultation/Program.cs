@@ -15,7 +15,7 @@ namespace ConsultationMedicale
         /// <summary>
         /// Api de la Consultation Médicale (utilisée pour interroger le serveur)
         /// </summary>
-        public static ApiConsultationMedicale Api { get; } = new ApiConsultationMedicale(PDSGBD.MySql.DB.Settings.Create("u_consultation", "tPe0YVS1rOBbwaFhAQ", "consultation"));
+        public static ApiConsultationMedicale Api { get; } = new ApiConsultationMedicale(PDSGBD.MySql.DB.Settings.Create("u_consultation", "YY836O3eew!Vy0OQ", "consultation"));
 
         /// <summary>
         /// Point d'entrée de l'application

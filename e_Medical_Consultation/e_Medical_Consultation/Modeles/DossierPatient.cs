@@ -70,7 +70,7 @@ namespace ConsultationMedicale
         }
 
         /// <summary>
-        /// Implémente le modèle d'entité d'un DossierPatient
+        /// Implémente le modèle d'entité d'un Dossier Patient
         /// </summary>
         private class DossierPatient : EntiteBase, IDossierPatient
         {

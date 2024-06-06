@@ -1,6 +1,7 @@
 ﻿using PDSGBD;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Drawing.Text;
 using System.Linq;
 using System.Text;
@@ -39,7 +40,7 @@ namespace ConsultationMedicale
             /// <summary>
             /// Statut
             /// </summary>
-            STATUT Statut { get; }
+            IStatutRendezVous Statut { get; }
 
             /// <summary>
             /// Consultation liéé au Rendez-Vous
@@ -52,6 +53,13 @@ namespace ConsultationMedicale
             /// <param name="consultation">Consultation liéé à ce rendez-vous </param>
             /// <returns>Vrai si la modification de cette information a pu se faire, sinon faux</returns>
             bool DefinirConsultation(IConsultation consultation);
+
+            /// <summary>
+            /// Permet de (re)définir le Statut du Rendez-vous
+            /// </summary>
+            /// <param name="statut">Statut à attribuer à ce Rendez-vous</param>
+            /// <returns>Vrai si la modification de cette information a pu se faire, sinon faux</returns>
+            bool DefinirStatut(IStatutRendezVous statut);
 
         }
 
@@ -88,7 +96,7 @@ namespace ConsultationMedicale
             /// <summary>
             /// Statut
             /// </summary>
-            public STATUT Statut { get; private set; }
+            public IStatutRendezVous Statut { get; private set; }
 
             /// <summary>
             /// Consultation
@@ -108,13 +116,25 @@ namespace ConsultationMedicale
             }
 
 
+            /// <summary>
+            /// Permet de (re)définir le Statut du Rendez-vous
+            /// </summary>
+            /// <param name="role">Statut à attribuer à ce Rendez-vous</param>
+            /// <returns>Vrai si la modification de cette information a pu se faire, sinon faux</returns>
+            public bool DefinirStatut(IStatutRendezVous statut)
+            {
+                if (statut == null) return false;
+                Statut = statut;
+                return true;
+            }
+
             public RendezVous()
                 : base(EntiteBase.NouveauCode, $"Rendez-Vous Médicale le {DateTime.Now.ToString("d/MM/yyyy à H:mm:ss").Replace('-', '/')}")
             {
                 Description = null;
                 Date = DateTime.MinValue;
                 Duree = 0;
-                Statut = STATUT.EN_ATTENTE;
+                Statut = null;
                 Consultation = null;
 
             }
