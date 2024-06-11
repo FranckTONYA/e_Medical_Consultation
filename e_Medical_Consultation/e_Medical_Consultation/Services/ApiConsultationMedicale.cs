@@ -89,209 +89,231 @@ namespace ConsultationMedicale
         }
 
         /// <summary>
-        /// Tente de récupérer les types de support
+        /// Tente de récupérer les Utilisateurs
         /// </summary>
-        /// <param name="completerAvecTailles">Indique si chaque type de support doit être complété avec sa liste des tailles disponibles</param>
-        /// <returns>Énumération des types de support</returns>
-        public IEnumerable<Modeles.ITypeSupport> EnumererTypesSupport(bool completerAvecTailles = false)
+        /// <returns>Énumération des Utilisateurs de l'application</returns>
+        public IEnumerable<Modeles.IUtilisateur> EnumererUtilisateurs()
         {
             ReinitialiserErreur();
-            if (completerAvecTailles)
-            {
-                Modeles.ITypeSupport typeSupport = null;
-                foreach (var enreg in m_DB.GetRows(@"
+
+            Modeles.IUtilisateur utilisateur = null;
+            foreach (var enreg in m_DB.GetRows(@"
                     SELECT
-                        type_support.id AS typ_id,
-                        type_support.nom AS typ_nom,
-                        nappage_autorise,
-                        creme_fraiche_autorisee,
-                        taille_support.id AS tai_id,
-                        taille_support.nom AS tai_nom,
-                        maximum_boules
+                        utilisateur.id AS utilisateur_id,
+                        utilisateur.email AS utilisateur_email,
+                        utilisateur.password AS utilisateur_motDePasse,
+                        utilisateur.token AS utilisateur_token,
+                        utilisateur.nom AS utilisateur_nom,
+                        utilisateur.prenom AS utilisateur_prenom,
+                        utilisateur.telephone AS utilisateur_telephone,
+                        utilisateur.dateNaissance AS utilisateur_dateNaissance,
+                        utilisateur.adresse AS utilisateur_adresse,
+                        role_utilisateur.id AS role_id,
+                        role_utilisateur.nom AS role_nom,                        
+                        role_utilisateur.description AS role_description
                     FROM
-                        type_support LEFT JOIN taille_support ON type_support.id = taille_support.ref_type
+                        utilisateur LEFT JOIN role_utilisateur ON utilisateur.ref_role = role_utilisateur.id
                     ORDER BY
-                        type_support.nom ASC,
-                        taille_support.nom ASC"))
-                {
-                    var idType = enreg.GetValue<int>("typ_id");
-                    if ((typeSupport == null) || !idType.Equals(typeSupport.Id))
-                    {
-                        if (typeSupport != null) yield return typeSupport;
-                        typeSupport = Modeles.CreerTypeSupport(enreg.GetValue<int>("typ_id"), enreg.GetValue<string>("typ_nom"), enreg.GetValue<bool>("nappage_autorise"), enreg.GetValue<bool>("creme_fraiche_autorisee"));
-                        if (!PasNullSinonErreur(typeSupport)) yield break;
-                    }
-                    typeSupport.AjouterTaille(Modeles.CreerTailleSupport(enreg.GetValue<int>("tai_id"), enreg.GetValue<string>("tai_nom"), enreg.GetValue<byte>("maximum_boules")));
-                }
-                if (typeSupport != null) yield return typeSupport;
-            }
-            else
+                        utilisateur.nom ASC,
+                        role_utilisateur.nom ASC"))
             {
-                foreach (var typeSupport in m_DB
-                    .GetRows("SELECT id, nom, nappage_autorise, creme_fraiche_autorisee FROM type_support ORDER BY nom ASC")
-                    .Select(enreg => Modeles.CreerTypeSupport(enreg.GetValue<int>("id"), enreg.GetValue<string>("nom"), enreg.GetValue<bool>("nappage_autorise"), enreg.GetValue<bool>("creme_fraiche_autorisee")))
-                    .TakeWhile(entite => PasNullSinonErreur(entite)))
+                var idUtilisateur = enreg.GetValue<int>("utilisateur_id");
+                if ((utilisateur == null) || !idUtilisateur.Equals(utilisateur.Id))
                 {
-                    yield return typeSupport;
+                    if (utilisateur != null) yield return utilisateur;
+                    utilisateur = Modeles.CreerUtilisateur(idUtilisateur, enreg.GetValue<string>("utilisateur_email"), enreg.GetValue<string>("utilisateur_motDePasse"), enreg.GetValue<string>("utilisateur_token"), enreg.GetValue<string>("utilisateur_nom"), enreg.GetValue<string>("utilisateur_prenom"), enreg.GetValue<string>("utilisateur_telephone"), enreg.GetValue<string>("utilisateur_dateNaissance"), enreg.GetValue<string>("utilisateur_adresse"));
+                    if (!PasNullSinonErreur(utilisateur)) yield break;
                 }
+                utilisateur.DefinirRole(Modeles.CreerRoleUtilisateur(enreg.GetValue<int>("role_id"), enreg.GetValue<string>("role_nom"), enreg.GetValue<string>("role_description")));
             }
+            if (utilisateur != null) yield return utilisateur;
         }
 
         /// <summary>
-        /// Tente de récupérer les tailles du type de support spécifié
+        /// Tente de récupérer un Utilisateur par son email
         /// </summary>
-        /// <param name="typeSupport">Spécifie le type de support pour lequel récupérer ses tailles</param>
-        /// <returns>Énumération des tailles du type de support spécifié</returns>
-        public IEnumerable<Modeles.ITailleSupport> EnumererTaillesSupport(Modeles.ITypeSupport typeSupport)
+        /// <param name="email">email de l'utilisateur</param>
+        /// <returns>Utilisateur retrouvé ou pas</returns>
+        public IEnumerable<IUtilisateur> EnumererUtilisateur(string email)
         {
             ReinitialiserErreur();
-            if (typeSupport == null)
+            Modeles.IUtilisateur utilisateur = null;
+            if (email == null)
             {
-                MessageErreur = $"Type de support défini lors de la tentative d'énumération de tailles de support !";
-                return new Modeles.ITailleSupport[0];
+                MessageErreur = $"email défini lors de la tentative d'énumération de l'utilisateur !";
+                yield return null;
             }
-            return m_DB
-                .GetRows("SELECT id, nom, maximum_boules FROM taille_support WHERE ref_type = {0} ORDER BY nom ASC", typeSupport.Id)
-                .Select(enreg => Modeles.CreerTailleSupport(enreg.GetValue<int>("id"), enreg.GetValue<string>("nom"), enreg.GetValue<byte>("maximum_boules")))
-                .TakeWhile(entite => PasNullSinonErreur(entite));
-        }
 
-        /// <summary>
-        /// Tente de récupérer les catégories de parfum de glace
-        /// </summary>
-        /// <param name="completerAvecParfums">Indique si chaque catégorie de parfum de glace doit être complétée avec sa liste des parfums de glace disponibles</param>
-        /// <returns>Énumération des catégories de parfum de glace</returns>
-        public IEnumerable<Modeles.ICategorieParfum> EnumererCategoriesParfum(bool completerAvecParfums = false)
-        {
-            ReinitialiserErreur();
-            if (completerAvecParfums)
-            {
-                Modeles.ICategorieParfum categorie = null;
-                foreach (var enreg in m_DB.GetRows(@"
+            foreach (var enreg in m_DB.GetRows(@"
                     SELECT
-                        categorie_parfum.id AS cat_id,
-                        categorie_parfum.nom AS cat_nom,
-                        parfum.id AS par_id,
-                        parfum.nom AS par_nom
+                        utilisateur.id AS utilisateur_id,
+                        utilisateur.email AS utilisateur_email,
+                        utilisateur.password AS utilisateur_motDePasse,
+                        utilisateur.token AS utilisateur_token,
+                        utilisateur.nom AS utilisateur_nom,
+                        utilisateur.prenom AS utilisateur_prenom,
+                        utilisateur.telephone AS utilisateur_telephone,
+                        utilisateur.dateNaissance AS utilisateur_dateNaissance,
+                        utilisateur.adresse AS utilisateur_adresse,
+                        role_utilisateur.id AS role_id,
+                        role_utilisateur.nom AS role_nom,                        
+                        role_utilisateur.description AS role_description
                     FROM
-                        categorie_parfum LEFT JOIN parfum ON categorie_parfum.id = parfum.ref_categorie
+                        utilisateur LEFT JOIN role_utilisateur ON utilisateur.ref_role = role_utilisateur.id
+                     WHERE 
+                        utilisateur_email = {0}
                     ORDER BY
-                        categorie_parfum.nom ASC,
-                        parfum.nom ASC"))
-                {
-                    var idCategorie = enreg.GetValue<int>("cat_id");
-                    if ((categorie == null) || !idCategorie.Equals(categorie.Id))
-                    {
-                        if (categorie != null) yield return categorie;
-                        categorie = Modeles.CreerCategorieParfum(idCategorie, enreg.GetValue<string>("cat_nom"));
-                        if (!PasNullSinonErreur(categorie)) yield break;
-                    }
-                    categorie.AjouterParfum(Modeles.CreerParfum(enreg.GetValue<int>("par_id"), enreg.GetValue<string>("par_nom")));
-                }
-                if (categorie != null) yield return categorie;
-            }
-            else
+                        utilisateur.nom ASC,
+                        role_utilisateur.nom ASC", email))
             {
-                foreach (var categorie in m_DB
-                    .GetRows("SELECT id, nom FROM categorie_parfum ORDER BY nom ASC")
-                    .Select(enreg => Modeles.CreerCategorieParfum(enreg.GetValue<int>("id"), enreg.GetValue<string>("nom")))
-                    .TakeWhile(entite => PasNullSinonErreur(entite)))
+                var idUtilisateur = enreg.GetValue<int>("utilisateur_id");
+                if ((utilisateur == null) || !idUtilisateur.Equals(utilisateur.Id))
                 {
-                    yield return categorie;
+                    if (utilisateur != null) yield return utilisateur;
+                    utilisateur = Modeles.CreerUtilisateur(idUtilisateur, enreg.GetValue<string>("utilisateur_email"), enreg.GetValue<string>("utilisateur_motDePasse"), enreg.GetValue<string>("utilisateur_token"), enreg.GetValue<string>("utilisateur_nom"), enreg.GetValue<string>("utilisateur_prenom"), enreg.GetValue<string>("utilisateur_telephone"), enreg.GetValue<string>("utilisateur_dateNaissance"), enreg.GetValue<string>("utilisateur_adresse"));
+                    if (!PasNullSinonErreur(utilisateur)) yield break;
                 }
+                utilisateur.DefinirRole(Modeles.CreerRoleUtilisateur(enreg.GetValue<int>("role_id"), enreg.GetValue<string>("role_nom"), enreg.GetValue<string>("role_description")));
             }
+            if (utilisateur != null) yield return utilisateur;
+            
         }
 
         /// <summary>
-        /// Tente de récupérer les parfums de glace de la catégorie spécifiée
+        /// Tente de récupérer les Dossiers patients
         /// </summary>
-        /// <param name="completerAvecTailles">Indique si chaque catégorie de parfum de glace doit être complété avec sa liste des parfums de glace disponibles</param>
-        /// <returns>Énumération des parfums de glace de la catégorie spécifiée</returns>
-        public IEnumerable<Modeles.IParfum> EnumererParfums(Modeles.ICategorieParfum categorieParfum)
+        /// <returns>Énumération des Dossiers Patients de l'application</returns>
+        public IEnumerable<Modeles.IDossierPatient> EnumererDossiersPatients()
         {
             ReinitialiserErreur();
-            if (categorieParfum == null)
-            {
-                MessageErreur = $"Catégories de parfum de glace défini lors de la tentative d'énumération de parfums de glace de support !";
-                return new Modeles.IParfum[0];
-            }
-            return m_DB
-                .GetRows("SELECT id, nom FROM parfum WHERE ref_categorie = {0} ORDER BY nom ASC", categorieParfum.Id)
-                .Select(enreg => Modeles.CreerParfum(enreg.GetValue<int>("id"), enreg.GetValue<string>("nom")))
-                .TakeWhile(entite => PasNullSinonErreur(entite));
-        }
 
-        /// <summary>
-        /// Tente de récupérer les nappages
-        /// </summary>
-        /// <returns>Énumération des nappages</returns>
-        public IEnumerable<Modeles.INappage> EnumererNappages()
-        {
-            ReinitialiserErreur();
-            return m_DB
-                .GetRows("SELECT id, nom FROM nappage ORDER BY nom ASC")
-                .Select(enreg => Modeles.CreerNappage(enreg.GetValue<int>("id"), enreg.GetValue<string>("nom")))
-                .TakeWhile(entite => PasNullSinonErreur(entite));
-        }
-
-        /// <summary>
-        /// Tente de récupérer les saupoudrages
-        /// </summary>
-        /// <returns>Énumération des saupoudrages</returns>
-        public IEnumerable<Modeles.ISaupoudrage> EnumererSaupoudrages()
-        {
-            ReinitialiserErreur();
-            return m_DB
-                .GetRows("SELECT id, nom FROM saupoudrage ORDER BY nom ASC")
-                .Select(enreg => Modeles.CreerSaupoudrage(enreg.GetValue<int>("id"), enreg.GetValue<string>("nom")))
-                .TakeWhile(entite => PasNullSinonErreur(entite));
-        }
-
-        /// <summary>
-        /// Tente de passer commande d'une confection
-        /// </summary>
-        /// <returns>Énumération des saupoudrages</returns>
-        public bool CommanderConfection(Modeles.IConfection confection)
-        {
-            /*
-            var clesValeurs = new List<string>();
+            Modeles.IDossierPatient dossierPatient = null;
+            foreach (var enreg in m_DB.GetRows(@"
+                    SELECT
+                        dossier_patient.id AS dossier_id,
+                        dossier_patient.description AS dossier_description,
+                        utilisateur.id AS patient_id,
+                        utilisateur.email AS patient_email,
+                        utilisateur.password AS patient_motDePasse,
+                        utilisateur.token AS patient_token,
+                        utilisateur.nom AS patient_nom,
+                        utilisateur.prenom AS patient_prenom,
+                        utilisateur.telephone AS patient_telephone,
+                        utilisateur.dateNaissance AS patient_dateNaissance,
+                        utilisateur.adresse AS patient_adresse,
+                        consultation.id AS consultation_id,
+                        consultation.prescription AS consultation_prescription,
+                        consultation.rapport AS consultation_rapport
+                    FROM
+                        dossier_patient 
+                            LEFT JOIN utilisateur ON dossier_patient.ref_utilisateur = utilisateur.id                            
+                            LEFT JOIN utilisateur ON consultation.ref_dossier = dossier_patient.id
+                    ORDER BY
+                        utilisateur.nom ASC"))
             {
-                clesValeurs.Add("action");
-                clesValeurs.Add("commander");
-            }
-            {
-                clesValeurs.Add("type");
-                clesValeurs.Add(confection.TypeSupport.Code);
-                clesValeurs.Add("taille");
-                clesValeurs.Add(confection.TailleSupport.Code);
-            }
-            foreach (var boule in confection.Boules)
-            {
-                for (int i = 0; i < boule.Quantite; i++)
+                var idDossier = enreg.GetValue<int>("dossier_id");
+                if ((dossierPatient == null) || !idDossier.Equals(dossierPatient.Id))
                 {
-                    clesValeurs.Add("boules[]");
-                    clesValeurs.Add(boule.Parfum.Code);
+                    if (dossierPatient != null) yield return dossierPatient;
+                    dossierPatient = Modeles.CreerDossierPatient(idDossier, enreg.GetValue<string>("utilisateur_description"));
+                    if (!PasNullSinonErreur(dossierPatient)) yield break;
                 }
+                dossierPatient.DefinirPatient(Modeles.CreerUtilisateur(enreg.GetValue<int>("patient_id"), enreg.GetValue<string>("patient_email"), enreg.GetValue<string>("patient_motDePasse"), enreg.GetValue<string>("patient_token"), enreg.GetValue<string>("patient_nom"), enreg.GetValue<string>("patient_prenom"), enreg.GetValue<string>("patient_telephone"), enreg.GetValue<string>("patient_dateNaissance"), enreg.GetValue<string>("patient_adresse")));
+                dossierPatient.AjouterConsultation(Modeles.CreerConsultation(enreg.GetValue<int>("consultation_id"), enreg.GetValue<string>("consultation_prescription"), enreg.GetValue<string>("consultation_rapport")));
             }
-            if (confection.Nappage != null)
+            if (dossierPatient != null) yield return dossierPatient;
+        }
+
+        /// <summary>
+        /// Tente de récupérer toutes les Consultations
+        /// </summary>
+        /// <returns>Énumération des Consultations de l'application</returns>
+        public IEnumerable<Modeles.IConsultation> EnumererConsultations()
+        {
+            ReinitialiserErreur();
+
+            Modeles.IConsultation consultation = null;
+            foreach (var enreg in m_DB.GetRows(@"
+                    SELECT
+                        consultation.id AS consultation_id,
+                        consultation.prescription AS consultation_prescription,
+                        consultation.rapport AS consultation_rapport,
+                        dossier_patient.id AS dossier_id,
+                        dossier_patient.description AS dossier_description,
+                        utilisateur.id AS medecin_id,
+                        utilisateur.email AS medecin_email,
+                        utilisateur.password AS medecin_motDePasse,
+                        utilisateur.token AS medecin_token,
+                        utilisateur.nom AS medecin_nom,
+                        utilisateur.prenom AS medecin_prenom,
+                        utilisateur.telephone AS medecin_telephone,
+                        utilisateur.dateNaissance AS medecin_dateNaissance,
+                        utilisateur.adresse AS medecin_adresse,
+                        rendez_vous.id AS rdv_id,
+                        rendez_vous.description AS rdv_description,
+                        rendez_vous.date AS rdv_date,
+                        rendez_vous.duree AS rdv_duree
+                    FROM
+                        consultation 
+                            LEFT JOIN utilisateur ON consultation.ref_medecin = utilisateur.id                            
+                            LEFT JOIN dossier_patient ON consultation.ref_dossier = dossier_patient.id
+                            LEFT JOIN rendez_vous ON rendez_vous.ref_consultation = consultation.id
+                    ORDER BY
+                        utilisateur.nom ASC"))
             {
-                clesValeurs.Add("nappage");
-                clesValeurs.Add(confection.Nappage.Code);
+                var idConsultation = enreg.GetValue<int>("consultation_id");
+                if ((consultation == null) || !idConsultation.Equals(consultation.Id))
+                {
+                    if (consultation != null) yield return consultation;
+                    consultation = Modeles.CreerConsultation(idConsultation, enreg.GetValue<string>("consultation_prescription"), enreg.GetValue<string>("consultation_rapport"));
+                    if (!PasNullSinonErreur(consultation)) yield break;
+                }
+                consultation.DefinirMedecinExecutant(Modeles.CreerUtilisateur(enreg.GetValue<int>("medecin_id"), enreg.GetValue<string>("medecin_email"), enreg.GetValue<string>("medecin_motDePasse"), enreg.GetValue<string>("medecin_token"), enreg.GetValue<string>("medecin_nom"), enreg.GetValue<string>("medecin_prenom"), enreg.GetValue<string>("medecin_telephone"), enreg.GetValue<string>("medecin_dateNaissance"), enreg.GetValue<string>("medecin_adresse")));
+                consultation.DefinirDossierPatient(Modeles.CreerDossierPatient(enreg.GetValue<int>("dossier_id"), enreg.GetValue<string>("dossier_description")));
+                consultation.AjouterRendezVous(Modeles.CreerRendezVous(enreg.GetValue<int>("rdv_id"), enreg.GetValue<string>("consultation_description"), enreg.GetValue<DateTime>("rdv_date"), enreg.GetValue<int>("rdv_duree")));
             }
-            if (confection.CremeFraiche)
+            if (consultation != null) yield return consultation;
+        }
+
+
+        /// <summary>
+        /// Tente de récupérer tous les Rendez-vous
+        /// </summary>
+        /// <returns>Énumération des Rendez-vous de l'application</returns>
+        public IEnumerable<Modeles.IRendezVous> EnumererLesRendezVous()
+        {
+            ReinitialiserErreur();
+
+            Modeles.IRendezVous rendezVous = null;
+            foreach (var enreg in m_DB.GetRows(@"
+                    SELECT
+                        rendez_vous.id AS rdv_id,
+                        rendez_vous.description AS rdv_description,
+                        rendez_vous.date AS rdv_date,
+                        rendez_vous.duree AS rdv_duree
+                        consultation.id AS consultation_id,
+                        consultation.prescription AS consultation_prescription,
+                        consultation.rapport AS consultation_rapport,
+                        statut_rendezvous.id AS statut_id,
+                        statut_rendezvous.nom AS statut_nom,
+                        statut_rendezvous.description AS statut_description
+                    FROM
+                        rendez_vous 
+                            LEFT JOIN consultation ON rendez_vous.ref_consultation = consultation.id                            
+                            LEFT JOIN statut ON rendez_vous.ref_statut = statut_rendezvous.id
+                    "))
             {
-                clesValeurs.Add("creme_fraiche");
-                clesValeurs.Add("");
+                var idRdv = enreg.GetValue<int>("rdv_id");
+                if ((rendezVous == null) || !idRdv.Equals(rendezVous.Id))
+                {
+                    if (rendezVous != null) yield return rendezVous;
+                    rendezVous = Modeles.CreerRendezVous(idRdv, enreg.GetValue<string>("rdv_description"), enreg.GetValue<DateTime >("rdv_date"), enreg.GetValue<int>("rdv_duree"));
+                    if (!PasNullSinonErreur(rendezVous)) yield break;
+                }
+                rendezVous.DefinirConsultation(Modeles.CreerConsultation(enreg.GetValue<int>("consultation_id"), enreg.GetValue<string>("consultation_prescription"), enreg.GetValue<string>("consultation_rapport")));
+                rendezVous.DefinirStatut(Modeles.CreerStatutRendezVous(enreg.GetValue<int>("statut_id"), enreg.GetValue<string>("statut_nom"), enreg.GetValue<string>("statut_description")));
             }
-            if (confection.Saupoudrage != null)
-            {
-                clesValeurs.Add("saupoudrage");
-                clesValeurs.Add(confection.Saupoudrage.Code);
-            }
-            QueryAndGetData(clesValeurs.ToArray()).FirstOrDefault();
-            return !ErreurRencontree;
-            */
-            return false;
+            if (rendezVous != null) yield return rendezVous;
         }
 
         private void ReinitialiserErreur()

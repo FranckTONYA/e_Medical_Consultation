@@ -72,9 +72,9 @@ namespace ConsultationMedicale
         /// Instancie un Utilisateur en fonction des caractéristiques spécifiées
         /// </summary>
         /// <returns>Nouvelle entité d'utilisateur si possible, sinon null</returns>
-        public static IUtilisateur CreerUtilisateur()
+        public static IUtilisateur CreerUtilisateur(int id, string email, string motDePasse, string token, string nom, string prenom, string telephone, string dateNaissance, string adresse)
         {
-            return new Utilisateur();
+            return new Utilisateur(id, email, motDePasse, token, nom, prenom, telephone, dateNaissance, adresse );
         }
 
         /// <summary>
@@ -146,29 +146,73 @@ namespace ConsultationMedicale
                 return true;
             }
 
-
-            public Utilisateur()
-                : base(EntiteBase.NouveauCode, $"Utilisateur le {DateTime.Now.ToString("d/MM/yyyy à H:mm:ss").Replace('-', '/')}")
+            /// <summary>
+            /// Constructeur
+            /// </summary>
+            /// <param name="id">Identifiant de ce type de support</param>
+            /// <param name="email">Email</param>
+            /// <param name="motDePasse">Mot de passe</param>
+            /// <param name="token">Token de verification</param>
+            /// <param name="role">Rôle de l'utilisateur</param>
+            /// <param name="nom">Nom</param>
+            /// <param name="prenom">Prènom</param>
+            /// <param name="telephone">Téléphone</param>
+            /// <param name="dateNaissance">Date de naissance</param>
+            /// <param name="adresse">adresse</param>
+            public Utilisateur(int id, string email, string motDePasse, string token, string nom, string prenom, string telephone, string dateNaissance, string adresse)
+                : base(id, nom)
             {
-                Email = null;
-                MotDePasse = null;
-                Token = null;
-                Role = null;
-                Nom = null;
-                Prenom = null;
-                Telephone = null;
-                DateNaissance = null;
-                Adresse = null;
+                Email = email;
+                MotDePasse = motDePasse;
+                Token = token;
+                Nom = nom;
+                Prenom = prenom;
+                Telephone = telephone;
+                DateNaissance = dateNaissance;
+                Adresse = adresse;
             }
+
+            /// <summary>
+            /// Constructeur
+            /// </summary>
+            /// <param name="id">Identifiant de ce type de support</param>
+            /// <param name="email">Email</param>
+            /// <param name="motDePasse">Mot de passe</param>
+            /// <param name="token">Token de verification</param>
+            /// <param name="role">Rôle de l'utilisateur</param>
+            /// <param name="nom">Nom</param>
+            /// <param name="prenom">Prènom</param>
+            /// <param name="telephone">Téléphone</param>
+            /// <param name="dateNaissance">Date de naissance</param>
+            /// <param name="adresse">adresse</param>
+            public Utilisateur(string email, string motDePasse, string token, string nom, string prenom, string telephone, string dateNaissance, string adresse)
+                : base(0, $"Utilisateur le {DateTime.Now.ToString("d/MM/yyyy à H:mm:ss").Replace('-', '/')}")
+            {
+                Email = email;
+                MotDePasse = motDePasse;
+                Token = token;
+                Nom = nom;
+                Prenom = prenom;
+                Telephone = telephone;
+                DateNaissance = dateNaissance;
+                Adresse = adresse;
+            }
+
+
+            /*            public Utilisateur()
+                            : base(EntiteBase.NouveauCode, $"Utilisateur le {DateTime.Now.ToString("d/MM/yyyy à H:mm:ss").Replace('-', '/')}")
+                        {
+                            Email = null;
+                            MotDePasse = null;
+                            Token = null;
+                            Role = null;
+                            Nom = null;
+                            Prenom = null;
+                            Telephone = null;
+                            DateNaissance = null;
+                            Adresse = null;
+                        }*/
         }
     }
 
-
-    public enum ROLE
-    {
-        VISITEUR,
-        PATIENT,
-        MEDECIN,
-        ADMINISTRATEUR,
-    }
 }

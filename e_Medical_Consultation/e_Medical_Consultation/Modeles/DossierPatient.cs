@@ -63,10 +63,12 @@ namespace ConsultationMedicale
         /// <summary>
         /// Instancie un Dossier Patient en fonction des caractéristiques spécifiées
         /// </summary>
+        /// <param name="id">Identifiant du dossier patient en BD</param>
+        /// <param name="description">Description du dossier patient</param>
         /// <returns>Nouvelle entité Dossier Patient si possible, sinon null</returns>
-        public static IDossierPatient CreerDossierPatient()
+        public static IDossierPatient CreerDossierPatient(int id, string description)
         {
-            return new DossierPatient();
+            return new DossierPatient(id, description);
         }
 
         /// <summary>
@@ -138,13 +140,10 @@ namespace ConsultationMedicale
             }
 
 
-            public DossierPatient()
-                : base(EntiteBase.NouveauCode, $"Dossier Patient le {DateTime.Now.ToString("d/MM/yyyy à H:mm:ss").Replace('-', '/')}")
+            public DossierPatient(int id, string description)
+                : base(id, description)
             {
-                Description = null;
-                Patient = null; 
-                m_Consultations = new List<IConsultation>();
-
+                Description = description;
             }
         }
     }

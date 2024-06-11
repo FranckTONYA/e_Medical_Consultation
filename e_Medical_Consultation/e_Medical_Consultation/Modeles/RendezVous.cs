@@ -66,10 +66,14 @@ namespace ConsultationMedicale
         /// <summary>
         /// Instancie unµ Rendez-Vous Médicale en fonction des caractéristiques spécifiées
         /// </summary>
+        /// <param name="id">Identifiant du Rendez-vous en BD</param>
+        /// <param name="description">Descriptioj du Rendez-vous</param>
+        /// <param name="date">Date du Rendez-vous</param>
+        /// <param name="duree">Durée du Rendez-vous</param>
         /// <returns>Nouvelle entité Rendez-Vous si possible, sinon null</returns>
-        public static IRendezVous CreerRendezVous()
+        public static IRendezVous CreerRendezVous(int id, string description, DateTime date, int duree)
         {
-            return new RendezVous();
+            return new RendezVous(id, description, date, duree);
         }
 
         /// <summary>
@@ -128,8 +132,8 @@ namespace ConsultationMedicale
                 return true;
             }
 
-            public RendezVous()
-                : base(EntiteBase.NouveauCode, $"Rendez-Vous Médicale le {DateTime.Now.ToString("d/MM/yyyy à H:mm:ss").Replace('-', '/')}")
+            public RendezVous(int id, string description, DateTime date, int duree)
+                : base(id, description)
             {
                 Description = null;
                 Date = DateTime.MinValue;

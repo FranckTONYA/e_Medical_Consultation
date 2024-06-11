@@ -36,10 +36,13 @@ namespace ConsultationMedicale
         /// <summary>
         /// Instancie un Statut de Rendez-Vous en fonction des caractéristiques spécifiées
         /// </summary>
+        /// <param name="id">Identifiant du rendez-vous en BD</param>
+        /// <param name="nom">Nom du Statut de Rendez-vous</param>
+        /// <param name="description">Description du Statut de Rendez-vous</param>
         /// <returns>Nouvelle entité StatutRendezVous si possible, sinon null</returns>
-        public static IStatutRendezVous CreerStatutRendezVous()
+        public static IStatutRendezVous CreerStatutRendezVous(int id, string nom, string description)
         {
-            return new StatutRendezVous();
+            return new StatutRendezVous(id, nom, description);
         }
 
         /// <summary>
@@ -59,11 +62,11 @@ namespace ConsultationMedicale
             public string Description { get; private set; }
 
 
-            public StatutRendezVous()
-                : base(EntiteBase.NouveauCode, $"Statut de Rendez-Vous le {DateTime.Now.ToString("d/MM/yyyy à H:mm:ss").Replace('-', '/')}")
+            public StatutRendezVous(int id, string nom, string description)
+                : base(id, nom)
             {
-                Nom = null;
-                Description = null;
+                Nom = nom;
+                Description = description;
             }
         }
     }

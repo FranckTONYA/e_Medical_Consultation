@@ -37,9 +37,9 @@ namespace ConsultationMedicale
         /// Instancie un Rôle Utilisateur en fonction des caractéristiques spécifiées
         /// </summary>
         /// <returns>Nouvelle entité Rôle Utilisateur si possible, sinon null</returns>
-        public static IRoleUtilisateur CreerRoleUtilisateur()
+        public static IRoleUtilisateur CreerRoleUtilisateur(int id, string nom, string description)
         {
-            return new RoleUtilisateur();
+            return new RoleUtilisateur(id, nom, description);
         }
 
         /// <summary>
@@ -59,11 +59,18 @@ namespace ConsultationMedicale
             public string Description { get; private set; }
 
 
-            public RoleUtilisateur()
-                : base(EntiteBase.NouveauCode, $"Rôle Utilisateur le {DateTime.Now.ToString("d/MM/yyyy à H:mm:ss").Replace('-', '/')}")
+            public RoleUtilisateur(int id, string nom, string description)
+                : base(id, nom)
             {
-                Nom = null;
-                Description = null;
+                Nom = nom;
+                Description = description;
+            }
+
+            public RoleUtilisateur(string nom, string description)
+                : base(EntiteBase.NouveauCode, nom)
+            {
+                Nom = nom;
+                Description = description;
             }
         }
     }

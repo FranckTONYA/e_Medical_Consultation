@@ -49,9 +49,9 @@ namespace ConsultationMedicale
             /// <summary>
             /// Permet de (re)définir le Médecin exécutant
             /// </summary>
-            /// <param name="MedecinExecutant">Médecin exécutant à attribuer à cette Consultation</param>
+            /// <param name="medecinExecutant">Médecin exécutant à attribuer à cette Consultation</param>
             /// <returns>Vrai si la modification de cette information a pu se faire, sinon faux</returns>
-            bool DefinirMedecinExecutant(IUtilisateur MedecinExecutant);
+            bool DefinirMedecinExecutant(IUtilisateur medecinExecutant);
 
             /// <summary>
             /// Permet de (re)définir le Dossier Patient
@@ -70,7 +70,7 @@ namespace ConsultationMedicale
             /// <summary>
             /// Permet de retirer un RendezVous de consultation spécifiée
             /// </summary>
-            /// <param name="RendezVous">Rendez-Vous de la consultation à retirer</param>
+            /// <param name="rendezVous">Rendez-Vous de la consultation à retirer</param>
             /// <returns>Vrai si le retrait a pu se faire, sinon faux</returns>
             bool RetirerRendezVous(IRendezVous rendezVous);
 
@@ -79,10 +79,13 @@ namespace ConsultationMedicale
         /// <summary>
         /// Instancie une Consultation Médicale en fonction des caractéristiques spécifiées
         /// </summary>
+        /// <param name="id">Identifiant de la consultation en BD</param>
+        /// <param name="prescription">Prescription de la consultation</param>
+        /// <param name="rapport">Rapport de la consultation</param>
         /// <returns>Nouvelle entité Consultation si possible, sinon null</returns>
-        public static IConsultation CreerConsultation()
+        public static IConsultation CreerConsultation(int id, string prescription, string rapport)
         {
-            return new Consultation();
+            return new Consultation(id, prescription, rapport);
         }
 
         /// <summary>
@@ -129,7 +132,7 @@ namespace ConsultationMedicale
             /// <returns>Vrai si la modification de cette information a pu se faire, sinon faux</returns>
             public bool DefinirMedecinExecutant(IUtilisateur medecinExecutant)
             {
-                if ((medecinExecutant != null) && (MedecinExecutant.Role != ROLE.MEDECIN)) return false;
+                if ((medecinExecutant != null) && (!MedecinExecutant.Role.Nom.Equals("MEDECIN"))) return false;
                 MedecinExecutant = medecinExecutant;
                 return true;
             }
@@ -175,14 +178,11 @@ namespace ConsultationMedicale
 
             }
 
-            public Consultation()
-                : base(EntiteBase.NouveauCode, $"Consultation Médicale le {DateTime.Now.ToString("d/MM/yyyy à H:mm:ss").Replace('-', '/')}")
+            public Consultation(int id, string prescription, string rapport)
+                : base(id, $"Consultation Médicale le {DateTime.Now.ToString("d/MM/yyyy à H:mm:ss").Replace('-', '/')}")
             {
-                Rapport = null;
-                Prescription = null;
-                MedecinExecutant = null;
-                DossierPatient = null;
-                m_LesRendezVous = new List<IRendezVous>();
+                Prescription = prescription;
+                Rapport = rapport;
 
             }
         }
