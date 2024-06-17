@@ -1,4 +1,4 @@
-﻿namespace Glacier
+﻿namespace ConsultationMedicale
 {
     partial class SelectionSupport
     {

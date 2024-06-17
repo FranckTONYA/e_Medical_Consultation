@@ -1,21 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using static Glacier.Modeles;
 
-namespace Glacier
+namespace ConsultationMedicale
 {
     /// <summary>
     /// Contrôle permettant de gérer la confection d'une crème glacée
     /// <para>Il s'agit d'une vue dans une architecture logicielle de type MVC</para>
     /// </summary>
-    public partial class Confection : UserControl
+    public partial class Accueil : UserControl
     {
         /// <summary>
         /// Api du Glacier, et donc "support" des données actives de l'application
@@ -88,7 +82,7 @@ namespace Glacier
         /// <summary>
         /// Constructeur par défaut
         /// </summary>
-        public Confection()
+        public Accueil()
             : this(null)
         {
         }
@@ -98,7 +92,7 @@ namespace Glacier
         /// <para>Obligatoire pour le mode Design de Visual Studio</para>
         /// </summary>
         /// <param name="api">Référence de l'API donnant accès au "support" des données actives de l'application</param>
-        public Confection(ApiConsultationMedicale api)
+        public Accueil(ApiConsultationMedicale api)
         {
             InitializeComponent();
             Api = api;
@@ -132,7 +126,7 @@ namespace Glacier
                 {
                     m_ControleEtapeActuelle.Visible = false;
                     tlpPrincipal.Controls.Remove(m_ControleEtapeActuelle);
-                    var recapitulatif = new Recapitulatif(Api, ConfectionEnCours, false);
+                    var recapitulatif = new Connexion(Api, ConfectionEnCours, false);
                     recapitulatif.Dock = DockStyle.Fill;
                     tlpPrincipal.Controls.Add(recapitulatif, 1, 1);
                     tlpPrincipal.SetColumnSpan(recapitulatif, 5);
@@ -187,9 +181,9 @@ namespace Glacier
             buttonSuivant.Visible = aUneEtapeSuivante;
             tlpPrincipal.ResumeLayout(true);
             MettreAJourTitre();
-            if (m_ControleEtapeActuelle is Recapitulatif)
+            if (m_ControleEtapeActuelle is Connexion)
             {
-                (m_ControleEtapeActuelle as Recapitulatif).ConfectionTerminee += (s, e) =>
+                (m_ControleEtapeActuelle as Connexion).ConfectionTerminee += (s, e) =>
                 {
                     InitialiserConfection();
                 };
@@ -210,6 +204,21 @@ namespace Glacier
                 titre.Append(m_EtapeConfectionActuelle.Titre);
             }
             labelTitre.Text = titre.ToString();
+        }
+
+        private void AfiicherConnexionMedecin(object sender, EventArgs e)
+        {
+
+        }
+
+        private void AfficherConnexionAdmin(object sender, EventArgs e)
+        {
+
+        }
+
+        private void AfficherConnexionPatient(object sender, EventArgs e)
+        {
+
         }
     }
 }

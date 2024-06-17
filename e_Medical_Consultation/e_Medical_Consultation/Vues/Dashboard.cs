@@ -9,13 +9,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Glacier
+namespace ConsultationMedicale
 {
     /// <summary>
     /// Contrôle permettant de gérer la sélection des boules
     /// <para>Il s'agit d'une vue dans une architecture logicielle de type MVC</para>
     /// </summary>
-    public partial class SelectionBoules : UserControl, IEtapeConfection
+    public partial class Dashboard : UserControl, IEtapeConfection
     {
         /// <summary>
         /// Api du Glacier, et donc "support" des données actives de l'application
@@ -78,7 +78,7 @@ namespace Glacier
         /// <param name="api">Référence de l'API donnant accès au "support" des données actives de l'application</param>
         /// <param name="confection">Référence de l'entité représentant ce qui est en cours de confection</param>
         /// <returns>Nouveau contrôle utilisateur implémentant l'interface IEtapeConfection si possible, sinon null</returns>
-        public IEtapeConfection CreerEtapeSuivante(ApiConsultationMedicale api, Modeles.IConfection confection) => new SelectionNappage(api, confection);
+        public IEtapeConfection CreerEtapeSuivante(ApiConsultationMedicale api, Modeles.IConfection confection) => new Consultations(api, confection);
 
         /// <summary>
         /// Référence de l'entité représentant ce qui est en cours de confection
@@ -95,7 +95,7 @@ namespace Glacier
         /// </summary>
         /// <param name="api">Référence de l'API donnant accès au "support" des données actives de l'application</param>
         /// <param name="confection">Référence de l'entité représentant ce qui est en cours de confection</param>
-        public SelectionBoules(ApiConsultationMedicale api = null, Modeles.IConfection confection = null)
+        public Dashboard(ApiConsultationMedicale api = null, Modeles.IConfection confection = null)
         {
             InitializeComponent();
             Api = api;
@@ -259,5 +259,24 @@ namespace Glacier
             buttonRetirerBoule.Enabled = (lvwBoules.SelectedIndices.Count == 1);
         }
 
+        private void AfficherConsultations(object sender, EventArgs e)
+        {
+
+        }
+
+        private void AfficherLesRendezVous(object sender, EventArgs e)
+        {
+
+        }
+
+        private void AfficherDossiersPatients(object sender, EventArgs e)
+        {
+
+        }
+
+        private void AfficherUtilisateurs(object sender, EventArgs e)
+        {
+
+        }
     }
 }

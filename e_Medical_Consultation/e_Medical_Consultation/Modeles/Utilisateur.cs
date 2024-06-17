@@ -56,6 +56,11 @@ namespace ConsultationMedicale
             string DateNaissance { get; }
 
             /// <summary>
+            /// Téléphone
+            /// </summary>
+            string Telephone { get; }
+
+            /// <summary>
             /// Adresse
             /// </summary>
             string Adresse { get; }

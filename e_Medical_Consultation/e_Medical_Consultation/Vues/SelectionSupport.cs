@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Glacier
+namespace ConsultationMedicale
 {
     /// <summary>
     /// Contrôle permettant de gérer la sélection d'un support (type et taille)
@@ -77,7 +77,7 @@ namespace Glacier
         /// <param name="api">Référence de l'API donnant accès au "support" des données actives de l'application</param>
         /// <param name="confection">Référence de l'entité représentant ce qui est en cours de confection</param>
         /// <returns>Nouveau contrôle utilisateur implémentant l'interface IEtapeConfection si possible, sinon null</returns>
-        public IEtapeConfection CreerEtapeSuivante(ApiConsultationMedicale api, Modeles.IConfection confection) => new SelectionBoules(api, confection);
+        public IEtapeConfection CreerEtapeSuivante(ApiConsultationMedicale api, Modeles.IConfection confection) => new Dashboard(api, confection);
 
         /// <summary>
         /// Référence de l'entité représentant ce qui est en cours de confection

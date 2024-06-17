@@ -8,12 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Glacier
+namespace ConsultationMedicale
 {
-    /// <summary>
-    /// Formulaire principal
-    /// <para>Servant également ici de conteneur au id de contrôleur dans une architecture logicielle de type MVC</para>
-    /// </summary>
     public partial class Principal : Form
     {
         /// <summary>
@@ -25,7 +21,22 @@ namespace Glacier
             InitializeComponent();
             this.Width = Math.Min(Screen.AllScreens.Min(s => s.WorkingArea.Width) * 2 / 3, this.Width * 3 / 2);
             this.Height = Math.Min(Screen.AllScreens.Max(s => s.WorkingArea.Height) * 2 / 3, this.Height * 3 / 2);
-            confection.DefinirApi(api);
+            /*confection.DefinirApi(api);*/
+        }
+
+        private void ConnexionAdmin(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ConnexionMedecin(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ConnexionPatient(object sender, EventArgs e)
+        {
+
         }
     }
 }

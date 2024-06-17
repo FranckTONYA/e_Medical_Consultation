@@ -270,7 +270,7 @@ namespace ConsultationMedicale
                 }
                 consultation.DefinirMedecinExecutant(Modeles.CreerUtilisateur(enreg.GetValue<int>("medecin_id"), enreg.GetValue<string>("medecin_email"), enreg.GetValue<string>("medecin_motDePasse"), enreg.GetValue<string>("medecin_token"), enreg.GetValue<string>("medecin_nom"), enreg.GetValue<string>("medecin_prenom"), enreg.GetValue<string>("medecin_telephone"), enreg.GetValue<string>("medecin_dateNaissance"), enreg.GetValue<string>("medecin_adresse")));
                 consultation.DefinirDossierPatient(Modeles.CreerDossierPatient(enreg.GetValue<int>("dossier_id"), enreg.GetValue<string>("dossier_description")));
-                consultation.AjouterRendezVous(Modeles.CreerRendezVous(enreg.GetValue<int>("rdv_id"), enreg.GetValue<string>("consultation_description"), enreg.GetValue<DateTime>("rdv_date"), enreg.GetValue<int>("rdv_duree")));
+                consultation.DefinirRendezVous(Modeles.CreerRendezVous(enreg.GetValue<int>("rdv_id"), enreg.GetValue<string>("consultation_description"), enreg.GetValue<DateTime>("rdv_date"), enreg.GetValue<int>("rdv_duree")));
             }
             if (consultation != null) yield return consultation;
         }

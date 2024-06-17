@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Debug = System.Diagnostics.Debug;
 
-namespace ConsultationMedicale
+namespace ConsultationMedicale.Controleurs
 {
     /// <summary>
     /// Contient le point d'entrée de l'application, ainsi que l'accès aux "services globaux"
@@ -34,43 +34,10 @@ namespace ConsultationMedicale
         /// </summary>
         private static void TesterApi()
         {
-            Debug.WriteLine("\nLISTE DES TYPES DE SUPPORT\n");
-            foreach (var typeSupport in Api.EnumererTypesSupport())
+            Debug.WriteLine("\nLISTE DES UTILISATEURS\n");
+            foreach (var utilisateur in Api.EnumererUtilisateurs())
             {
-                Debug.WriteLine($"{typeSupport.Id} - {typeSupport.Denomination} - {(typeSupport.AutoriseNappage ? "nappage autorisé" : "nappage interdit")} - {(typeSupport.AutoriseCremeFraiche ? "crème fraîche autorisée" : "crème fraîche interdite")}");
-            }
-            Debug.WriteLine("\nLISTE DES TYPES DE SUPPORT AVEC INFORMATIONS DES TAILLES");
-            foreach (var typeSupport in Api.EnumererTypesSupport(true))
-            {
-                Debug.WriteLine($"\n{typeSupport.Id} - {typeSupport.Denomination} - {(typeSupport.AutoriseNappage ? "nappage autorisé" : "nappage interdit")} - {(typeSupport.AutoriseCremeFraiche ? "crème fraîche autorisée" : "crème fraîche interdite")} - {((typeSupport.Tailles.Count >= 2) ? $"{typeSupport.Tailles.Count} tailles disponibles" : "une seule taille disponible")} :");
-                foreach (var tailleSupport in typeSupport.Tailles)
-                {
-                    Debug.WriteLine($"* {tailleSupport.Id} - {tailleSupport.Denomination} - {tailleSupport.MaximumBoules} boule(s) au maximum");
-                }
-            }
-            Debug.WriteLine("\nLISTE DES CATÉGORIES DE PARFUM\n");
-            foreach (var categorieParfum in Api.EnumererCategoriesParfum())
-            {
-                Debug.WriteLine($"{categorieParfum.Id} - {categorieParfum.Denomination}");
-            }
-            Debug.WriteLine("\nLISTE DES CATÉGORIES DE PARFUM AVEC INFORMATIONS DES PARFUMS");
-            foreach (var categorieParfum in Api.EnumererCategoriesParfum(true))
-            {
-                Debug.WriteLine($"\n{categorieParfum.Id} - {categorieParfum.Denomination} - {((categorieParfum.Parfums.Count >= 2) ? $"{categorieParfum.Parfums.Count} parfums de glace disponibles" : "un seul parfum de glace disponible")} :");
-                foreach (var parfum in categorieParfum.Parfums)
-                {
-                    Debug.WriteLine($"* {parfum.Id} - {parfum.Denomination}");
-                }
-            }
-            Debug.WriteLine("\nLISTE DES NAPPAGES\n");
-            foreach (var nappage in Api.EnumererNappages())
-            {
-                Debug.WriteLine($"{nappage.Id} - {nappage.Denomination}");
-            }
-            Debug.WriteLine("\nLISTE DES SAUPOUDRAGES\n");
-            foreach (var saupoudrage in Api.EnumererSaupoudrages())
-            {
-                Debug.WriteLine($"{saupoudrage.Id} - {saupoudrage.Denomination}");
+                Debug.WriteLine($"{utilisateur.Id} - {utilisateur.Denomination} - {utilisateur.Email} - {utilisateur.MotDePasse} - {utilisateur.Nom} - {utilisateur.Prenom} - {utilisateur.Token} - {utilisateur.Telephone} - {utilisateur.DateNaissance} - {utilisateur.Adresse}");
             }
         }
     }

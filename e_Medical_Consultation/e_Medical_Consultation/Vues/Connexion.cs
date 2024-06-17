@@ -1,21 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using static Glacier.Modeles;
 
-namespace Glacier
+namespace ConsultationMedicale
 {
     /// <summary>
     /// Contrôle permettant de gérer la sélection d'un nappage
     /// <para>Il s'agit d'une vue dans une architecture logicielle de type MVC</para>
     /// </summary>
-    public partial class Recapitulatif : UserControl, IEtapeConfection
+    public partial class Connexion : UserControl, IEtapeConfection
     {
         /// <summary>
         /// Api du Glacier, et donc "support" des données actives de l'application
@@ -69,7 +64,7 @@ namespace Glacier
         /// </summary>
         /// <param name="api">Référence de l'API donnant accès au "support" des données actives de l'application</param>
         /// <returns>Nouveau contrôle utilisateur implémentant l'interface IEtapeConfection si possible, sinon null</returns>
-        public IEtapeConfection CreerEtapePrecedente(ApiConsultationMedicale api, Modeles.IConfection confection) => new SelectionSaupoudrage(api, confection);
+        public IEtapeConfection CreerEtapePrecedente(ApiConsultationMedicale api, Modeles.IConfection confection) => new RendezVous(api, confection);
 
         /// <summary>
         /// Permet d'instancier la vue de l'étape suivant celle-ci
@@ -99,7 +94,7 @@ namespace Glacier
         /// <param name="api">Référence de l'API donnant accès au "support" des données actives de l'application</param>
         /// <param name="confection">Référence de l'entité représentant ce qui est en cours de confection</param>
         /// <param name="pourCommande">Indique si ce récapitulatif correspond à l'étape de finalisation de la confection, menant à la commande</param>
-        public Recapitulatif(ApiConsultationMedicale api = null, Modeles.IConfection confection = null, bool pourCommande = true)
+        public Connexion(ApiConsultationMedicale api = null, Modeles.IConfection confection = null, bool pourCommande = true)
         {
             InitializeComponent();
             Api = api;
@@ -203,6 +198,16 @@ namespace Glacier
             noeudNappage.ExpandAll();
             noeudSaupoudrage.ExpandAll();
             #endregion
+        }
+
+        private void Connexion(object sender, EventArgs e)
+        {
+
+        }
+
+        private void AfficherAccueil(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+
         }
     }
 }

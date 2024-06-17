@@ -7,15 +7,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static Glacier.Modeles;
+using static ConsultationMedicale.Modeles;
 
-namespace Glacier
+namespace ConsultationMedicale
 {
     /// <summary>
-    /// Contrôle permettant de gérer la sélection d'un saupoudrage, et de crème fraîche
+    /// Contrôle permettant de gérer la sélection d'un nappage
     /// <para>Il s'agit d'une vue dans une architecture logicielle de type MVC</para>
     /// </summary>
-    public partial class SelectionSaupoudrage : UserControl, IEtapeConfection
+    public partial class Consultations : UserControl, IEtapeConfection
     {
         /// <summary>
         /// Api du Glacier, et donc "support" des données actives de l'application
@@ -37,12 +37,12 @@ namespace Glacier
         /// <summary>
         /// Identifiant de cette étape de confection
         /// </summary>
-        public EtapeConfection Identifiant => EtapeConfection.SelectionSaupoudrage;
+        public EtapeConfection Identifiant => EtapeConfection.SelectionNappage;
 
         /// <summary>
         /// Indique le titre d'étape de confection correspondant à ce contrôle
         /// </summary>
-        public string Titre => "Sélection du saupoudrage";
+        public string Titre => "Sélection du nappage";
 
         /// <summary>
         /// Indique si la sélection est actuellement valide
@@ -57,31 +57,31 @@ namespace Glacier
         /// <summary>
         /// Indique le texte du bouton d'étape précedente, sinon null
         /// </summary>
-        public string TexteBoutonPrecedent => "Retourner à la sélection du nappage";
+        public string TexteBoutonPrecedent => "Retourner à la sélection des boules";
 
         /// <summary>
         /// Indique le texte du bouton d'étape suivante, sinon null
         /// </summary>
-        public string TexteBoutonSuivant => "Passer au récapitulatif";
+        public string TexteBoutonSuivant => "Passer au choix de saupoudrage";
 
         /// <summary>
         /// Permet d'instancier la vue de l'étape précédant celle-ci
         /// </summary>
         /// <param name="api">Référence de l'API donnant accès au "support" des données actives de l'application</param>
         /// <returns>Nouveau contrôle utilisateur implémentant l'interface IEtapeConfection si possible, sinon null</returns>
-        public IEtapeConfection CreerEtapePrecedente(ApiConsultationMedicale api, Modeles.IConfection confection) => new SelectionNappage(api, confection);
+        public IEtapeConfection CreerEtapePrecedente(ApiConsultationMedicale api, Modeles.IConfection confection) => new Dashboard(api, confection);
 
         /// <summary>
         /// Permet d'instancier la vue de l'étape suivant celle-ci
         /// </summary>
         /// <param name="api">Référence de l'API donnant accès au "support" des données actives de l'application</param>
         /// <returns>Nouveau contrôle utilisateur implémentant l'interface IEtapeConfection si possible, sinon null</returns>
-        public IEtapeConfection CreerEtapeSuivante(ApiConsultationMedicale api, Modeles.IConfection confection) => new Recapitulatif(api,confection);
+        public IEtapeConfection CreerEtapeSuivante(ApiConsultationMedicale api, Modeles.IConfection confection) => new RendezVous(api, confection);
 
         /// <summary>
-        /// Saupoudrage sélectionné (ou null)
+        /// Nappage sélectionné (ou null)
         /// </summary>
-        public Modeles.ISaupoudrage SaupoudrageSelectionne => (Confection != null) ? Confection.Saupoudrage : null;
+        public Modeles.INappage NappageSelectionne => (Confection != null) ? Confection.Nappage : null;
 
         /// <summary>
         /// Référence de l'entité représentant ce qui est en cours de confection
@@ -93,45 +93,45 @@ namespace Glacier
         /// </summary>
         /// <param name="api">Référence de l'API donnant accès au "support" des données actives de l'application</param>
         /// <param name="confection">Référence de l'entité représentant ce qui est en cours de confection</param>
-        public SelectionSaupoudrage(ApiConsultationMedicale api = null, Modeles.IConfection confection = null)
+        public Consultations(ApiConsultationMedicale api = null, Modeles.IConfection confection = null)
         {
             InitializeComponent();
             Api = api;
             Confection = confection;
             SelectionValide = true;
-            groupSaupoudrage.OnCheckedItemChanged += (s, e) =>
+            groupNappage.OnCheckedItemChanged += (s, e) =>
             {
-                if (groupSaupoudrage.CheckedItem is Modeles.ISaupoudrage)
+                if (groupNappage.CheckedItem is Modeles.INappage)
                 {
-                    Confection.DefinirSaupoudrage(groupSaupoudrage.CheckedItem as Modeles.ISaupoudrage);
+                    Confection.DefinirNappage(groupNappage.CheckedItem as Modeles.INappage);
                 }
                 else
                 {
-                    Confection.DefinirSaupoudrage(null);
+                    Confection.DefinirNappage(null);
                 }
             };
-            RemplirListeSaupoudrages();
-            groupSaupoudrage.CheckedItem = Confection.Saupoudrage;
-            if (groupSaupoudrage.CheckedIndex < 0) groupSaupoudrage.CheckedIndex = 0;
-            checkCremeFraiche.CheckedChanged += (s, e) =>
-            {
-                Confection.DefinirCremeFraiche(checkCremeFraiche.Checked);
-            };
-            checkCremeFraiche.Enabled = Confection.CremeFraicheAutorisee;
-            checkCremeFraiche.Checked = Confection.CremeFraicheAutorisee && Confection.CremeFraiche;
+            RemplirListeNappages();
+            groupNappage.CheckedItem = Confection.Nappage;
+            if (groupNappage.CheckedIndex < 0) groupNappage.CheckedIndex = 0;
         }
 
         /// <summary>
         /// Permet de remplir/rafraichir la liste des nappages
         /// </summary>
-        private void RemplirListeSaupoudrages()
+        private void RemplirListeNappages()
         {
-            groupSaupoudrage.ClearItems();
-            groupSaupoudrage.AddItem("Aucun saupoudrage");
-            foreach (var saupoudrage in Api.EnumererSaupoudrages())
+            var nappageAutorise = Confection.NappageAutorise;
+            groupNappage.ClearItems();
+            groupNappage.AddItem("Aucun nappage");
+            foreach (var nappage in Api.EnumererNappages())
             {
-                groupSaupoudrage.AddItem(saupoudrage);
+                groupNappage.AddItem(nappage, nappageAutorise);
             }
+            if (!nappageAutorise) groupNappage.CheckedIndex = 0;
         }
+
+        private void AfficherConsultation(object sender, EventArgs e)
+        {
+
     }
 }

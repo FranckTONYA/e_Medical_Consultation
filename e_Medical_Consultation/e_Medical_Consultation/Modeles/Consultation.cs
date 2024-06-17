@@ -42,9 +42,10 @@ namespace ConsultationMedicale
             IDossierPatient DossierPatient { get; }
 
             /// <summary>
-            /// Les RendezVous du consultation
+            /// Rendez-vous
             /// </summary>
-            IEnumerable<IRendezVous> LesRendezVous { get; }
+            IRendezVous RendezVous { get; }
+
 
             /// <summary>
             /// Permet de (re)définir le Médecin exécutant
@@ -61,18 +62,12 @@ namespace ConsultationMedicale
             bool DefinirDossierPatient(IDossierPatient dossierPatient);
 
             /// <summary>
-            /// Permet d'ajouter un Rendez-Vous de consultation spécifiée
+            /// Permet de (re)définir le Rendez-vous
             /// </summary>
-            /// <param name="RendezVous">Rendez-Vous de ce cette consultation </param>
-            /// <returns>Vrai si l'ajout a pu se faire, sinon faux</returns>
-            bool AjouterRendezVous(IRendezVous rendezVous);
+            /// <param name="rendezVous">Rendez-vous à attribuer à cette Consultation</param>
+            /// <returns>Vrai si la modification de cette information a pu se faire, sinon faux</returns>
+            bool DefinirRendezVous(IRendezVous rendezVous);
 
-            /// <summary>
-            /// Permet de retirer un RendezVous de consultation spécifiée
-            /// </summary>
-            /// <param name="rendezVous">Rendez-Vous de la consultation à retirer</param>
-            /// <returns>Vrai si le retrait a pu se faire, sinon faux</returns>
-            bool RetirerRendezVous(IRendezVous rendezVous);
 
         }
 
@@ -115,14 +110,9 @@ namespace ConsultationMedicale
             public IDossierPatient DossierPatient { get; private set; }
 
             /// <summary>
-            /// Liste des Rendez-Vous présents
+            /// Rendez-vous
             /// </summary>
-            private List<IRendezVous> m_LesRendezVous;
-
-            /// <summary>
-            /// Rendez-Vous présents
-            /// </summary>
-            public IEnumerable<IRendezVous> LesRendezVous => m_LesRendezVous;
+            public IRendezVous RendezVous { get; private set; }
 
 
             /// <summary>
@@ -151,31 +141,15 @@ namespace ConsultationMedicale
 
 
             /// <summary>
-            /// Permet d'ajouter un Rendez-Vous de la consultation spécifiée
+            /// Permet de (re)définir le Rendez-Vous de la consultation spécifiée
             /// </summary>
             /// <param name="rendezVous">Rendez-Vous de cette consultation</param>
-            /// <returns>Vrai si l'ajout a pu se faire, sinon faux</returns>
-            public bool AjouterRendezVous(IRendezVous rendezVous)
+            /// <returns>Vrai si cette modification a pu se faire, sinon faux</returns>
+            public bool DefinirRendezVous(IRendezVous rendezVous)
             {
-                if (rendezVous == null) return false;
-                m_LesRendezVous.Add(rendezVous);
+                if ( rendezVous == null) return false;
+                RendezVous = rendezVous;
                 return true;
-            }
-
-            /// <summary>
-            /// Permet de retirer un Rendez-Vous de la consultation spécifiée
-            /// </summary>
-            /// <param name="rendezVous">Rendez-Vous de la consultation à retirer</param>
-            /// <returns>Vrai si le retrait a pu se faire, sinon faux</returns>
-            public bool RetirerRendezVous(IRendezVous rendezVous)
-            {
-                if (rendezVous == null) return false;
-                var indiceRendezVous = m_LesRendezVous.FindIndex(rdv => rdv.Equals(rendezVous));
-                if (indiceRendezVous == -1) return false;
-                var rdvARetirer = m_LesRendezVous[indiceRendezVous];
-                m_LesRendezVous.RemoveAt(indiceRendezVous);
-                return true;
-
             }
 
             public Consultation(int id, string prescription, string rapport)

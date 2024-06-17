@@ -6,12 +6,27 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{47D13477-EC59-43CA-BC83-567A33AE540D}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>e_Medical_Consultation</RootNamespace>
+    <RootNamespace>ConsultationMedicale</RootNamespace>
     <AssemblyName>e_Medical_Consultation</AssemblyName>
     <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -55,13 +70,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controleurs\Principal.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Controleurs\Principal.Designer.cs">
-      <DependentUpon>Principal.cs</DependentUpon>
-    </Compile>
-    <Compile Include="IEtapeConfection.cs" />
+    <Compile Include="Modeles\Confection.cs" />
     <Compile Include="Modeles\Hopital.cs" />
     <Compile Include="Modeles\RoleUtilisateur.cs" />
     <Compile Include="Modeles\StatutRendezVous.cs" />
@@ -70,38 +79,50 @@
     <Compile Include="Modeles\Consultation.cs" />
     <Compile Include="Modeles\DossierPatient.cs" />
     <Compile Include="Modeles\_EntiteBase.cs" />
+    <Compile Include="Controleurs\Principal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controleurs\Principal.Designer.cs">
+      <DependentUpon>Principal.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ApiConsultationMedicale.cs" />
-    <Compile Include="Vues\Confection.cs">
+    <Compile Include="Vues\Acceuil.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Vues\Confection.Designer.cs">
-      <DependentUpon>Confection.cs</DependentUpon>
+    <Compile Include="Vues\Acceuil.Designer.cs">
+      <DependentUpon>Acceuil.cs</DependentUpon>
     </Compile>
-    <Compile Include="Vues\Recapitulatif.cs">
+    <Compile Include="Vues\Connexion.cs">
       <SubType>UserControl</SubType>
+      <CustomToolNamespace>ConsultationMedicale</CustomToolNamespace>
     </Compile>
-    <Compile Include="Vues\Recapitulatif.Designer.cs">
-      <DependentUpon>Recapitulatif.cs</DependentUpon>
+    <Compile Include="Vues\Connexion.Designer.cs">
+      <DependentUpon>Connexion.cs</DependentUpon>
     </Compile>
-    <Compile Include="Vues\SelectionBoules.cs">
+    <Compile Include="Vues\Dashboard.cs">
       <SubType>UserControl</SubType>
+      <CustomToolNamespace>ConsultationMedicale</CustomToolNamespace>
     </Compile>
-    <Compile Include="Vues\SelectionBoules.Designer.cs">
-      <DependentUpon>SelectionBoules.cs</DependentUpon>
+    <Compile Include="Vues\Dashboard.Designer.cs">
+      <DependentUpon>Dashboard.cs</DependentUpon>
+      <CustomToolNamespace>ConsultationMedicale</CustomToolNamespace>
     </Compile>
-    <Compile Include="Vues\SelectionNappage.cs">
+    <Compile Include="Vues\Consultations.cs">
       <SubType>UserControl</SubType>
+      <CustomToolNamespace>ConsultationMedicale</CustomToolNamespace>
     </Compile>
-    <Compile Include="Vues\SelectionNappage.Designer.cs">
-      <DependentUpon>SelectionNappage.cs</DependentUpon>
+    <Compile Include="Vues\Consultations.Designer.cs">
+      <DependentUpon>Consultations.cs</DependentUpon>
     </Compile>
-    <Compile Include="Vues\SelectionSaupoudrage.cs">
+    <Compile Include="Vues\RendezVous.cs">
       <SubType>UserControl</SubType>
+      <CustomToolNamespace>ConsultationMedicale</CustomToolNamespace>
     </Compile>
-    <Compile Include="Vues\SelectionSaupoudrage.Designer.cs">
-      <DependentUpon>SelectionSaupoudrage.cs</DependentUpon>
+    <Compile Include="Vues\RendezVous.Designer.cs">
+      <DependentUpon>RendezVous.cs</DependentUpon>
+      <CustomToolNamespace>ConsultationMedicale</CustomToolNamespace>
     </Compile>
     <Compile Include="Vues\SelectionSupport.cs">
       <SubType>UserControl</SubType>
@@ -120,21 +141,23 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="Vues\Confection.resx">
-      <DependentUpon>Confection.cs</DependentUpon>
+    <EmbeddedResource Include="Vues\Accueil.resx">
+      <DependentUpon>Acceuil.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Vues\Recapitulatif.resx">
-      <DependentUpon>Recapitulatif.cs</DependentUpon>
+    <EmbeddedResource Include="Vues\Connexion.resx">
+      <DependentUpon>Connexion.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Vues\SelectionBoules.resx">
-      <DependentUpon>SelectionBoules.cs</DependentUpon>
+    <EmbeddedResource Include="Vues\Dashboard.resx">
+      <DependentUpon>Dashboard.cs</DependentUpon>
+      <CustomToolNamespace>ConsultationMedicale</CustomToolNamespace>
     </EmbeddedResource>
-    <EmbeddedResource Include="Vues\SelectionNappage.resx">
-      <DependentUpon>SelectionNappage.cs</DependentUpon>
+    <EmbeddedResource Include="Vues\Consultations.resx">
+      <DependentUpon>Consultations.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Vues\SelectionSaupoudrage.resx">
-      <DependentUpon>SelectionSaupoudrage.cs</DependentUpon>
+    <EmbeddedResource Include="Vues\RendezVous.resx">
+      <DependentUpon>RendezVous.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Vues\SelectionSupport.resx">
       <DependentUpon>SelectionSupport.cs</DependentUpon>
@@ -154,6 +177,18 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="_Donnees\class_eMediConsult.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.8.1">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.8.1 %28x86 et x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
