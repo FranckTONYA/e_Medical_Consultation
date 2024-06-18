@@ -26,6 +26,7 @@ namespace ConsultationMedicale.Controleurs
             TesterApi();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            TesterApi();
             Application.Run(new Principal(Api));
         }
 

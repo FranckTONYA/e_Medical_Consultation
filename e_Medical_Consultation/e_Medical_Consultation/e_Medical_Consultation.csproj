@@ -70,7 +70,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Modeles\Confection.cs" />
     <Compile Include="Modeles\Hopital.cs" />
     <Compile Include="Modeles\RoleUtilisateur.cs" />
     <Compile Include="Modeles\StatutRendezVous.cs" />
@@ -124,12 +123,6 @@
       <DependentUpon>RendezVous.cs</DependentUpon>
       <CustomToolNamespace>ConsultationMedicale</CustomToolNamespace>
     </Compile>
-    <Compile Include="Vues\SelectionSupport.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Vues\SelectionSupport.Designer.cs">
-      <DependentUpon>SelectionSupport.cs</DependentUpon>
-    </Compile>
     <EmbeddedResource Include="Controleurs\Principal.resx">
       <DependentUpon>Principal.cs</DependentUpon>
     </EmbeddedResource>
@@ -158,9 +151,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Vues\RendezVous.resx">
       <DependentUpon>RendezVous.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Vues\SelectionSupport.resx">
-      <DependentUpon>SelectionSupport.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

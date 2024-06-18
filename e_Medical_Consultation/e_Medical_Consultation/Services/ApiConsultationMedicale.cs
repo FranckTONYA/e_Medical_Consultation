@@ -106,7 +106,7 @@ namespace ConsultationMedicale
                         utilisateur.nom AS utilisateur_nom,
                         utilisateur.prenom AS utilisateur_prenom,
                         utilisateur.telephone AS utilisateur_telephone,
-                        utilisateur.dateNaissance AS utilisateur_dateNaissance,
+                        utilisateur.date_naissance AS utilisateur_dateNaissance,
                         utilisateur.adresse AS utilisateur_adresse,
                         role_utilisateur.id AS role_id,
                         role_utilisateur.nom AS role_nom,                        
@@ -121,7 +121,7 @@ namespace ConsultationMedicale
                 if ((utilisateur == null) || !idUtilisateur.Equals(utilisateur.Id))
                 {
                     if (utilisateur != null) yield return utilisateur;
-                    utilisateur = Modeles.CreerUtilisateur(idUtilisateur, enreg.GetValue<string>("utilisateur_email"), enreg.GetValue<string>("utilisateur_motDePasse"), enreg.GetValue<string>("utilisateur_token"), enreg.GetValue<string>("utilisateur_nom"), enreg.GetValue<string>("utilisateur_prenom"), enreg.GetValue<string>("utilisateur_telephone"), enreg.GetValue<string>("utilisateur_dateNaissance"), enreg.GetValue<string>("utilisateur_adresse"));
+                    utilisateur = Modeles.CreerUtilisateur(idUtilisateur, enreg.GetValue<string>("utilisateur_email"), enreg.GetValue<string>("utilisateur_motDePasse"), enreg.GetValue<string>("utilisateur_token"), enreg.GetValue<string>("utilisateur_nom"), enreg.GetValue<string>("utilisateur_prenom"), enreg.GetValue<string>("utilisateur_telephone"), enreg.GetValue<DateTime>("utilisateur_dateNaissance"), enreg.GetValue<string>("utilisateur_adresse"));
                     if (!PasNullSinonErreur(utilisateur)) yield break;
                 }
                 utilisateur.DefinirRole(Modeles.CreerRoleUtilisateur(enreg.GetValue<int>("role_id"), enreg.GetValue<string>("role_nom"), enreg.GetValue<string>("role_description")));
@@ -134,7 +134,7 @@ namespace ConsultationMedicale
         /// </summary>
         /// <param name="email">email de l'utilisateur</param>
         /// <returns>Utilisateur retrouvé ou pas</returns>
-        public IEnumerable<IUtilisateur> EnumererUtilisateur(string email)
+        public IEnumerable<IUtilisateur> EnumererUtilisateurParEmail(string email)
         {
             ReinitialiserErreur();
             Modeles.IUtilisateur utilisateur = null;
@@ -153,7 +153,7 @@ namespace ConsultationMedicale
                         utilisateur.nom AS utilisateur_nom,
                         utilisateur.prenom AS utilisateur_prenom,
                         utilisateur.telephone AS utilisateur_telephone,
-                        utilisateur.dateNaissance AS utilisateur_dateNaissance,
+                        utilisateur.date_naissance AS utilisateur_dateNaissance,
                         utilisateur.adresse AS utilisateur_adresse,
                         role_utilisateur.id AS role_id,
                         role_utilisateur.nom AS role_nom,                        
@@ -161,7 +161,7 @@ namespace ConsultationMedicale
                     FROM
                         utilisateur LEFT JOIN role_utilisateur ON utilisateur.ref_role = role_utilisateur.id
                      WHERE 
-                        utilisateur_email = {0}
+                        utilisateur.email = {0}
                     ORDER BY
                         utilisateur.nom ASC,
                         role_utilisateur.nom ASC", email))
@@ -170,7 +170,7 @@ namespace ConsultationMedicale
                 if ((utilisateur == null) || !idUtilisateur.Equals(utilisateur.Id))
                 {
                     if (utilisateur != null) yield return utilisateur;
-                    utilisateur = Modeles.CreerUtilisateur(idUtilisateur, enreg.GetValue<string>("utilisateur_email"), enreg.GetValue<string>("utilisateur_motDePasse"), enreg.GetValue<string>("utilisateur_token"), enreg.GetValue<string>("utilisateur_nom"), enreg.GetValue<string>("utilisateur_prenom"), enreg.GetValue<string>("utilisateur_telephone"), enreg.GetValue<string>("utilisateur_dateNaissance"), enreg.GetValue<string>("utilisateur_adresse"));
+                    utilisateur = Modeles.CreerUtilisateur(idUtilisateur, enreg.GetValue<string>("utilisateur_email"), enreg.GetValue<string>("utilisateur_motDePasse"), enreg.GetValue<string>("utilisateur_token"), enreg.GetValue<string>("utilisateur_nom"), enreg.GetValue<string>("utilisateur_prenom"), enreg.GetValue<string>("utilisateur_telephone"), enreg.GetValue<DateTime>("utilisateur_dateNaissance"), enreg.GetValue<string>("utilisateur_adresse"));
                     if (!PasNullSinonErreur(utilisateur)) yield break;
                 }
                 utilisateur.DefinirRole(Modeles.CreerRoleUtilisateur(enreg.GetValue<int>("role_id"), enreg.GetValue<string>("role_nom"), enreg.GetValue<string>("role_description")));
@@ -199,7 +199,7 @@ namespace ConsultationMedicale
                         utilisateur.nom AS patient_nom,
                         utilisateur.prenom AS patient_prenom,
                         utilisateur.telephone AS patient_telephone,
-                        utilisateur.dateNaissance AS patient_dateNaissance,
+                        utilisateur.date_naissance AS patient_dateNaissance,
                         utilisateur.adresse AS patient_adresse,
                         consultation.id AS consultation_id,
                         consultation.prescription AS consultation_prescription,
@@ -218,7 +218,7 @@ namespace ConsultationMedicale
                     dossierPatient = Modeles.CreerDossierPatient(idDossier, enreg.GetValue<string>("utilisateur_description"));
                     if (!PasNullSinonErreur(dossierPatient)) yield break;
                 }
-                dossierPatient.DefinirPatient(Modeles.CreerUtilisateur(enreg.GetValue<int>("patient_id"), enreg.GetValue<string>("patient_email"), enreg.GetValue<string>("patient_motDePasse"), enreg.GetValue<string>("patient_token"), enreg.GetValue<string>("patient_nom"), enreg.GetValue<string>("patient_prenom"), enreg.GetValue<string>("patient_telephone"), enreg.GetValue<string>("patient_dateNaissance"), enreg.GetValue<string>("patient_adresse")));
+                dossierPatient.DefinirPatient(Modeles.CreerUtilisateur(enreg.GetValue<int>("patient_id"), enreg.GetValue<string>("patient_email"), enreg.GetValue<string>("patient_motDePasse"), enreg.GetValue<string>("patient_token"), enreg.GetValue<string>("patient_nom"), enreg.GetValue<string>("patient_prenom"), enreg.GetValue<string>("patient_telephone"), enreg.GetValue<DateTime>("patient_dateNaissance"), enreg.GetValue<string>("patient_adresse")));
                 dossierPatient.AjouterConsultation(Modeles.CreerConsultation(enreg.GetValue<int>("consultation_id"), enreg.GetValue<string>("consultation_prescription"), enreg.GetValue<string>("consultation_rapport")));
             }
             if (dossierPatient != null) yield return dossierPatient;
@@ -247,7 +247,7 @@ namespace ConsultationMedicale
                         utilisateur.nom AS medecin_nom,
                         utilisateur.prenom AS medecin_prenom,
                         utilisateur.telephone AS medecin_telephone,
-                        utilisateur.dateNaissance AS medecin_dateNaissance,
+                        utilisateur.date_naissance AS medecin_dateNaissance,
                         utilisateur.adresse AS medecin_adresse,
                         rendez_vous.id AS rdv_id,
                         rendez_vous.description AS rdv_description,
@@ -268,7 +268,7 @@ namespace ConsultationMedicale
                     consultation = Modeles.CreerConsultation(idConsultation, enreg.GetValue<string>("consultation_prescription"), enreg.GetValue<string>("consultation_rapport"));
                     if (!PasNullSinonErreur(consultation)) yield break;
                 }
-                consultation.DefinirMedecinExecutant(Modeles.CreerUtilisateur(enreg.GetValue<int>("medecin_id"), enreg.GetValue<string>("medecin_email"), enreg.GetValue<string>("medecin_motDePasse"), enreg.GetValue<string>("medecin_token"), enreg.GetValue<string>("medecin_nom"), enreg.GetValue<string>("medecin_prenom"), enreg.GetValue<string>("medecin_telephone"), enreg.GetValue<string>("medecin_dateNaissance"), enreg.GetValue<string>("medecin_adresse")));
+                consultation.DefinirMedecinExecutant(Modeles.CreerUtilisateur(enreg.GetValue<int>("medecin_id"), enreg.GetValue<string>("medecin_email"), enreg.GetValue<string>("medecin_motDePasse"), enreg.GetValue<string>("medecin_token"), enreg.GetValue<string>("medecin_nom"), enreg.GetValue<string>("medecin_prenom"), enreg.GetValue<string>("medecin_telephone"), enreg.GetValue<DateTime>("medecin_dateNaissance"), enreg.GetValue<string>("medecin_adresse")));
                 consultation.DefinirDossierPatient(Modeles.CreerDossierPatient(enreg.GetValue<int>("dossier_id"), enreg.GetValue<string>("dossier_description")));
                 consultation.DefinirRendezVous(Modeles.CreerRendezVous(enreg.GetValue<int>("rdv_id"), enreg.GetValue<string>("consultation_description"), enreg.GetValue<DateTime>("rdv_date"), enreg.GetValue<int>("rdv_duree")));
             }

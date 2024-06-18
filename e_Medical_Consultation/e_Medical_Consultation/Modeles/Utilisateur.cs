@@ -53,7 +53,7 @@ namespace ConsultationMedicale
             /// <summary>
             /// Date de naissance
             /// </summary>
-            string DateNaissance { get; }
+            DateTime DateNaissance { get; }
 
             /// <summary>
             /// Téléphone
@@ -77,7 +77,7 @@ namespace ConsultationMedicale
         /// Instancie un Utilisateur en fonction des caractéristiques spécifiées
         /// </summary>
         /// <returns>Nouvelle entité d'utilisateur si possible, sinon null</returns>
-        public static IUtilisateur CreerUtilisateur(int id, string email, string motDePasse, string token, string nom, string prenom, string telephone, string dateNaissance, string adresse)
+        public static IUtilisateur CreerUtilisateur(int id, string email, string motDePasse, string token, string nom, string prenom, string telephone, DateTime dateNaissance, string adresse)
         {
             return new Utilisateur(id, email, motDePasse, token, nom, prenom, telephone, dateNaissance, adresse );
         }
@@ -126,7 +126,7 @@ namespace ConsultationMedicale
             /// <summary>
             /// Date de naissance
             /// </summary>
-            public string DateNaissance { get; private set; }
+            public DateTime DateNaissance { get; private set; }
 
             /// <summary>
             /// Adresse
@@ -164,7 +164,7 @@ namespace ConsultationMedicale
             /// <param name="telephone">Téléphone</param>
             /// <param name="dateNaissance">Date de naissance</param>
             /// <param name="adresse">adresse</param>
-            public Utilisateur(int id, string email, string motDePasse, string token, string nom, string prenom, string telephone, string dateNaissance, string adresse)
+            public Utilisateur(int id, string email, string motDePasse, string token, string nom, string prenom, string telephone, DateTime dateNaissance, string adresse)
                 : base(id, nom)
             {
                 Email = email;
@@ -190,7 +190,7 @@ namespace ConsultationMedicale
             /// <param name="telephone">Téléphone</param>
             /// <param name="dateNaissance">Date de naissance</param>
             /// <param name="adresse">adresse</param>
-            public Utilisateur(string email, string motDePasse, string token, string nom, string prenom, string telephone, string dateNaissance, string adresse)
+            public Utilisateur(string email, string motDePasse, string token, string nom, string prenom, string telephone, DateTime dateNaissance, string adresse)
                 : base(0, $"Utilisateur le {DateTime.Now.ToString("d/MM/yyyy à H:mm:ss").Replace('-', '/')}")
             {
                 Email = email;
