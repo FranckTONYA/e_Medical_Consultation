@@ -29,22 +29,22 @@
         private void InitializeComponent()
         {
             this.groupNappage = new PDSGBD.UI.RadioGroup();
-            this.consultation_listBox = new System.Windows.Forms.ListBox();
+            this.consultationListBox = new System.Windows.Forms.ListBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel6 = new System.Windows.Forms.Panel();
-            this.rapport_textBox = new System.Windows.Forms.TextBox();
+            this.rapportTextBox = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.panel5 = new System.Windows.Forms.Panel();
-            this.prescription_textBox = new System.Windows.Forms.TextBox();
+            this.prescriptionTextBox = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.medecin_textBox = new System.Windows.Forms.TextBox();
+            this.medecinTextBox = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.rdv_textBox = new System.Windows.Forms.TextBox();
+            this.rdvTextBox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.patient_textBox = new System.Windows.Forms.TextBox();
+            this.patientTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel6.SuspendLayout();
@@ -67,16 +67,16 @@
             this.groupNappage.Size = new System.Drawing.Size(1239, 596);
             this.groupNappage.TabIndex = 0;
             // 
-            // consultation_listBox
+            // consultationListBox
             // 
-            this.consultation_listBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.consultation_listBox.FormattingEnabled = true;
-            this.consultation_listBox.ItemHeight = 22;
-            this.consultation_listBox.Location = new System.Drawing.Point(26, 156);
-            this.consultation_listBox.Name = "consultation_listBox";
-            this.consultation_listBox.Size = new System.Drawing.Size(357, 378);
-            this.consultation_listBox.TabIndex = 1;
-            this.consultation_listBox.Click += new System.EventHandler(this.AfficherConsultation);
+            this.consultationListBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.consultationListBox.FormattingEnabled = true;
+            this.consultationListBox.ItemHeight = 22;
+            this.consultationListBox.Location = new System.Drawing.Point(26, 156);
+            this.consultationListBox.Name = "consultationListBox";
+            this.consultationListBox.Size = new System.Drawing.Size(357, 378);
+            this.consultationListBox.TabIndex = 1;
+            this.consultationListBox.Click += new System.EventHandler(this.AfficherConsultation);
             // 
             // panel1
             // 
@@ -92,20 +92,20 @@
             // 
             // panel6
             // 
-            this.panel6.Controls.Add(this.rapport_textBox);
+            this.panel6.Controls.Add(this.rapportTextBox);
             this.panel6.Controls.Add(this.label5);
             this.panel6.Location = new System.Drawing.Point(13, 307);
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(313, 97);
             this.panel6.TabIndex = 4;
             // 
-            // rapport_textBox
+            // rapportTextBox
             // 
-            this.rapport_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rapport_textBox.Location = new System.Drawing.Point(24, 47);
-            this.rapport_textBox.Name = "rapport_textBox";
-            this.rapport_textBox.Size = new System.Drawing.Size(263, 28);
-            this.rapport_textBox.TabIndex = 1;
+            this.rapportTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rapportTextBox.Location = new System.Drawing.Point(24, 47);
+            this.rapportTextBox.Name = "rapportTextBox";
+            this.rapportTextBox.Size = new System.Drawing.Size(263, 28);
+            this.rapportTextBox.TabIndex = 1;
             // 
             // label5
             // 
@@ -119,20 +119,20 @@
             // 
             // panel5
             // 
-            this.panel5.Controls.Add(this.prescription_textBox);
+            this.panel5.Controls.Add(this.prescriptionTextBox);
             this.panel5.Controls.Add(this.label4);
             this.panel5.Location = new System.Drawing.Point(395, 171);
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(313, 97);
             this.panel5.TabIndex = 2;
             // 
-            // prescription_textBox
+            // prescriptionTextBox
             // 
-            this.prescription_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.prescription_textBox.Location = new System.Drawing.Point(24, 47);
-            this.prescription_textBox.Name = "prescription_textBox";
-            this.prescription_textBox.Size = new System.Drawing.Size(263, 28);
-            this.prescription_textBox.TabIndex = 1;
+            this.prescriptionTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.prescriptionTextBox.Location = new System.Drawing.Point(24, 47);
+            this.prescriptionTextBox.Name = "prescriptionTextBox";
+            this.prescriptionTextBox.Size = new System.Drawing.Size(263, 28);
+            this.prescriptionTextBox.TabIndex = 1;
             // 
             // label4
             // 
@@ -146,20 +146,20 @@
             // 
             // panel4
             // 
-            this.panel4.Controls.Add(this.medecin_textBox);
+            this.panel4.Controls.Add(this.medecinTextBox);
             this.panel4.Controls.Add(this.label3);
             this.panel4.Location = new System.Drawing.Point(395, 20);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(313, 97);
             this.panel4.TabIndex = 3;
             // 
-            // medecin_textBox
+            // medecinTextBox
             // 
-            this.medecin_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.medecin_textBox.Location = new System.Drawing.Point(24, 47);
-            this.medecin_textBox.Name = "medecin_textBox";
-            this.medecin_textBox.Size = new System.Drawing.Size(263, 28);
-            this.medecin_textBox.TabIndex = 1;
+            this.medecinTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.medecinTextBox.Location = new System.Drawing.Point(24, 47);
+            this.medecinTextBox.Name = "medecinTextBox";
+            this.medecinTextBox.Size = new System.Drawing.Size(263, 28);
+            this.medecinTextBox.TabIndex = 1;
             // 
             // label3
             // 
@@ -173,20 +173,20 @@
             // 
             // panel3
             // 
-            this.panel3.Controls.Add(this.rdv_textBox);
+            this.panel3.Controls.Add(this.rdvTextBox);
             this.panel3.Controls.Add(this.label2);
             this.panel3.Location = new System.Drawing.Point(13, 171);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(313, 97);
             this.panel3.TabIndex = 2;
             // 
-            // rdv_textBox
+            // rdvTextBox
             // 
-            this.rdv_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rdv_textBox.Location = new System.Drawing.Point(24, 47);
-            this.rdv_textBox.Name = "rdv_textBox";
-            this.rdv_textBox.Size = new System.Drawing.Size(263, 28);
-            this.rdv_textBox.TabIndex = 1;
+            this.rdvTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rdvTextBox.Location = new System.Drawing.Point(24, 47);
+            this.rdvTextBox.Name = "rdvTextBox";
+            this.rdvTextBox.Size = new System.Drawing.Size(263, 28);
+            this.rdvTextBox.TabIndex = 1;
             // 
             // label2
             // 
@@ -200,20 +200,20 @@
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.patient_textBox);
+            this.panel2.Controls.Add(this.patientTextBox);
             this.panel2.Controls.Add(this.label1);
             this.panel2.Location = new System.Drawing.Point(13, 20);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(313, 97);
             this.panel2.TabIndex = 0;
             // 
-            // patient_textBox
+            // patientTextBox
             // 
-            this.patient_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.patient_textBox.Location = new System.Drawing.Point(24, 47);
-            this.patient_textBox.Name = "patient_textBox";
-            this.patient_textBox.Size = new System.Drawing.Size(263, 28);
-            this.patient_textBox.TabIndex = 1;
+            this.patientTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.patientTextBox.Location = new System.Drawing.Point(24, 47);
+            this.patientTextBox.Name = "patientTextBox";
+            this.patientTextBox.Size = new System.Drawing.Size(263, 28);
+            this.patientTextBox.TabIndex = 1;
             // 
             // label1
             // 
@@ -230,7 +230,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.consultation_listBox);
+            this.Controls.Add(this.consultationListBox);
             this.Controls.Add(this.groupNappage);
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MinimumSize = new System.Drawing.Size(320, 84);
@@ -254,22 +254,22 @@
         #endregion
 
         private PDSGBD.UI.RadioGroup groupNappage;
-        private System.Windows.Forms.ListBox consultation_listBox;
+        private System.Windows.Forms.ListBox consultationListBox;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.TextBox patient_textBox;
+        private System.Windows.Forms.TextBox patientTextBox;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.TextBox rdv_textBox;
+        private System.Windows.Forms.TextBox rdvTextBox;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Panel panel6;
-        private System.Windows.Forms.TextBox rapport_textBox;
+        private System.Windows.Forms.TextBox rapportTextBox;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Panel panel5;
-        private System.Windows.Forms.TextBox prescription_textBox;
+        private System.Windows.Forms.TextBox prescriptionTextBox;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Panel panel4;
-        private System.Windows.Forms.TextBox medecin_textBox;
+        private System.Windows.Forms.TextBox medecinTextBox;
         private System.Windows.Forms.Label label3;
     }
 }

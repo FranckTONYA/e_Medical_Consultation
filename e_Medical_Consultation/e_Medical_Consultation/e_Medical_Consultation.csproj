@@ -58,7 +58,7 @@
       <HintPath>..\..\PDSGBD\PDSGBD_UI\bin\Debug\PDSGBD_UI.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Core" />
+	<Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -70,6 +70,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConsultationMedicale.cs" />
     <Compile Include="Modeles\Hopital.cs" />
     <Compile Include="Modeles\RoleUtilisateur.cs" />
     <Compile Include="Modeles\StatutRendezVous.cs" />
@@ -100,20 +101,24 @@
     <Compile Include="Vues\Connexion.Designer.cs">
       <DependentUpon>Connexion.cs</DependentUpon>
     </Compile>
-    <Compile Include="Vues\Dashboard.cs">
-      <SubType>UserControl</SubType>
-      <CustomToolNamespace>ConsultationMedicale</CustomToolNamespace>
-    </Compile>
-    <Compile Include="Vues\Dashboard.Designer.cs">
-      <DependentUpon>Dashboard.cs</DependentUpon>
-      <CustomToolNamespace>ConsultationMedicale</CustomToolNamespace>
-    </Compile>
     <Compile Include="Vues\Consultations.cs">
       <SubType>UserControl</SubType>
       <CustomToolNamespace>ConsultationMedicale</CustomToolNamespace>
     </Compile>
     <Compile Include="Vues\Consultations.Designer.cs">
       <DependentUpon>Consultations.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Vues\Dashboard.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Vues\Dashboard.Designer.cs">
+      <DependentUpon>Dashboard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Vues\DossiersPatients.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Vues\DossiersPatients.designer.cs">
+      <DependentUpon>DossiersPatients.cs</DependentUpon>
     </Compile>
     <Compile Include="Vues\RendezVous.cs">
       <SubType>UserControl</SubType>
@@ -122,6 +127,12 @@
     <Compile Include="Vues\RendezVous.Designer.cs">
       <DependentUpon>RendezVous.cs</DependentUpon>
       <CustomToolNamespace>ConsultationMedicale</CustomToolNamespace>
+    </Compile>
+    <Compile Include="Vues\Utilisateurs.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Vues\Utilisateurs.designer.cs">
+      <DependentUpon>Utilisateurs.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Controleurs\Principal.resx">
       <DependentUpon>Principal.cs</DependentUpon>
@@ -142,15 +153,20 @@
     <EmbeddedResource Include="Vues\Connexion.resx">
       <DependentUpon>Connexion.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Vues\Dashboard.resx">
-      <DependentUpon>Dashboard.cs</DependentUpon>
-      <CustomToolNamespace>ConsultationMedicale</CustomToolNamespace>
-    </EmbeddedResource>
     <EmbeddedResource Include="Vues\Consultations.resx">
       <DependentUpon>Consultations.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Vues\Dashboard.resx">
+      <DependentUpon>Dashboard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Vues\DossiersPatients.resx">
+      <DependentUpon>DossiersPatients.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Vues\RendezVous.resx">
       <DependentUpon>RendezVous.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Vues\Utilisateurs.resx">
+      <DependentUpon>Utilisateurs.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

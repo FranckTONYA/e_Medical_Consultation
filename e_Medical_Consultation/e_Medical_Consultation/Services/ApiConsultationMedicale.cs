@@ -129,6 +129,37 @@ namespace ConsultationMedicale
             if (utilisateur != null) yield return utilisateur;
         }
 
+
+        /// <summary>
+        /// Tente de récupérer les Rôles Utilisateurs
+        /// </summary>
+        /// <returns>Énumération des Rôles Utilisateurs de l'application</returns>
+        public IEnumerable<Modeles.IRoleUtilisateur> EnumererRoles()
+        {
+            ReinitialiserErreur();
+
+            Modeles.IRoleUtilisateur role = null;
+            foreach (var enreg in m_DB.GetRows(@"
+                    SELECT
+                        role_utilisateur.id AS role_id,
+                        role_utilisateur.nom AS role_nom,
+                        role_utilisateur.description AS role_description
+                    FROM
+                        role_utilisateur
+                    ORDER BY
+                        role_utilisateur.nom ASC"))
+            {
+                var idRole = enreg.GetValue<int>("role_id");
+                if ((role == null) || !idRole.Equals(role.Id))
+                {
+                    if (role != null) yield return role;
+                    role = Modeles.CreerRoleUtilisateur(idRole, enreg.GetValue<string>("role_nom"), enreg.GetValue<string>("role_description"));
+                    if (!PasNullSinonErreur(role)) yield break;
+                }
+            }
+            if (role != null) yield return role;
+        }
+
         /// <summary>
         /// Tente de récupérer un Utilisateur par son email
         /// </summary>

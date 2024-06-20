@@ -8,8 +8,7 @@ using System.Windows.Forms;
 namespace ConsultationMedicale
 {
     /// <summary>
-    /// Contrôle permettant de gérer la sélection d'un nappage
-    /// <para>Il s'agit d'une vue dans une architecture logicielle de type MVC</para>
+    /// Contrôle permettant de gérer la connexion utilisateur dans l'application
     /// </summary>
     public partial class Connexion : UserControl
     {
@@ -28,10 +27,6 @@ namespace ConsultationMedicale
         /// </summary>
         public Modeles.IUtilisateur Utilisateur { get; private set; }
 
-        /// <summary>
-        /// Panel central où afficher le contenu
-        /// </summary>
-        public Panel panelCentral { get; private set; }
 
         Dashboard formulaireDashboard;
 
@@ -72,18 +67,6 @@ namespace ConsultationMedicale
             return true;
         }
 
-        /// <summary>
-        /// Permet de définir le panel central où afficher le contenu de ce formulaire
-        /// </summary>
-        /// <param name="panel">Référence du panel central où afficher le contenu</param>
-        /// <returns>Vrai si cette définition a pu se faire, sinon faux</returns>
-        public bool DefinirPanelCentral(Panel panel)
-        {
-            if ( panel == null) return false;
-            panelCentral = panel;
-            return true;
-        }
-
         private void AfficherAccueil(object sender, LinkLabelLinkClickedEventArgs e)
         {
 
@@ -113,8 +96,9 @@ namespace ConsultationMedicale
             if (!Utilisateur.MotDePasse.Equals(passwordTextBox.Text)){
 
             }
-
-            AfficherDashboard();
+            ConsultationMedicale.Utilisateur = Utilisateur;
+            ConsultationMedicale.UtilisateurEstConnecter = true;
+            ConsultationMedicale.AfficherFormDansPanelCentral(formulaireDashboard);
 
         }
 
@@ -122,21 +106,6 @@ namespace ConsultationMedicale
         {
             if (emailTextBox.Text.Length < 0 || passwordTextBox.Text.Length < 0 ) return false;
             return true;
-        }
-
-        private void AfficherDashboard()
-        {
-            panelCentral.Controls.Clear();
-            panelCentral.Controls.Add(formulaireDashboard);
-
-            // Calculer la position pour centrer le formulaire enfant dans le panel
-            int x = (panelCentral.Width - formulaireDashboard.Width) / 2;
-            int y = (panelCentral.Height - formulaireDashboard.Height) / 2;
-
-            // Définir la position du formulaire enfant
-            formulaireDashboard.Location = new Point(x, y);
-
-            formulaireDashboard.Show();
         }
 
         public enum Privilege

@@ -28,27 +28,28 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
+            this.titreLabel = new System.Windows.Forms.Label();
             this.consultation_button = new System.Windows.Forms.Button();
             this.rdv_button = new System.Windows.Forms.Button();
             this.dossier_button = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.dashboardPanel = new System.Windows.Forms.Panel();
             this.SuspendLayout();
             // 
-            // label1
+            // titreLabel
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(365, 24);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(132, 24);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Accueil - xxx";
+            this.titreLabel.AutoSize = true;
+            this.titreLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.titreLabel.Location = new System.Drawing.Point(577, 24);
+            this.titreLabel.Name = "titreLabel";
+            this.titreLabel.Size = new System.Drawing.Size(132, 24);
+            this.titreLabel.TabIndex = 0;
+            this.titreLabel.Text = "Accueil - xxx";
             // 
             // consultation_button
             // 
             this.consultation_button.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.consultation_button.Location = new System.Drawing.Point(55, 110);
+            this.consultation_button.Location = new System.Drawing.Point(267, 83);
             this.consultation_button.Name = "consultation_button";
             this.consultation_button.Size = new System.Drawing.Size(136, 39);
             this.consultation_button.TabIndex = 1;
@@ -59,7 +60,7 @@
             // rdv_button
             // 
             this.rdv_button.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rdv_button.Location = new System.Drawing.Point(266, 110);
+            this.rdv_button.Location = new System.Drawing.Point(478, 83);
             this.rdv_button.Name = "rdv_button";
             this.rdv_button.Size = new System.Drawing.Size(136, 39);
             this.rdv_button.TabIndex = 2;
@@ -70,9 +71,9 @@
             // dossier_button
             // 
             this.dossier_button.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dossier_button.Location = new System.Drawing.Point(470, 110);
+            this.dossier_button.Location = new System.Drawing.Point(682, 83);
             this.dossier_button.Name = "dossier_button";
-            this.dossier_button.Size = new System.Drawing.Size(154, 39);
+            this.dossier_button.Size = new System.Drawing.Size(173, 39);
             this.dossier_button.TabIndex = 3;
             this.dossier_button.Text = "Dossiers patients";
             this.dossier_button.UseVisualStyleBackColor = true;
@@ -81,7 +82,7 @@
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(693, 110);
+            this.button1.Location = new System.Drawing.Point(905, 83);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(136, 39);
             this.button1.TabIndex = 4;
@@ -89,18 +90,26 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.AfficherUtilisateurs);
             // 
+            // dashboardPanel
+            // 
+            this.dashboardPanel.Location = new System.Drawing.Point(19, 158);
+            this.dashboardPanel.Name = "dashboardPanel";
+            this.dashboardPanel.Size = new System.Drawing.Size(1235, 765);
+            this.dashboardPanel.TabIndex = 5;
+            // 
             // Dashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.dashboardPanel);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.dossier_button);
             this.Controls.Add(this.rdv_button);
             this.Controls.Add(this.consultation_button);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.titreLabel);
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Dashboard";
-            this.Size = new System.Drawing.Size(900, 557);
+            this.Size = new System.Drawing.Size(1288, 944);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -108,10 +117,11 @@
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label titreLabel;
         private System.Windows.Forms.Button consultation_button;
         private System.Windows.Forms.Button rdv_button;
         private System.Windows.Forms.Button dossier_button;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Panel dashboardPanel;
     }
 }

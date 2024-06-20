@@ -12,8 +12,7 @@ using System.Windows.Forms;
 namespace ConsultationMedicale
 {
     /// <summary>
-    /// Contrôle permettant de gérer la sélection des boules
-    /// <para>Il s'agit d'une vue dans une architecture logicielle de type MVC</para>
+    /// Contrôle permettant de gérer le tableau de bord des utilisateurs
     /// </summary>
     public partial class Dashboard : UserControl
     {
@@ -21,6 +20,11 @@ namespace ConsultationMedicale
         /// Api de l'application
         /// </summary>
         public ApiConsultationMedicale Api { get; private set; }
+
+        Consultations formulaireConsultation;
+        RendezVous formulaireRdv;
+        DossiersPatients formulaireDossier;
+        Utilisateurs formulaireUtilisateur;
 
         /// <summary>
         /// Permet de définir "tardivement" la référence de l'Api des données actives de l'application
@@ -42,27 +46,47 @@ namespace ConsultationMedicale
         {
             InitializeComponent();
             Api = api;
+            formulaireConsultation = new Consultations(api);
+            formulaireRdv = new RendezVous(api);
+            formulaireDossier = new DossiersPatients(api);
+            formulaireUtilisateur = new Utilisateurs(api);
+            this.Load += new System.EventHandler(this.Dashboard_Load);
         }
 
+        private void Dashboard_Load(object sender, EventArgs e)
+        {
+            // Appeler la fonction ici une fois que le formulaire est complètement chargé
+            AfficherTitre();
+        }
+
+        private void AfficherTitre()
+        {
+            if(ConsultationMedicale.Utilisateur != null)
+            {
+                titreLabel.Text = $"Accueil - {ConsultationMedicale.Utilisateur.Role.Nom} " +
+                $"( {ConsultationMedicale.Utilisateur.Nom} )";
+            }
+            
+        }
       
         private void AfficherConsultations(object sender, EventArgs e)
         {
-
+            ConsultationMedicale.AfficherFormDansPanelParent(dashboardPanel, formulaireConsultation);
         }
 
         private void AfficherLesRendezVous(object sender, EventArgs e)
         {
-
+            ConsultationMedicale.AfficherFormDansPanelParent(dashboardPanel, formulaireRdv);
         }
 
         private void AfficherDossiersPatients(object sender, EventArgs e)
         {
-
+            ConsultationMedicale.AfficherFormDansPanelParent(dashboardPanel, formulaireDossier);
         }
 
         private void AfficherUtilisateurs(object sender, EventArgs e)
         {
-
+            ConsultationMedicale.AfficherFormDansPanelParent(dashboardPanel, formulaireUtilisateur);
         }
     }
 }
