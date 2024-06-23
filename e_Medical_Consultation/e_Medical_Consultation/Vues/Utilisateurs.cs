@@ -48,7 +48,7 @@ namespace ConsultationMedicale
         private void Utilisateurs_Load(object sender, EventArgs e)
         {
             userPanel.Hide();
-            motDePassePanel.Hide();
+            // motDePassePanel.Hide();
             AfficherDonnees();
         }
 
@@ -75,6 +75,7 @@ namespace ConsultationMedicale
             }
             utilisateurListBox.DataSource = listeUtilisateurs;
             utilisateurListBox.DisplayMember = "Nom";
+            motDePasseTextBox.Clear();
         }
 
         private void ChangeIndexListBox(object sender, EventArgs e)
@@ -83,7 +84,7 @@ namespace ConsultationMedicale
             {
                 nouveau = false;
                 nouveauButton.Show();
-                motDePassePanel.Hide();
+               // motDePassePanel.Hide();
             }
 
             utilisateurSelect = utilisateurListBox.SelectedItem as IUtilisateur;
@@ -158,7 +159,7 @@ namespace ConsultationMedicale
 
             nouveau = true;
             nouveauButton.Hide();
-            motDePassePanel.Show();
+            // motDePassePanel.Show();
         }
 
         /// <summary>
@@ -181,6 +182,8 @@ namespace ConsultationMedicale
                     utilisateurSelect.Telephone = telephoneTextBox.Text;
                     utilisateurSelect.DateNaissance = DateTime.Parse(dateTimePicker.Text);
                     utilisateurSelect.Adresse = adresseTextBox.Text;
+                    if (!string.IsNullOrWhiteSpace(motDePasseTextBox.Text))
+                        utilisateurSelect.MotDePasse = motDePasseTextBox.Text;
                 }
 
                 IRoleUtilisateur roleSelect = roleComboBox.SelectedItem as IRoleUtilisateur;

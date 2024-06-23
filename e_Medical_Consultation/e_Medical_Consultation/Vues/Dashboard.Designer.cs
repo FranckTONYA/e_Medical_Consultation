@@ -40,7 +40,7 @@
             // 
             this.titreLabel.AutoSize = true;
             this.titreLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.titreLabel.Location = new System.Drawing.Point(577, 24);
+            this.titreLabel.Location = new System.Drawing.Point(522, 24);
             this.titreLabel.Name = "titreLabel";
             this.titreLabel.Size = new System.Drawing.Size(132, 24);
             this.titreLabel.TabIndex = 0;
