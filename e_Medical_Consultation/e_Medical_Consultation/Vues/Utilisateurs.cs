@@ -24,6 +24,15 @@ namespace ConsultationMedicale
         /// </summary>
         public ApiConsultationMedicale Api { get; private set; }
 
+        /// <summary>
+        /// Référence de l'utilisateur selectionné actuellement traités
+        /// </summary>
+        private IUtilisateur utilisateurSelect;
+
+        /// <summary>
+        /// Specifie si le formulaire traite un nouvel utilisateur ou pas
+        /// </summary>
+        private bool nouveau;
 
         /// <summary>
         /// Constructeur
@@ -39,6 +48,7 @@ namespace ConsultationMedicale
         private void Utilisateurs_Load(object sender, EventArgs e)
         {
             userPanel.Hide();
+            motDePassePanel.Hide();
             AfficherDonnees();
         }
 
@@ -54,7 +64,7 @@ namespace ConsultationMedicale
             return true;
         }
 
-        public void AfficherDonnees()
+        private void AfficherDonnees()
         {
             IEnumerable IUtilisateurEnum;
             IUtilisateurEnum = Api.EnumererUtilisateurs();
@@ -69,22 +79,29 @@ namespace ConsultationMedicale
 
         private void ChangeIndexListBox(object sender, EventArgs e)
         {
-            IUtilisateur selectedItem = utilisateurListBox.SelectedItem as IUtilisateur;
+            if (nouveau)
+            {
+                nouveau = false;
+                nouveauButton.Show();
+                motDePassePanel.Hide();
+            }
 
-            if (selectedItem != null)
+            utilisateurSelect = utilisateurListBox.SelectedItem as IUtilisateur;
+
+            if (utilisateurSelect != null)
             {
                 userPanel.Show();
-                nomTextBox.Text = selectedItem.Nom;
-                prenomTextBox.Text = selectedItem.Prenom;
-                dateTextBox.Text = selectedItem.DateNaissance.ToString();
-                telephoneTextBox.Text = selectedItem.Telephone;
-                emailTextBox.Text = selectedItem.Email;
-                adresseTextBox.Text = selectedItem.Adresse;
-                AfficherRoles(selectedItem);
+                nomTextBox.Text = utilisateurSelect.Nom;
+                prenomTextBox.Text = utilisateurSelect.Prenom;
+                dateTimePicker.Text = utilisateurSelect.DateNaissance.ToString();
+                telephoneTextBox.Text = utilisateurSelect.Telephone;
+                emailTextBox.Text = utilisateurSelect.Email;
+                adresseTextBox.Text = utilisateurSelect.Adresse;
+                AfficherRoles(utilisateurSelect);
             }
         }
 
-        public void AfficherRoles(IUtilisateur utilisateur)
+        private void AfficherRoles(IUtilisateur utilisateur)
         {
             IEnumerable IRoleEnum;
             IRoleEnum = Api.EnumererRoles();
@@ -99,6 +116,95 @@ namespace ConsultationMedicale
 
             if (roleComboBox.SelectedValue != null)
             roleComboBox.SelectedValue = utilisateur.Role.Nom;
+        }
+
+        private void Enregistrer(object sender, EventArgs e)
+        {
+            bool result = SauvegarderUtilisateur();
+            if (result)
+            {
+                utilisateurListBox.DataSource = null;
+                AfficherDonnees();
+            }
+            else
+            {
+                //TO DO
+            }
+        }
+
+        private void Supprimer(object sender, EventArgs e)
+        {
+            bool result = Api.SupprimerUtilisateur(utilisateurSelect);
+            if (result)
+            {
+                utilisateurListBox.DataSource = null;
+                AfficherDonnees();
+            }
+            else
+            {
+                //TO DO
+            }
+        }
+
+        private void ReinitialiserFormulaire(object sender, EventArgs e)
+        {
+            nomTextBox.Clear();
+            prenomTextBox.Clear();
+            emailTextBox.Clear();
+            telephoneTextBox.Clear();
+            dateTimePicker.Value = DateTime.Now;
+            adresseTextBox.Clear();
+            motDePasseTextBox.Clear();
+
+            nouveau = true;
+            nouveauButton.Hide();
+            motDePassePanel.Show();
+        }
+
+        /// <summary>
+        /// Permet de sauvegarder un Utilisateur en Base de données
+        /// </summary>
+        /// <returns>Vrai si la sauvegarde a été correctement éffectuée, sinon faux</returns>
+        private bool SauvegarderUtilisateur()
+        {
+            if (ValiderForm())
+            {
+                if (nouveau)
+                {
+                    utilisateurSelect = CreerUtilisateur(emailTextBox.Text, motDePasseTextBox.Text, nomTextBox.Text, prenomTextBox.Text, telephoneTextBox.Text, DateTime.Parse(dateTimePicker.Text), adresseTextBox.Text);
+                }
+                else
+                {
+                    utilisateurSelect.Nom = nomTextBox.Text;
+                    utilisateurSelect.Prenom = prenomTextBox.Text;
+                    utilisateurSelect.Email = emailTextBox.Text;
+                    utilisateurSelect.Telephone = telephoneTextBox.Text;
+                    utilisateurSelect.DateNaissance = DateTime.Parse(dateTimePicker.Text);
+                    utilisateurSelect.Adresse = adresseTextBox.Text;
+                }
+
+                IRoleUtilisateur roleSelect = roleComboBox.SelectedItem as IRoleUtilisateur;
+                utilisateurSelect.Role = roleSelect;
+                return Api.SauvegarderUtilisateur(utilisateurSelect, nouveau);
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        // TO DO
+        private bool ValiderForm()
+        {
+            if (nouveau)
+            {
+                // TO DO
+                return true;
+            }
+            else
+            {
+                return true;
+            }
         }
     }
 }

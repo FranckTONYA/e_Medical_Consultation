@@ -210,6 +210,35 @@ namespace ConsultationMedicale
             
         }
 
+        public bool SauvegarderUtilisateur( IUtilisateur utilisateur, bool nouveau)
+        {
+            if (nouveau)
+            {
+                int  id = (int)m_DB.Execute(@"INSERT INTO utilisateur
+                                            SET email = {0}, password = {1}, token = {2}, nom = {3}, prenom = {4}, 
+                                            telephone = {5}, date_naissance = {6}, adresse = {7}, ref_role = {8}, ref_hopital = {9}", 
+                                            utilisateur.Email, utilisateur.MotDePasse, utilisateur.Token, utilisateur.Nom, utilisateur.Prenom, utilisateur.Telephone,
+                                            utilisateur.DateNaissance, utilisateur.Adresse, utilisateur.Role.Id, 1).LastInsertedId;
+                if (id == 0) return false;
+                return true;
+            }
+            else
+            {
+                return m_DB.Execute(@"UPDATE utilisateur 
+                                        SET 
+                                            email = {1}, password = {2}, token = {3}, nom = {4}, prenom = {5}, 
+                                            telephone = {6}, date_naissance = {7}, adresse = {8}, ref_role = {9}
+                                        WHERE id = {0}", 
+                                        utilisateur.Id, utilisateur.Email, utilisateur.MotDePasse, utilisateur.Token, utilisateur.Nom, utilisateur.Prenom, utilisateur.Telephone,
+                                        utilisateur.DateNaissance, utilisateur.Adresse, utilisateur.Role.Id).Success;
+            }
+        }
+
+        public bool SupprimerUtilisateur(IUtilisateur utilisateur)
+        {
+            return m_DB.Execute("DELETE FROM utilisateur WHERE id = {0}", utilisateur.Id).Success;
+        }
+
         /// <summary>
         /// Tente de récupérer les Dossiers patients
         /// </summary>

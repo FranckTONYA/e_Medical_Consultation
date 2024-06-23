@@ -29,13 +29,15 @@
         private void InitializeComponent()
         {
             this.tlpPrincipal = new System.Windows.Forms.TableLayoutPanel();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.nouveauButton = new System.Windows.Forms.Button();
             this.utilisateurListBox = new System.Windows.Forms.ListBox();
             this.nomTextBox = new System.Windows.Forms.TextBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
-            this.dateTextBox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.dateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.prenomTextBox = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.telephoneTextBox = new System.Windows.Forms.TextBox();
@@ -49,14 +51,16 @@
             this.label6 = new System.Windows.Forms.Label();
             this.panel7 = new System.Windows.Forms.Panel();
             this.userPanel = new System.Windows.Forms.Panel();
-            this.panel8 = new System.Windows.Forms.Panel();
-            this.label7 = new System.Windows.Forms.Label();
-            this.enregistrerButton = new System.Windows.Forms.Button();
             this.SupprimerButton = new System.Windows.Forms.Button();
-            this.creerButton = new System.Windows.Forms.Button();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.enregistrerButton = new System.Windows.Forms.Button();
+            this.panel8 = new System.Windows.Forms.Panel();
             this.roleComboBox = new System.Windows.Forms.ComboBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.motDePassePanel = new System.Windows.Forms.Panel();
+            this.motDePasseTextBox = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
             this.tlpPrincipal.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel4.SuspendLayout();
@@ -65,25 +69,45 @@
             this.panel7.SuspendLayout();
             this.userPanel.SuspendLayout();
             this.panel8.SuspendLayout();
-            this.panel1.SuspendLayout();
+            this.motDePassePanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // tlpPrincipal
             // 
             this.tlpPrincipal.ColumnCount = 1;
             this.tlpPrincipal.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpPrincipal.Controls.Add(this.panel1, 0, 1);
+            this.tlpPrincipal.Controls.Add(this.panel1, 0, 2);
             this.tlpPrincipal.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpPrincipal.Location = new System.Drawing.Point(0, 0);
             this.tlpPrincipal.Margin = new System.Windows.Forms.Padding(0);
             this.tlpPrincipal.Name = "tlpPrincipal";
-            this.tlpPrincipal.RowCount = 2;
+            this.tlpPrincipal.RowCount = 3;
             this.tlpPrincipal.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlpPrincipal.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpPrincipal.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 179F));
             this.tlpPrincipal.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tlpPrincipal.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tlpPrincipal.Size = new System.Drawing.Size(1295, 832);
             this.tlpPrincipal.TabIndex = 0;
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.nouveauButton);
+            this.panel1.Location = new System.Drawing.Point(3, 656);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(284, 58);
+            this.panel1.TabIndex = 10;
+            // 
+            // nouveauButton
+            // 
+            this.nouveauButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.nouveauButton.Location = new System.Drawing.Point(167, 3);
+            this.nouveauButton.Name = "nouveauButton";
+            this.nouveauButton.Size = new System.Drawing.Size(114, 34);
+            this.nouveauButton.TabIndex = 9;
+            this.nouveauButton.Text = "Nouveau";
+            this.nouveauButton.UseVisualStyleBackColor = true;
+            this.nouveauButton.Click += new System.EventHandler(this.ReinitialiserFormulaire);
             // 
             // utilisateurListBox
             // 
@@ -123,14 +147,6 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Nom";
             // 
-            // dateTextBox
-            // 
-            this.dateTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dateTextBox.Location = new System.Drawing.Point(24, 46);
-            this.dateTextBox.Name = "dateTextBox";
-            this.dateTextBox.Size = new System.Drawing.Size(342, 28);
-            this.dateTextBox.TabIndex = 1;
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -143,12 +159,21 @@
             // 
             // panel3
             // 
-            this.panel3.Controls.Add(this.dateTextBox);
+            this.panel3.Controls.Add(this.dateTimePicker);
             this.panel3.Controls.Add(this.label2);
             this.panel3.Location = new System.Drawing.Point(13, 170);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(378, 97);
             this.panel3.TabIndex = 2;
+            // 
+            // dateTimePicker
+            // 
+            this.dateTimePicker.CalendarFont = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dateTimePicker.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dateTimePicker.Location = new System.Drawing.Point(24, 46);
+            this.dateTimePicker.Name = "dateTimePicker";
+            this.dateTimePicker.Size = new System.Drawing.Size(342, 28);
+            this.dateTimePicker.TabIndex = 1;
             // 
             // prenomTextBox
             // 
@@ -261,6 +286,7 @@
             // 
             // userPanel
             // 
+            this.userPanel.Controls.Add(this.motDePassePanel);
             this.userPanel.Controls.Add(this.SupprimerButton);
             this.userPanel.Controls.Add(this.enregistrerButton);
             this.userPanel.Controls.Add(this.panel8);
@@ -275,6 +301,28 @@
             this.userPanel.Size = new System.Drawing.Size(815, 602);
             this.userPanel.TabIndex = 6;
             // 
+            // SupprimerButton
+            // 
+            this.SupprimerButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SupprimerButton.Location = new System.Drawing.Point(662, 548);
+            this.SupprimerButton.Name = "SupprimerButton";
+            this.SupprimerButton.Size = new System.Drawing.Size(138, 34);
+            this.SupprimerButton.TabIndex = 8;
+            this.SupprimerButton.Text = "Supprimer";
+            this.SupprimerButton.UseVisualStyleBackColor = true;
+            this.SupprimerButton.Click += new System.EventHandler(this.Supprimer);
+            // 
+            // enregistrerButton
+            // 
+            this.enregistrerButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.enregistrerButton.Location = new System.Drawing.Point(512, 548);
+            this.enregistrerButton.Name = "enregistrerButton";
+            this.enregistrerButton.Size = new System.Drawing.Size(138, 34);
+            this.enregistrerButton.TabIndex = 7;
+            this.enregistrerButton.Text = "Enregistrer";
+            this.enregistrerButton.UseVisualStyleBackColor = true;
+            this.enregistrerButton.Click += new System.EventHandler(this.Enregistrer);
+            // 
             // panel8
             // 
             this.panel8.Controls.Add(this.roleComboBox);
@@ -283,6 +331,15 @@
             this.panel8.Name = "panel8";
             this.panel8.Size = new System.Drawing.Size(378, 97);
             this.panel8.TabIndex = 6;
+            // 
+            // roleComboBox
+            // 
+            this.roleComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.roleComboBox.FormattingEnabled = true;
+            this.roleComboBox.Location = new System.Drawing.Point(24, 44);
+            this.roleComboBox.Name = "roleComboBox";
+            this.roleComboBox.Size = new System.Drawing.Size(278, 30);
+            this.roleComboBox.TabIndex = 1;
             // 
             // label7
             // 
@@ -294,52 +351,33 @@
             this.label7.TabIndex = 0;
             this.label7.Text = "Rôle";
             // 
-            // enregistrerButton
+            // motDePassePanel
             // 
-            this.enregistrerButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.enregistrerButton.Location = new System.Drawing.Point(548, 548);
-            this.enregistrerButton.Name = "enregistrerButton";
-            this.enregistrerButton.Size = new System.Drawing.Size(114, 34);
-            this.enregistrerButton.TabIndex = 7;
-            this.enregistrerButton.Text = "Enregistrer";
-            this.enregistrerButton.UseVisualStyleBackColor = true;
+            this.motDePassePanel.Controls.Add(this.motDePasseTextBox);
+            this.motDePassePanel.Controls.Add(this.label8);
+            this.motDePassePanel.Location = new System.Drawing.Point(431, 434);
+            this.motDePassePanel.Name = "motDePassePanel";
+            this.motDePassePanel.Size = new System.Drawing.Size(369, 97);
+            this.motDePassePanel.TabIndex = 9;
             // 
-            // SupprimerButton
+            // motDePasseTextBox
             // 
-            this.SupprimerButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SupprimerButton.Location = new System.Drawing.Point(674, 548);
-            this.SupprimerButton.Name = "SupprimerButton";
-            this.SupprimerButton.Size = new System.Drawing.Size(114, 34);
-            this.SupprimerButton.TabIndex = 8;
-            this.SupprimerButton.Text = "Supprimer";
-            this.SupprimerButton.UseVisualStyleBackColor = true;
+            this.motDePasseTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.motDePasseTextBox.Location = new System.Drawing.Point(24, 46);
+            this.motDePasseTextBox.Name = "motDePasseTextBox";
+            this.motDePasseTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.motDePasseTextBox.Size = new System.Drawing.Size(336, 28);
+            this.motDePasseTextBox.TabIndex = 1;
             // 
-            // creerButton
+            // label8
             // 
-            this.creerButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.creerButton.Location = new System.Drawing.Point(3, 104);
-            this.creerButton.Name = "creerButton";
-            this.creerButton.Size = new System.Drawing.Size(114, 34);
-            this.creerButton.TabIndex = 9;
-            this.creerButton.Text = "Créer";
-            this.creerButton.UseVisualStyleBackColor = true;
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.creerButton);
-            this.panel1.Location = new System.Drawing.Point(57, 481);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(369, 158);
-            this.panel1.TabIndex = 10;
-            // 
-            // roleComboBox
-            // 
-            this.roleComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.roleComboBox.FormattingEnabled = true;
-            this.roleComboBox.Location = new System.Drawing.Point(14, 52);
-            this.roleComboBox.Name = "roleComboBox";
-            this.roleComboBox.Size = new System.Drawing.Size(278, 30);
-            this.roleComboBox.TabIndex = 1;
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(20, 11);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(138, 25);
+            this.label8.TabIndex = 0;
+            this.label8.Text = "Mot de passe";
             // 
             // Utilisateurs
             // 
@@ -353,6 +391,7 @@
             this.Name = "Utilisateurs";
             this.Size = new System.Drawing.Size(1295, 832);
             this.tlpPrincipal.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.panel3.ResumeLayout(false);
@@ -368,7 +407,8 @@
             this.userPanel.ResumeLayout(false);
             this.panel8.ResumeLayout(false);
             this.panel8.PerformLayout();
-            this.panel1.ResumeLayout(false);
+            this.motDePassePanel.ResumeLayout(false);
+            this.motDePassePanel.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -379,7 +419,6 @@
         private System.Windows.Forms.TextBox nomTextBox;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox dateTextBox;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.TextBox prenomTextBox;
@@ -400,7 +439,11 @@
         private System.Windows.Forms.Button enregistrerButton;
         private System.Windows.Forms.Button SupprimerButton;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Button creerButton;
+        private System.Windows.Forms.Button nouveauButton;
         private System.Windows.Forms.ComboBox roleComboBox;
+        private System.Windows.Forms.DateTimePicker dateTimePicker;
+        private System.Windows.Forms.Panel motDePassePanel;
+        private System.Windows.Forms.TextBox motDePasseTextBox;
+        private System.Windows.Forms.Label label8;
     }
 }

@@ -23,47 +23,47 @@ namespace ConsultationMedicale
             /// <summary>
             /// email
             /// </summary>
-            string Email { get; }
+            string Email { get; set; }
 
             /// <summary>
             /// Mot de passe
             /// </summary>
-            string MotDePasse { get; }
+            string MotDePasse { get; set; }
 
             /// <summary>
             /// Rôle de l'utilisateur
             /// </summary>
-            IRoleUtilisateur Role { get; }
+            IRoleUtilisateur Role { get; set; }
 
             /// <summary>
             /// Token d'authentification
             /// </summary>
-            string Token { get; }
+            string Token { get; set; }
 
             /// <summary>
             /// Nom
             /// </summary>
-            string Nom { get; }
+            string Nom { get; set; }
 
             /// <summary>
             /// Prènom
             /// </summary>
-            string Prenom { get; }
+            string Prenom { get; set; }
 
             /// <summary>
             /// Date de naissance
             /// </summary>
-            DateTime DateNaissance { get; }
+            DateTime DateNaissance { get; set; }
 
             /// <summary>
             /// Téléphone
             /// </summary>
-            string Telephone { get; }
+            string Telephone { get; set; }
 
             /// <summary>
             /// Adresse
             /// </summary>
-            string Adresse { get; }
+            string Adresse { get; set; }
 
             /// <summary>
             /// Permet de (re)définir le Rôle de l'Utilisateur
@@ -83,6 +83,15 @@ namespace ConsultationMedicale
         }
 
         /// <summary>
+        /// Instancie un Utilisateur sans ID en fonction des caractéristiques spécifiées
+        /// </summary>
+        /// <returns>Nouvelle entité d'utilisateur si possible, sinon null</returns>
+        public static IUtilisateur CreerUtilisateur(string email, string motDePasse, string nom, string prenom, string telephone, DateTime dateNaissance, string adresse)
+        {
+            return new Utilisateur(email, motDePasse, nom, prenom, telephone, dateNaissance, adresse);
+        }
+
+        /// <summary>
         /// Implémente le modèle d'entité d'un Utilisateur
         /// </summary>
         private class Utilisateur : EntiteBase, IUtilisateur
@@ -91,47 +100,47 @@ namespace ConsultationMedicale
             /// <summary>
             /// Email
             /// </summary>
-            public string Email { get; private set; }
+            public string Email { get; set; }
 
             /// <summary>
             /// Mot de passe
             /// </summary>
-            public string MotDePasse { get; private set; }
+            public string MotDePasse { get; set; }
 
             /// <summary>
             /// Token de connexion
             /// </summary>
-            public string Token { get; private set; }
+            public string Token { get; set; }
 
             /// <summary>
             /// Rôle
             /// </summary>
-            public IRoleUtilisateur Role { get; private set; }
+            public IRoleUtilisateur Role { get; set; }
 
             /// <summary>
             /// Nom
             /// </summary>
-            public string Nom { get; private set; }
+            public string Nom { get; set; }
 
             /// <summary>
             /// Prénom
             /// </summary>
-            public string Prenom { get; private set; }
+            public string Prenom { get; set; }
 
             /// <summary>
             /// Téléphone
             /// </summary>
-            public string Telephone { get; private set; }
+            public string Telephone { get; set; }
 
             /// <summary>
             /// Date de naissance
             /// </summary>
-            public DateTime DateNaissance { get; private set; }
+            public DateTime DateNaissance { get; set; }
 
             /// <summary>
             /// Adresse
             /// </summary>
-            public string Adresse { get; private set; }
+            public string Adresse { get; set; }
 
             /// <summary>
             /// Constructeur
@@ -183,19 +192,16 @@ namespace ConsultationMedicale
             /// <param name="id">Identifiant de ce type de support</param>
             /// <param name="email">Email</param>
             /// <param name="motDePasse">Mot de passe</param>
-            /// <param name="token">Token de verification</param>
-            /// <param name="role">Rôle de l'utilisateur</param>
             /// <param name="nom">Nom</param>
             /// <param name="prenom">Prènom</param>
             /// <param name="telephone">Téléphone</param>
             /// <param name="dateNaissance">Date de naissance</param>
             /// <param name="adresse">adresse</param>
-            public Utilisateur(string email, string motDePasse, string token, string nom, string prenom, string telephone, DateTime dateNaissance, string adresse)
+            public Utilisateur(string email, string motDePasse, string nom, string prenom, string telephone, DateTime dateNaissance, string adresse)
                 : base(0, $"Utilisateur le {DateTime.Now.ToString("d/MM/yyyy à H:mm:ss").Replace('-', '/')}")
             {
                 Email = email;
                 MotDePasse = motDePasse;
-                Token = token;
                 Nom = nom;
                 Prenom = prenom;
                 Telephone = telephone;

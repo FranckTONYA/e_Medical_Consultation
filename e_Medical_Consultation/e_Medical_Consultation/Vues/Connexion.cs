@@ -74,31 +74,44 @@ namespace ConsultationMedicale
 
         private void Login(object sender, EventArgs e)
         {
-            if (!VerificationFormulaire())
+            if (VerificationFormulaire())
             {
-               
-            }
-            IEnumerable IUtilisateurEnum;
-            IUtilisateurEnum = Api.EnumererUtilisateurParEmail(emailTextBox.Text);
+                System.Collections.Generic.IEnumerable<Modeles.IUtilisateur> IUtilisateurEnum = Api.EnumererUtilisateurParEmail(emailTextBox.Text);
 
-            if (IUtilisateurEnum == null)
+                if (IUtilisateurEnum.Count() > 0)
+                {
+                    Utilisateur = IUtilisateurEnum.First();
+
+                   /* Utilisateur = Api.EnumererUtilisateurParEmail(emailTextBox.Text).First();*/
+
+                    if (Utilisateur.Role.Nom.Equals(privilege.ToString()))
+                    {
+                        if (Utilisateur.MotDePasse.Equals(passwordTextBox.Text))
+                        {
+                            ConsultationMedicale.Utilisateur = Utilisateur;
+                            ConsultationMedicale.UtilisateurEstConnecter = true;
+                            ConsultationMedicale.AfficherFormDansPanelCentral(formulaireDashboard);
+                        }
+                        else
+                        {
+                            // TO DO
+                        }
+                    }
+                    else
+                    {
+                        // TO DO
+                    }
+                }
+                else
+                {
+                    // TO DO
+                }
+            }
+            else
             {
-
+                // TO DO
             }
 
-            Utilisateur = Api.EnumererUtilisateurParEmail(emailTextBox.Text).First();
-
-            if (!Utilisateur.Role.Equals(privilege.ToString()))
-            {
-
-            }
-
-            if (!Utilisateur.MotDePasse.Equals(passwordTextBox.Text)){
-
-            }
-            ConsultationMedicale.Utilisateur = Utilisateur;
-            ConsultationMedicale.UtilisateurEstConnecter = true;
-            ConsultationMedicale.AfficherFormDansPanelCentral(formulaireDashboard);
 
         }
 
