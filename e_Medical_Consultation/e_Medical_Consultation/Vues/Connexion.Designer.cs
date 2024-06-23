@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.tooltipInfoBulle = new System.Windows.Forms.ToolTip(this.components);
-            this.label1 = new System.Windows.Forms.Label();
+            this.titreLabel = new System.Windows.Forms.Label();
             this.emailTextBox = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
@@ -39,35 +39,37 @@
             this.passwordTextBox = new System.Windows.Forms.TextBox();
             this.connexionButton = new System.Windows.Forms.Button();
             this.accueil_linkLabel = new System.Windows.Forms.LinkLabel();
+            this.connexionPanel = new System.Windows.Forms.Panel();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.connexionPanel.SuspendLayout();
             this.SuspendLayout();
             // 
-            // label1
+            // titreLabel
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(203, 41);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(175, 24);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Connexion - xxxx";
+            this.titreLabel.AutoSize = true;
+            this.titreLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.titreLabel.Location = new System.Drawing.Point(125, 65);
+            this.titreLabel.Name = "titreLabel";
+            this.titreLabel.Size = new System.Drawing.Size(175, 24);
+            this.titreLabel.TabIndex = 0;
+            this.titreLabel.Text = "Connexion - xxxx";
             // 
             // emailTextBox
             // 
-            this.emailTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.emailTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.emailTextBox.Location = new System.Drawing.Point(16, 55);
             this.emailTextBox.Name = "emailTextBox";
-            this.emailTextBox.Size = new System.Drawing.Size(319, 26);
+            this.emailTextBox.Size = new System.Drawing.Size(399, 35);
             this.emailTextBox.TabIndex = 1;
             // 
             // panel1
             // 
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.emailTextBox);
-            this.panel1.Location = new System.Drawing.Point(73, 118);
+            this.panel1.Location = new System.Drawing.Point(70, 169);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(377, 119);
+            this.panel1.Size = new System.Drawing.Size(435, 119);
             this.panel1.TabIndex = 2;
             // 
             // label2
@@ -84,9 +86,9 @@
             // 
             this.panel2.Controls.Add(this.label3);
             this.panel2.Controls.Add(this.passwordTextBox);
-            this.panel2.Location = new System.Drawing.Point(73, 275);
+            this.panel2.Location = new System.Drawing.Point(70, 326);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(377, 119);
+            this.panel2.Size = new System.Drawing.Size(435, 119);
             this.panel2.TabIndex = 3;
             // 
             // label3
@@ -101,18 +103,18 @@
             // 
             // passwordTextBox
             // 
-            this.passwordTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.passwordTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.passwordTextBox.Location = new System.Drawing.Point(16, 55);
             this.passwordTextBox.Name = "passwordTextBox";
-            this.passwordTextBox.Size = new System.Drawing.Size(319, 26);
+            this.passwordTextBox.Size = new System.Drawing.Size(399, 35);
             this.passwordTextBox.TabIndex = 1;
             // 
             // connexionButton
             // 
-            this.connexionButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.connexionButton.Location = new System.Drawing.Point(92, 414);
+            this.connexionButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.connexionButton.Location = new System.Drawing.Point(70, 531);
             this.connexionButton.Name = "connexionButton";
-            this.connexionButton.Size = new System.Drawing.Size(115, 44);
+            this.connexionButton.Size = new System.Drawing.Size(137, 44);
             this.connexionButton.TabIndex = 4;
             this.connexionButton.Text = "Connexion";
             this.connexionButton.UseVisualStyleBackColor = true;
@@ -121,41 +123,51 @@
             // accueil_linkLabel
             // 
             this.accueil_linkLabel.AutoSize = true;
-            this.accueil_linkLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.accueil_linkLabel.Location = new System.Drawing.Point(382, 429);
+            this.accueil_linkLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.accueil_linkLabel.Location = new System.Drawing.Point(432, 542);
             this.accueil_linkLabel.Name = "accueil_linkLabel";
-            this.accueil_linkLabel.Size = new System.Drawing.Size(64, 20);
+            this.accueil_linkLabel.Size = new System.Drawing.Size(73, 24);
             this.accueil_linkLabel.TabIndex = 5;
             this.accueil_linkLabel.TabStop = true;
             this.accueil_linkLabel.Text = "Accueil";
             this.accueil_linkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.AfficherAccueil);
+            // 
+            // connexionPanel
+            // 
+            this.connexionPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.connexionPanel.Controls.Add(this.titreLabel);
+            this.connexionPanel.Controls.Add(this.accueil_linkLabel);
+            this.connexionPanel.Controls.Add(this.panel1);
+            this.connexionPanel.Controls.Add(this.connexionButton);
+            this.connexionPanel.Controls.Add(this.panel2);
+            this.connexionPanel.Location = new System.Drawing.Point(144, 33);
+            this.connexionPanel.Name = "connexionPanel";
+            this.connexionPanel.Size = new System.Drawing.Size(563, 655);
+            this.connexionPanel.TabIndex = 6;
             // 
             // Connexion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.Controls.Add(this.accueil_linkLabel);
-            this.Controls.Add(this.connexionButton);
-            this.Controls.Add(this.panel2);
-            this.Controls.Add(this.panel1);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.connexionPanel);
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MinimumSize = new System.Drawing.Size(320, 84);
             this.Name = "Connexion";
-            this.Size = new System.Drawing.Size(551, 480);
+            this.Size = new System.Drawing.Size(804, 742);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            this.connexionPanel.ResumeLayout(false);
+            this.connexionPanel.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
         private System.Windows.Forms.ToolTip tooltipInfoBulle;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label titreLabel;
         private System.Windows.Forms.TextBox emailTextBox;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label2;
@@ -164,5 +176,6 @@
         private System.Windows.Forms.TextBox passwordTextBox;
         private System.Windows.Forms.Button connexionButton;
         private System.Windows.Forms.LinkLabel accueil_linkLabel;
+        private System.Windows.Forms.Panel connexionPanel;
     }
 }

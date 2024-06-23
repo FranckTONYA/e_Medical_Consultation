@@ -4,6 +4,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace ConsultationMedicale
 {
@@ -38,9 +39,16 @@ namespace ConsultationMedicale
         public Connexion(ApiConsultationMedicale api)
         {
             InitializeComponent();
+            Load += new EventHandler(Connexion_Load);
             Api = api;
             formulaireDashboard = new Dashboard(api);
             passwordTextBox.PasswordChar = '*';
+        }
+
+        private void Connexion_Load(object sender, EventArgs e)
+        {
+            titreLabel.Location = new Point((connexionPanel.Width - titreLabel.Width) / 3, 45);
+            AfficherTitre();
         }
 
         /// <summary>
@@ -67,10 +75,28 @@ namespace ConsultationMedicale
             return true;
         }
 
+        private void AfficherTitre()
+        {
+            titreLabel.Text = $"Connexion - {privilege.ToString()} ";
+        }
+
         private void AfficherAccueil(object sender, LinkLabelLinkClickedEventArgs e)
         {
 
+            ConsultationMedicale.AfficherAccueil(this);
+           /* Form formParent = FindForm();
+
+            if (formParent != null && formParent is Principal)
+            {
+                Principal formPrincipal = (Principal)formParent;
+                Principal nouveauForm = new Principal(Api);
+                Panel PanelCentral = nouveauForm.PanelCentral;
+                formPrincipal.Controls.Clear();
+                formPrincipal.Controls.Add(PanelCentral);
+            }*/
+
         }
+
 
         private void Login(object sender, EventArgs e)
         {
@@ -82,11 +108,9 @@ namespace ConsultationMedicale
                 {
                     Utilisateur = IUtilisateurEnum.First();
 
-                   /* Utilisateur = Api.EnumererUtilisateurParEmail(emailTextBox.Text).First();*/
-
                     if (Utilisateur.Role.Nom.Equals(privilege.ToString()))
-                    {
-                        if (Utilisateur.MotDePasse.Equals(passwordTextBox.Text))
+                    { 
+                        if (PasswordHasher.VerifyPassword(passwordTextBox.Text, Utilisateur.MotDePasse))
                         {
                             ConsultationMedicale.Utilisateur = Utilisateur;
                             ConsultationMedicale.UtilisateurEstConnecter = true;
@@ -94,31 +118,35 @@ namespace ConsultationMedicale
                         }
                         else
                         {
-                            // TO DO
+                            AfficherMessageErreur();
                         }
                     }
                     else
                     {
-                        // TO DO
+                        AfficherMessageErreur();
                     }
                 }
                 else
                 {
-                    // TO DO
+                    AfficherMessageErreur();
                 }
             }
             else
             {
-                // TO DO
+                AfficherMessageErreur();
             }
-
-
         }
 
         private bool VerificationFormulaire()
         {
             if (emailTextBox.Text.Length < 0 || passwordTextBox.Text.Length < 0 ) return false;
             return true;
+        }
+
+        private void AfficherMessageErreur()
+        {
+            MessageBox.Show("Nom d'utilisateur ou mot de passe incorrect. Veuillez également vous assurez d'être dans le bon profil de connexion utilisateur !");
+
         }
 
         public enum Privilege

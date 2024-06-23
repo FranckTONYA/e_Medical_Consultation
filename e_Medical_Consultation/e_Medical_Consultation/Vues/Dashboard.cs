@@ -50,12 +50,11 @@ namespace ConsultationMedicale
             formulaireRdv = new RendezVous(api);
             formulaireDossier = new DossiersPatients(api);
             formulaireUtilisateur = new Utilisateurs(api);
-            this.Load += new System.EventHandler(this.Dashboard_Load);
+            Load += new EventHandler(Dashboard_Load);
         }
 
         private void Dashboard_Load(object sender, EventArgs e)
         {
-            // Appeler la fonction ici une fois que le formulaire est complètement chargé
             AfficherTitre();
         }
 
@@ -87,6 +86,11 @@ namespace ConsultationMedicale
         private void AfficherUtilisateurs(object sender, EventArgs e)
         {
             ConsultationMedicale.AfficherFormDansPanelParent(dashboardPanel, formulaireUtilisateur);
+        }
+
+        private void Deconnexion(object sender, EventArgs e)
+        {
+            ConsultationMedicale.AfficherAccueil(this);
         }
     }
 }

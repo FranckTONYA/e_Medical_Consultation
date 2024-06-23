@@ -28,6 +28,23 @@ namespace ConsultationMedicale
         /// </summary>
         public static Panel PanelCentral { get; set; }
 
+        /// <summary>
+        /// Api de l'application
+        /// </summary>
+        public static ApiConsultationMedicale Api { get; private set; }
+
+
+        /// <summary>
+        /// Permet de définir "tardivement" la référence de l'Api servant de données actives de l'application
+        /// </summary>
+        /// <param name="api">Référence de l'API donnant accès aux données actives de l'application</param>
+        /// <returns>Vrai si cette initialisation "tardive" a pu se faire, sinon faux</returns>
+        public static bool DefinirApi(ApiConsultationMedicale api)
+        {
+            if ((Api != null) || (api == null)) return false;
+            Api = api;
+            return true;
+        }
 
         /// <summary>
         /// Permet d'afficher le contenu d'un formulaire dans le panel central de l'application
@@ -57,15 +74,27 @@ namespace ConsultationMedicale
         {
             panelParent.Controls.Clear();
             panelParent.Controls.Add(formulaire);
-
-            // Calculer la position pour centrer le formulaire enfant dans le panel
-            int x = (panelParent.Width - formulaire.Width) / 2;
-            int y = 0;
-
-            // Définir la position du formulaire enfant
-            formulaire.Location = new Point(x, y);
-
             formulaire.Show();
+
+            
         }
+
+
+        public static void AfficherAccueil(UserControl userControl)
+        {
+            Form formParent = userControl.FindForm();
+
+            if (formParent != null && formParent is Principal)
+            {
+                Principal formPrincipal = (Principal)formParent;
+                Principal nouveauForm = new Principal(Api);
+                Panel PanelCentral = nouveauForm.PanelCentral;
+                formPrincipal.Controls.Clear();
+                formPrincipal.Controls.Add(PanelCentral);
+            }
+
+        }
+
+
     }
 }

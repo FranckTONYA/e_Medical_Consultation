@@ -98,7 +98,7 @@
             this.panelCentral.Controls.Add(this.label1);
             this.panelCentral.Controls.Add(this.button_admin);
             this.panelCentral.Controls.Add(this.button_medecin);
-            this.panelCentral.Location = new System.Drawing.Point(46, 12);
+            this.panelCentral.Location = new System.Drawing.Point(288, 24);
             this.panelCentral.Name = "panelCentral";
             this.panelCentral.Size = new System.Drawing.Size(1348, 1031);
             this.panelCentral.TabIndex = 8;

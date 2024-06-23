@@ -6,10 +6,12 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static ConsultationMedicale.Modeles;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace ConsultationMedicale
 {
@@ -42,13 +44,12 @@ namespace ConsultationMedicale
         {
             InitializeComponent();
             Api = api;
-            this.Load += new System.EventHandler(this.Utilisateurs_Load);
+            Load += new EventHandler(Utilisateurs_Load);
         }
 
         private void Utilisateurs_Load(object sender, EventArgs e)
         {
             userPanel.Hide();
-            // motDePassePanel.Hide();
             AfficherDonnees();
         }
 
@@ -76,6 +77,8 @@ namespace ConsultationMedicale
             utilisateurListBox.DataSource = listeUtilisateurs;
             utilisateurListBox.DisplayMember = "Nom";
             motDePasseTextBox.Clear();
+            ReinitialiserErreurs();
+            nouveauButton.Show();
         }
 
         private void ChangeIndexListBox(object sender, EventArgs e)
@@ -86,6 +89,8 @@ namespace ConsultationMedicale
                 nouveauButton.Show();
                // motDePassePanel.Hide();
             }
+
+            ReinitialiserErreurs();
 
             utilisateurSelect = utilisateurListBox.SelectedItem as IUtilisateur;
 
@@ -127,10 +132,6 @@ namespace ConsultationMedicale
                 utilisateurListBox.DataSource = null;
                 AfficherDonnees();
             }
-            else
-            {
-                //TO DO
-            }
         }
 
         private void Supprimer(object sender, EventArgs e)
@@ -149,6 +150,7 @@ namespace ConsultationMedicale
 
         private void ReinitialiserFormulaire(object sender, EventArgs e)
         {
+            ReinitialiserErreurs();
             nomTextBox.Clear();
             prenomTextBox.Clear();
             emailTextBox.Clear();
@@ -172,7 +174,8 @@ namespace ConsultationMedicale
             {
                 if (nouveau)
                 {
-                    utilisateurSelect = CreerUtilisateur(emailTextBox.Text, motDePasseTextBox.Text, nomTextBox.Text, prenomTextBox.Text, telephoneTextBox.Text, DateTime.Parse(dateTimePicker.Text), adresseTextBox.Text);
+                    string hashedPassword = PasswordHasher.HashPassword(motDePasseTextBox.Text);
+                    utilisateurSelect = CreerUtilisateur(emailTextBox.Text, hashedPassword, nomTextBox.Text, prenomTextBox.Text, telephoneTextBox.Text, DateTime.Parse(dateTimePicker.Text), adresseTextBox.Text);
                 }
                 else
                 {
@@ -183,7 +186,8 @@ namespace ConsultationMedicale
                     utilisateurSelect.DateNaissance = DateTime.Parse(dateTimePicker.Text);
                     utilisateurSelect.Adresse = adresseTextBox.Text;
                     if (!string.IsNullOrWhiteSpace(motDePasseTextBox.Text))
-                        utilisateurSelect.MotDePasse = motDePasseTextBox.Text;
+                        utilisateurSelect.MotDePasse = PasswordHasher.HashPassword(motDePasseTextBox.Text); ;
+                        
                 }
 
                 IRoleUtilisateur roleSelect = roleComboBox.SelectedItem as IRoleUtilisateur;
@@ -196,18 +200,66 @@ namespace ConsultationMedicale
             }
         }
 
-        // TO DO
+        /// <summary>
+        /// Permet de valider le formulaire par rapport aux critéres des éléments à valider
+        /// </summary>
+        /// <returns>Vrai si tous les critéres sont respectés, sinon faux</returns>
         private bool ValiderForm()
         {
-            if (nouveau)
+            ReinitialiserErreurs();
+
+            // Utiliser une regex pour valider le format de l'adresse e-mail
+            string patternEmail = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
+            // Définir l'expression régulière pour les chiffres uniquement
+            string patternTel = @"^\d+$";
+
+            if (nomTextBox.Text.Length <= 0)
             {
-                // TO DO
-                return true;
-            }
-            else
+                nomErrorProvider.SetError(nomTextBox, "Le Nom doit avoir minimun 1 caractére !");
+                return false;
+            } 
+            else if (prenomTextBox.Text.Length <= 0)
             {
-                return true;
+                prenomErrorProvider.SetError(prenomTextBox, "Le Prénom doit avoir minimun 1 caractére !");
+                return false;
             }
+            else if (telephoneTextBox.Text.Length <= 0 || !Regex.IsMatch(telephoneTextBox.Text, patternTel))
+            {
+                telErrorProvider.SetError(telephoneTextBox, "Le Téléphone ne peut contenir que des chiffres et minimun 5 !");
+                return false;
+            }
+            else if(emailTextBox.Text.Length <= 0 || !Regex.IsMatch(emailTextBox.Text, patternEmail))
+            {
+                emailErrorProvider.SetError(emailTextBox, "L'Email doit être au format comme exemple@gmail.com !");
+                return false;
+            }
+            else if(adresseTextBox.Text.Length <= 0)
+            {
+                adresseErrorProvider.SetError(adresseTextBox, "L'Adresse doit avoir minimun 1 caractére !");
+                return false;
+            }
+                
+
+            if ((nouveau && motDePasseTextBox.Text.Length < 5) || (!nouveau && motDePasseTextBox.Text.Length > 0 && motDePasseTextBox.Text.Length < 5))
+            {
+                mdpErrorProvider.SetError(motDePasseTextBox, "Le Mot de passe doit avoir minimun 5 caractéres !");
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Permet de réinitialiser les controls d'erreurs des éléments à valider
+        /// </summary>
+        private void ReinitialiserErreurs()
+        {
+            nomErrorProvider.Clear();
+            prenomErrorProvider.Clear();
+            emailErrorProvider.Clear();
+            telErrorProvider.Clear();
+            adresseErrorProvider.Clear();
+            mdpErrorProvider.Clear();
         }
     }
 }

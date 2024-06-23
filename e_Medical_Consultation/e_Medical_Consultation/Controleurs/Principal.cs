@@ -12,8 +12,8 @@ namespace ConsultationMedicale
 {
     public partial class Principal : Form
     {
-        ApiConsultationMedicale apiConsultation;
         Connexion formulaireConnexion;
+        public Panel PanelCentral;
 
         /// <summary>
         /// Constructeur
@@ -22,11 +22,24 @@ namespace ConsultationMedicale
         public Principal(ApiConsultationMedicale api)
         {
             InitializeComponent();
-            this.Width = Math.Min(Screen.AllScreens.Min(s => s.WorkingArea.Width) * 2 / 3, this.Width * 3 / 2);
-            this.Height = Math.Min(Screen.AllScreens.Max(s => s.WorkingArea.Height) * 2 / 3, this.Height * 3 / 2);
-            apiConsultation = api;
+            Load += new EventHandler(Principal_Load);
+
             formulaireConnexion = new Connexion(api);
             ConsultationMedicale.PanelCentral = panelCentral;
+            ConsultationMedicale.DefinirApi(api);
+            PanelCentral = panelCentral;
+        }
+
+        private void Principal_Load(object sender, EventArgs e)
+        {
+            // Calculer la position pour centrer le formulaire en haut
+            int screenWidth = Screen.PrimaryScreen.WorkingArea.Width;
+            int formWidth = Width;
+            int left = (screenWidth - formWidth) / 2;
+            Height = Screen.PrimaryScreen.WorkingArea.Height;
+
+            // Positionner le formulaire en haut de l'écran
+            this.Location = new Point(left, 0);
         }
 
         private void ConnexionAdmin(object sender, EventArgs e)

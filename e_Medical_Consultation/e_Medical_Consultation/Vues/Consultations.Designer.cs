@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.groupNappage = new PDSGBD.UI.RadioGroup();
             this.consultationListBox = new System.Windows.Forms.ListBox();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -46,12 +47,14 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.patientTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.patientErrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.panel1.SuspendLayout();
             this.panel6.SuspendLayout();
             this.panel5.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.patientErrorProvider)).BeginInit();
             this.SuspendLayout();
             // 
             // groupNappage
@@ -225,6 +228,10 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Patient";
             // 
+            // patientErrorProvider
+            // 
+            this.patientErrorProvider.ContainerControl = this;
+            // 
             // Consultations
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -247,6 +254,7 @@
             this.panel3.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.patientErrorProvider)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -271,5 +279,6 @@
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.TextBox medecinTextBox;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ErrorProvider patientErrorProvider;
     }
 }
