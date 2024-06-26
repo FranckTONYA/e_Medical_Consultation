@@ -1,25 +1,27 @@
--- phpMyAdmin SQL Dump
--- version 5.2.1
--- https://www.phpmyadmin.net/
---
--- Hôte : localhost
--- Généré le : jeu. 06 juin 2024 à 10:25
--- Version du serveur : 8.0.31
--- Version de PHP : 8.0.26
-
+-- -----------------------
+-- Début de la transaction
+-- -----------------------
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 
+-- -------------------------
+-- Base de données : consultation
+-- -------------------------
+DROP DATABASE IF EXISTS consultation;
+CREATE DATABASE consultation;
+USE consultation;
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
---
--- Base de données : `consultation`
---
+-- ---------------------------------
+-- Utilisateur  : u_consultation
+-- Mot de passe : YY836O3eew!Vy0OQ
+-- ---------------------------------
+DROP USER IF EXISTS 'u_consultation'@'localhost';
+CREATE USER 'u_consultation'@'localhost' IDENTIFIED WITH caching_sha2_password BY 'YY836O3eew!Vy0OQ';
+GRANT USAGE ON *.* TO 'u_consultation'@'localhost';
+ALTER USER 'u_consultation'@'localhost' REQUIRE NONE WITH MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0;
+GRANT SELECT, INSERT, UPDATE, DELETE, EXECUTE ON `consultation`.* TO 'u_consultation'@'localhost';
+ALTER USER 'u_consultation'@'localhost';
 
 -- --------------------------------------------------------
 
@@ -32,7 +34,8 @@ CREATE TABLE `consultation` (
   `rapport` varchar(255) DEFAULT NULL,
   `prescription` varchar(255) DEFAULT NULL,
   `ref_medecin` int NOT NULL,
-  `ref_dossier` int NOT NULL
+  `ref_dossier` int NOT NULL,
+  `ref_rdv` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -43,7 +46,7 @@ CREATE TABLE `consultation` (
 
 CREATE TABLE `dossier_patient` (
   `id` int NOT NULL,
-  `description` varchar(255) NOT NULL,
+  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `ref_utilisateur` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -129,7 +132,8 @@ CREATE TABLE `utilisateur` (
 ALTER TABLE `consultation`
   ADD PRIMARY KEY (`id`),
   ADD KEY `consultation_ibfk_1` (`ref_medecin`),
-  ADD KEY `consultation_ibfk_2` (`ref_dossier`);
+  ADD KEY `consultation_ibfk_2` (`ref_dossier`),
+  ADD KEY `consultation_ibfk_3` (`ref_rdv`);
 
 --
 -- Index pour la table `dossier_patient`
@@ -227,30 +231,31 @@ ALTER TABLE `utilisateur`
 -- Contraintes pour la table `consultation`
 --
 ALTER TABLE `consultation`
-  ADD CONSTRAINT `consultation_ibfk_1` FOREIGN KEY (`ref_medecin`) REFERENCES `utilisateur` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `consultation_ibfk_2` FOREIGN KEY (`ref_dossier`) REFERENCES `dossier_patient` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+  ADD CONSTRAINT `consultation_ibfk_1` FOREIGN KEY (`ref_medecin`) REFERENCES `utilisateur` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `consultation_ibfk_2` FOREIGN KEY (`ref_dossier`) REFERENCES `dossier_patient` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `consultation_ibfk_3` FOREIGN KEY (`ref_rdv`) REFERENCES `rendez_vous` (`id`) ON DELETE CASCADE;
 
 --
 -- Contraintes pour la table `dossier_patient`
 --
 ALTER TABLE `dossier_patient`
-  ADD CONSTRAINT `dossier_ibfk_1` FOREIGN KEY (`ref_utilisateur`) REFERENCES `utilisateur` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+  ADD CONSTRAINT `dossier_ibfk_1` FOREIGN KEY (`ref_utilisateur`) REFERENCES `utilisateur` (`id`) ON DELETE CASCADE;
 
 --
 -- Contraintes pour la table `rendez_vous`
 --
 ALTER TABLE `rendez_vous`
-  ADD CONSTRAINT `rendez_vous_ibfk_1` FOREIGN KEY (`ref_consultation`) REFERENCES `consultation` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `rendez_vous_ibfk_2` FOREIGN KEY (`ref_statut`) REFERENCES `statut_rendezvous` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+  ADD CONSTRAINT `rendez_vous_ibfk_1` FOREIGN KEY (`ref_consultation`) REFERENCES `consultation` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `rendez_vous_ibfk_2` FOREIGN KEY (`ref_statut`) REFERENCES `statut_rendezvous` (`id`) ON DELETE CASCADE;
 
 --
 -- Contraintes pour la table `utilisateur`
 --
 ALTER TABLE `utilisateur`
-  ADD CONSTRAINT `hopital_ibfk_2` FOREIGN KEY (`ref_hopital`) REFERENCES `hopital` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `role_ibfk_1` FOREIGN KEY (`ref_role`) REFERENCES `role_utilisateur` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+  ADD CONSTRAINT `hopital_ibfk_2` FOREIGN KEY (`ref_hopital`) REFERENCES `hopital` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `role_ibfk_1` FOREIGN KEY (`ref_role`) REFERENCES `role_utilisateur` (`id`) ON DELETE CASCADE;
+  
+  -- ---------------------
+-- Fin de la transaction
+-- ---------------------
 COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

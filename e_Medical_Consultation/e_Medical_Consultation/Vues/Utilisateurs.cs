@@ -27,7 +27,7 @@ namespace ConsultationMedicale
         public ApiConsultationMedicale Api { get; private set; }
 
         /// <summary>
-        /// Référence de l'utilisateur selectionné actuellement traités
+        /// Référence de l'utilisateur selectionné actuellement
         /// </summary>
         private IUtilisateur utilisateurSelect;
 
@@ -126,26 +126,49 @@ namespace ConsultationMedicale
 
         private void Enregistrer(object sender, EventArgs e)
         {
-            bool result = SauvegarderUtilisateur();
-            if (result)
+            if (ValiderForm())
             {
-                utilisateurListBox.DataSource = null;
-                AfficherDonnees();
+                bool result = SauvegarderUtilisateur();
+                if (result)
+                {
+                    utilisateurListBox.DataSource = null;
+                    AfficherDonnees();
+                    MessageBox.Show("L'élément a bien été sauvegardé", "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Probléme rencontré lors de l'enregistrement de l'élément", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
         private void Supprimer(object sender, EventArgs e)
         {
-            bool result = Api.SupprimerUtilisateur(utilisateurSelect);
-            if (result)
+            DialogResult reponse = MessageBox.Show(
+                "Etes vous êtes sûr de vouloir supprimer cet Utilisateur ? Notez que sa suppression entrainera également la suppression de tous les éléments liés à celui ci ",
+                "Confirmation",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (reponse == DialogResult.Yes)
             {
-                utilisateurListBox.DataSource = null;
-                AfficherDonnees();
+                bool result = Api.SupprimerUtilisateur(utilisateurSelect);
+                if (result)
+                {
+                    utilisateurListBox.DataSource = null;
+                    AfficherDonnees();
+                    MessageBox.Show("L'élément a bien été supprimé", "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Probléme rencontré lors de la suppression de l'élément", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
             else
             {
-                //TO DO
+                MessageBox.Show("Vous avez annulé l'opération.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+
         }
 
         private void ReinitialiserFormulaire(object sender, EventArgs e)
@@ -170,34 +193,27 @@ namespace ConsultationMedicale
         /// <returns>Vrai si la sauvegarde a été correctement éffectuée, sinon faux</returns>
         private bool SauvegarderUtilisateur()
         {
-            if (ValiderForm())
+            if (nouveau)
             {
-                if (nouveau)
-                {
-                    string hashedPassword = PasswordHasher.HashPassword(motDePasseTextBox.Text);
-                    utilisateurSelect = CreerUtilisateur(emailTextBox.Text, hashedPassword, nomTextBox.Text, prenomTextBox.Text, telephoneTextBox.Text, DateTime.Parse(dateTimePicker.Text), adresseTextBox.Text);
-                }
-                else
-                {
-                    utilisateurSelect.Nom = nomTextBox.Text;
-                    utilisateurSelect.Prenom = prenomTextBox.Text;
-                    utilisateurSelect.Email = emailTextBox.Text;
-                    utilisateurSelect.Telephone = telephoneTextBox.Text;
-                    utilisateurSelect.DateNaissance = DateTime.Parse(dateTimePicker.Text);
-                    utilisateurSelect.Adresse = adresseTextBox.Text;
-                    if (!string.IsNullOrWhiteSpace(motDePasseTextBox.Text))
-                        utilisateurSelect.MotDePasse = PasswordHasher.HashPassword(motDePasseTextBox.Text); ;
-                        
-                }
-
-                IRoleUtilisateur roleSelect = roleComboBox.SelectedItem as IRoleUtilisateur;
-                utilisateurSelect.Role = roleSelect;
-                return Api.SauvegarderUtilisateur(utilisateurSelect, nouveau);
+                string hashedPassword = PasswordHasher.HashPassword(motDePasseTextBox.Text);
+                utilisateurSelect = CreerUtilisateur(emailTextBox.Text, hashedPassword, nomTextBox.Text, prenomTextBox.Text, telephoneTextBox.Text, DateTime.Parse(dateTimePicker.Text), adresseTextBox.Text);
             }
             else
             {
-                return false;
+                utilisateurSelect.Nom = nomTextBox.Text;
+                utilisateurSelect.Prenom = prenomTextBox.Text;
+                utilisateurSelect.Email = emailTextBox.Text;
+                utilisateurSelect.Telephone = telephoneTextBox.Text;
+                utilisateurSelect.DateNaissance = DateTime.Parse(dateTimePicker.Text);
+                utilisateurSelect.Adresse = adresseTextBox.Text;
+                if (!string.IsNullOrWhiteSpace(motDePasseTextBox.Text))
+                    utilisateurSelect.MotDePasse = PasswordHasher.HashPassword(motDePasseTextBox.Text);
+
             }
+
+            IRoleUtilisateur roleSelect = roleComboBox.SelectedItem as IRoleUtilisateur;
+            utilisateurSelect.Role = roleSelect;
+            return Api.SauvegarderUtilisateur(utilisateurSelect, nouveau);
         }
 
         /// <summary>

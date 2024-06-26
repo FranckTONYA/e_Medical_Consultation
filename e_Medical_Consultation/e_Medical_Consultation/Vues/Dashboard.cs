@@ -46,10 +46,6 @@ namespace ConsultationMedicale
         {
             InitializeComponent();
             Api = api;
-            formulaireConsultation = new Consultations(api);
-            formulaireRdv = new RendezVous(api);
-            formulaireDossier = new DossiersPatients(api);
-            formulaireUtilisateur = new Utilisateurs(api);
             Load += new EventHandler(Dashboard_Load);
         }
 
@@ -70,21 +66,25 @@ namespace ConsultationMedicale
       
         private void AfficherConsultations(object sender, EventArgs e)
         {
+            formulaireConsultation = new Consultations(Api);
             ConsultationMedicale.AfficherFormDansPanelParent(dashboardPanel, formulaireConsultation);
         }
 
         private void AfficherLesRendezVous(object sender, EventArgs e)
         {
+            formulaireRdv = new RendezVous(Api);
             ConsultationMedicale.AfficherFormDansPanelParent(dashboardPanel, formulaireRdv);
         }
 
         private void AfficherDossiersPatients(object sender, EventArgs e)
         {
+            formulaireDossier = new DossiersPatients(Api);
             ConsultationMedicale.AfficherFormDansPanelParent(dashboardPanel, formulaireDossier);
         }
 
         private void AfficherUtilisateurs(object sender, EventArgs e)
         {
+            formulaireUtilisateur = new Utilisateurs(Api);
             ConsultationMedicale.AfficherFormDansPanelParent(dashboardPanel, formulaireUtilisateur);
         }
 

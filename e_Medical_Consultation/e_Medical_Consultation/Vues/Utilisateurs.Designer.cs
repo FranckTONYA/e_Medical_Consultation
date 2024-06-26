@@ -99,7 +99,7 @@
             this.tlpPrincipal.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tlpPrincipal.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tlpPrincipal.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlpPrincipal.Size = new System.Drawing.Size(1327, 611);
+            this.tlpPrincipal.Size = new System.Drawing.Size(1357, 611);
             this.tlpPrincipal.TabIndex = 0;
             // 
             // panel1
@@ -425,7 +425,7 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MinimumSize = new System.Drawing.Size(320, 84);
             this.Name = "Utilisateurs";
-            this.Size = new System.Drawing.Size(1327, 611);
+            this.Size = new System.Drawing.Size(1357, 611);
             this.tlpPrincipal.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);

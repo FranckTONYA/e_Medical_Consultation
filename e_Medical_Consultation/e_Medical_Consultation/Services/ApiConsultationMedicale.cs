@@ -204,7 +204,9 @@ namespace ConsultationMedicale
                     utilisateur = Modeles.CreerUtilisateur(idUtilisateur, enreg.GetValue<string>("utilisateur_email"), enreg.GetValue<string>("utilisateur_motDePasse"), enreg.GetValue<string>("utilisateur_token"), enreg.GetValue<string>("utilisateur_nom"), enreg.GetValue<string>("utilisateur_prenom"), enreg.GetValue<string>("utilisateur_telephone"), enreg.GetValue<DateTime>("utilisateur_dateNaissance"), enreg.GetValue<string>("utilisateur_adresse"));
                     if (!PasNullSinonErreur(utilisateur)) yield break;
                 }
-                utilisateur.DefinirRole(Modeles.CreerRoleUtilisateur(enreg.GetValue<int>("role_id"), enreg.GetValue<string>("role_nom"), enreg.GetValue<string>("role_description")));
+                int idRole = enreg.GetValue<int>("role_id");
+                if(idRole != 0)
+                    utilisateur.DefinirRole(Modeles.CreerRoleUtilisateur(idRole, enreg.GetValue<string>("role_nom"), enreg.GetValue<string>("role_description")));
             }
             if (utilisateur != null) yield return utilisateur;
             
@@ -220,6 +222,16 @@ namespace ConsultationMedicale
                                             utilisateur.Email, utilisateur.MotDePasse, utilisateur.Token, utilisateur.Nom, utilisateur.Prenom, utilisateur.Telephone,
                                             utilisateur.DateNaissance, utilisateur.Adresse, utilisateur.Role.Id, 1).LastInsertedId;
                 if (id == 0) return false;
+
+                // Si l'Utilisateur sauvegardé est un patient, créer automatiquement son Dossier Patient associé
+                if (utilisateur.Role.Nom.Equals(ConsultationMedicale.Privilege.Patient.ToString()))
+                {
+                    int idDossier = (int)m_DB.Execute(@"INSERT INTO dossier_patient
+                                            SET ref_utilisateur = {0}",
+                                            id).LastInsertedId;
+                    if (idDossier == 0) return false;
+                }
+                
                 return true;
             }
             else
@@ -262,12 +274,13 @@ namespace ConsultationMedicale
                         utilisateur.date_naissance AS patient_dateNaissance,
                         utilisateur.adresse AS patient_adresse,
                         consultation.id AS consultation_id,
-                        consultation.prescription AS consultation_prescription,
-                        consultation.rapport AS consultation_rapport
+                        consultation.motif AS consultation_motif,
+                        consultation.rapport AS consultation_rapport,
+                        consultation.prescription AS consultation_prescription
                     FROM
                         dossier_patient 
                             LEFT JOIN utilisateur ON dossier_patient.ref_utilisateur = utilisateur.id                            
-                            LEFT JOIN utilisateur ON consultation.ref_dossier = dossier_patient.id
+                            LEFT JOIN consultation ON consultation.ref_dossier = dossier_patient.id
                     ORDER BY
                         utilisateur.nom ASC"))
             {
@@ -275,14 +288,29 @@ namespace ConsultationMedicale
                 if ((dossierPatient == null) || !idDossier.Equals(dossierPatient.Id))
                 {
                     if (dossierPatient != null) yield return dossierPatient;
-                    dossierPatient = Modeles.CreerDossierPatient(idDossier, enreg.GetValue<string>("utilisateur_description"));
+                    dossierPatient = Modeles.CreerDossierPatient(idDossier, enreg.GetValue<string>("dossier_description"), enreg.GetValue<string>("patient_nom"));
                     if (!PasNullSinonErreur(dossierPatient)) yield break;
                 }
-                dossierPatient.DefinirPatient(Modeles.CreerUtilisateur(enreg.GetValue<int>("patient_id"), enreg.GetValue<string>("patient_email"), enreg.GetValue<string>("patient_motDePasse"), enreg.GetValue<string>("patient_token"), enreg.GetValue<string>("patient_nom"), enreg.GetValue<string>("patient_prenom"), enreg.GetValue<string>("patient_telephone"), enreg.GetValue<DateTime>("patient_dateNaissance"), enreg.GetValue<string>("patient_adresse")));
-                dossierPatient.AjouterConsultation(Modeles.CreerConsultation(enreg.GetValue<int>("consultation_id"), enreg.GetValue<string>("consultation_prescription"), enreg.GetValue<string>("consultation_rapport")));
+                int idPatient = enreg.GetValue<int>("patient_id");
+                if(idPatient != 0)
+                    dossierPatient.DefinirPatient(Modeles.CreerUtilisateur(idPatient, enreg.GetValue<string>("patient_email"), enreg.GetValue<string>("patient_motDePasse"), enreg.GetValue<string>("patient_token"), enreg.GetValue<string>("patient_nom"), enreg.GetValue<string>("patient_prenom"), enreg.GetValue<string>("patient_telephone"), enreg.GetValue<DateTime>("patient_dateNaissance"), enreg.GetValue<string>("patient_adresse")));
+
+                int idConsultation = enreg.GetValue<int>("consultation_id");
+                if (idConsultation != 0)
+                    dossierPatient.AjouterConsultation(Modeles.CreerConsultation(idConsultation, enreg.GetValue<string>("consultation_motif"), enreg.GetValue<string>("consultation_rapport"), enreg.GetValue<string>("consultation_prescription")));
             }
             if (dossierPatient != null) yield return dossierPatient;
         }
+
+
+        public bool SauvegarderDossier(IDossierPatient dossier)
+        {
+            return m_DB.Execute(@"UPDATE dossier_patient 
+                                        SET description = {1}
+                                        WHERE id = {0}",
+                                        dossier.Id, dossier.Description).Success;
+        }
+
 
         /// <summary>
         /// Tente de récupérer toutes les Consultations
@@ -296,8 +324,9 @@ namespace ConsultationMedicale
             foreach (var enreg in m_DB.GetRows(@"
                     SELECT
                         consultation.id AS consultation_id,
-                        consultation.prescription AS consultation_prescription,
+                        consultation.motif AS consultation_motif,
                         consultation.rapport AS consultation_rapport,
+                        consultation.prescription AS consultation_prescription,
                         dossier_patient.id AS dossier_id,
                         dossier_patient.description AS dossier_description,
                         utilisateur.id AS medecin_id,
@@ -308,16 +337,11 @@ namespace ConsultationMedicale
                         utilisateur.prenom AS medecin_prenom,
                         utilisateur.telephone AS medecin_telephone,
                         utilisateur.date_naissance AS medecin_dateNaissance,
-                        utilisateur.adresse AS medecin_adresse,
-                        rendez_vous.id AS rdv_id,
-                        rendez_vous.description AS rdv_description,
-                        rendez_vous.date AS rdv_date,
-                        rendez_vous.duree AS rdv_duree
+                        utilisateur.adresse AS medecin_adresse
                     FROM
                         consultation 
                             LEFT JOIN utilisateur ON consultation.ref_medecin = utilisateur.id                            
                             LEFT JOIN dossier_patient ON consultation.ref_dossier = dossier_patient.id
-                            LEFT JOIN rendez_vous ON rendez_vous.ref_consultation = consultation.id
                     ORDER BY
                         utilisateur.nom ASC"))
             {
@@ -325,12 +349,11 @@ namespace ConsultationMedicale
                 if ((consultation == null) || !idConsultation.Equals(consultation.Id))
                 {
                     if (consultation != null) yield return consultation;
-                    consultation = Modeles.CreerConsultation(idConsultation, enreg.GetValue<string>("consultation_prescription"), enreg.GetValue<string>("consultation_rapport"));
+                    consultation = Modeles.CreerConsultation(idConsultation, enreg.GetValue<string>("consultation_motif"), enreg.GetValue<string>("consultation_rapport"), enreg.GetValue<string>("consultation_prescription"));
                     if (!PasNullSinonErreur(consultation)) yield break;
                 }
                 consultation.DefinirMedecinExecutant(Modeles.CreerUtilisateur(enreg.GetValue<int>("medecin_id"), enreg.GetValue<string>("medecin_email"), enreg.GetValue<string>("medecin_motDePasse"), enreg.GetValue<string>("medecin_token"), enreg.GetValue<string>("medecin_nom"), enreg.GetValue<string>("medecin_prenom"), enreg.GetValue<string>("medecin_telephone"), enreg.GetValue<DateTime>("medecin_dateNaissance"), enreg.GetValue<string>("medecin_adresse")));
                 consultation.DefinirDossierPatient(Modeles.CreerDossierPatient(enreg.GetValue<int>("dossier_id"), enreg.GetValue<string>("dossier_description")));
-                consultation.DefinirRendezVous(Modeles.CreerRendezVous(enreg.GetValue<int>("rdv_id"), enreg.GetValue<string>("consultation_description"), enreg.GetValue<DateTime>("rdv_date"), enreg.GetValue<int>("rdv_duree")));
             }
             if (consultation != null) yield return consultation;
         }
@@ -370,7 +393,7 @@ namespace ConsultationMedicale
                     rendezVous = Modeles.CreerRendezVous(idRdv, enreg.GetValue<string>("rdv_description"), enreg.GetValue<DateTime >("rdv_date"), enreg.GetValue<int>("rdv_duree"));
                     if (!PasNullSinonErreur(rendezVous)) yield break;
                 }
-                rendezVous.DefinirConsultation(Modeles.CreerConsultation(enreg.GetValue<int>("consultation_id"), enreg.GetValue<string>("consultation_prescription"), enreg.GetValue<string>("consultation_rapport")));
+                rendezVous.DefinirConsultation(Modeles.CreerConsultation(enreg.GetValue<int>("consultation_id"), enreg.GetValue<string>("consultation_motif"), enreg.GetValue<string>("consultation_rapport"), enreg.GetValue<string>("consultation_prescription")));
                 rendezVous.DefinirStatut(Modeles.CreerStatutRendezVous(enreg.GetValue<int>("statut_id"), enreg.GetValue<string>("statut_nom"), enreg.GetValue<string>("statut_description")));
             }
             if (rendezVous != null) yield return rendezVous;

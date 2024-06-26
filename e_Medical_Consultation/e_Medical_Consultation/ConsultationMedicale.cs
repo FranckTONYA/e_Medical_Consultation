@@ -95,6 +95,12 @@ namespace ConsultationMedicale
 
         }
 
-
+        public enum Privilege
+        {
+            Administrateur,
+            Medecin,
+            Patient,
+            Visiteur
+        }
     }
 }

@@ -22,6 +22,11 @@ namespace ConsultationMedicale
         public interface IConsultation : IEntiteBase
         {
             /// <summary>
+            /// Motif
+            /// </summary>
+            string Motif { get; }
+
+            /// <summary>
             /// Rapport
             /// </summary>
             string Rapport { get; }
@@ -41,11 +46,6 @@ namespace ConsultationMedicale
             /// </summary>
             IDossierPatient DossierPatient { get; }
 
-            /// <summary>
-            /// Rendez-vous
-            /// </summary>
-            IRendezVous RendezVous { get; }
-
 
             /// <summary>
             /// Permet de (re)définir le Médecin exécutant
@@ -61,13 +61,6 @@ namespace ConsultationMedicale
             /// <returns>Vrai si la modification de cette information a pu se faire, sinon faux</returns>
             bool DefinirDossierPatient(IDossierPatient dossierPatient);
 
-            /// <summary>
-            /// Permet de (re)définir le Rendez-vous
-            /// </summary>
-            /// <param name="rendezVous">Rendez-vous à attribuer à cette Consultation</param>
-            /// <returns>Vrai si la modification de cette information a pu se faire, sinon faux</returns>
-            bool DefinirRendezVous(IRendezVous rendezVous);
-
 
         }
 
@@ -75,12 +68,13 @@ namespace ConsultationMedicale
         /// Instancie une Consultation Médicale en fonction des caractéristiques spécifiées
         /// </summary>
         /// <param name="id">Identifiant de la consultation en BD</param>
-        /// <param name="prescription">Prescription de la consultation</param>
+        /// <param name="motif">Motif de la consultation</param>
         /// <param name="rapport">Rapport de la consultation</param>
+        /// <param name="prescription">Prescription de la consultation</param>
         /// <returns>Nouvelle entité Consultation si possible, sinon null</returns>
-        public static IConsultation CreerConsultation(int id, string prescription, string rapport)
+        public static IConsultation CreerConsultation(int id, string motif, string rapport, string prescription)
         {
-            return new Consultation(id, prescription, rapport);
+            return new Consultation(id, motif, rapport, prescription);
         }
 
         /// <summary>
@@ -88,6 +82,10 @@ namespace ConsultationMedicale
         /// </summary>
         private class Consultation : EntiteBase, IConsultation
         {
+            /// <summary>
+            /// Motif
+            /// </summary>
+            public string Motif { get; private set; }
 
             /// <summary>
             /// Rapport
@@ -108,11 +106,6 @@ namespace ConsultationMedicale
             /// Dossier Patient
             /// </summary>
             public IDossierPatient DossierPatient { get; private set; }
-
-            /// <summary>
-            /// Rendez-vous
-            /// </summary>
-            public IRendezVous RendezVous { get; private set; }
 
 
             /// <summary>
@@ -139,25 +132,12 @@ namespace ConsultationMedicale
                 return true;
             }
 
-
-            /// <summary>
-            /// Permet de (re)définir le Rendez-Vous de la consultation spécifiée
-            /// </summary>
-            /// <param name="rendezVous">Rendez-Vous de cette consultation</param>
-            /// <returns>Vrai si cette modification a pu se faire, sinon faux</returns>
-            public bool DefinirRendezVous(IRendezVous rendezVous)
-            {
-                if ( rendezVous == null) return false;
-                RendezVous = rendezVous;
-                return true;
-            }
-
-            public Consultation(int id, string prescription, string rapport)
+            public Consultation(int id, string motif, string rapport, string prescription)
                 : base(id, $"Consultation Médicale le {DateTime.Now.ToString("d/MM/yyyy à H:mm:ss").Replace('-', '/')}")
             {
-                Prescription = prescription;
+                Motif = motif;
                 Rapport = rapport;
-
+                Prescription = prescription;
             }
         }
     }

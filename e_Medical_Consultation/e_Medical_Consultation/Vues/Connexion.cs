@@ -21,7 +21,7 @@ namespace ConsultationMedicale
         /// <summary>
         /// Privilège avec lequel l'utilisateur souhaite se connecter
         /// </summary>
-        public Privilege privilege { get; private set; }
+        public ConsultationMedicale.Privilege privilege { get; private set; }
 
         /// <summary>
         /// Entité retenant les données de l'utilisateur en cours
@@ -68,7 +68,7 @@ namespace ConsultationMedicale
         /// </summary>
         /// <param name="priv">Référence du privilège que l'utilisateur souhaite avoir </param>
         /// <returns>Vrai si la définition a pu se faire, sinon faux</returns>
-        public bool DefinirPrivilege(Privilege priv)
+        public bool DefinirPrivilege(ConsultationMedicale.Privilege priv)
         {
             if (privilege == priv) return false;
             privilege = priv;
@@ -145,16 +145,8 @@ namespace ConsultationMedicale
 
         private void AfficherMessageErreur()
         {
-            MessageBox.Show("Nom d'utilisateur ou mot de passe incorrect. Veuillez également vous assurez d'être dans le bon profil de connexion utilisateur !");
+            MessageBox.Show("Nom d'utilisateur ou mot de passe incorrect. Veuillez également vous assurez d'être dans le bon profil de connexion utilisateur !", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-        }
-
-        public enum Privilege
-        {
-            Administrateur,
-            Medecin,
-            Patient,
-            Visiteur
         }
     }
 }

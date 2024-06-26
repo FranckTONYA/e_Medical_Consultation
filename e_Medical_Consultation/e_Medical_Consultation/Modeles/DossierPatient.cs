@@ -24,7 +24,7 @@ namespace ConsultationMedicale
             /// <summary>
             /// Description
             /// </summary>
-            string Description { get; }
+            string Description { get; set; }
 
             /// <summary>
             /// Patient
@@ -65,6 +65,18 @@ namespace ConsultationMedicale
         /// </summary>
         /// <param name="id">Identifiant du dossier patient en BD</param>
         /// <param name="description">Description du dossier patient</param>
+        /// <param name="denomination">Dénomination du dossier patient</param>
+        /// <returns>Nouvelle entité Dossier Patient si possible, sinon null</returns>
+        public static IDossierPatient CreerDossierPatient(int id, string description, string denomination)
+        {
+            return new DossierPatient(id, description, denomination);
+        }
+
+        /// <summary>
+        /// Instancie un Dossier Patient en fonction des caractéristiques spécifiées
+        /// </summary>
+        /// <param name="id">Identifiant du dossier patient en BD</param>
+        /// <param name="description">Description du dossier patient</param>
         /// <returns>Nouvelle entité Dossier Patient si possible, sinon null</returns>
         public static IDossierPatient CreerDossierPatient(int id, string description)
         {
@@ -80,7 +92,7 @@ namespace ConsultationMedicale
             /// <summary>
             /// Description
             /// </summary>
-            public string Description { get; private set; }
+            public string Description { get; set; }
 
             /// <summary>
             /// Patient
@@ -142,6 +154,12 @@ namespace ConsultationMedicale
 
             public DossierPatient(int id, string description)
                 : base(id, description)
+            {
+                Description = description;
+            }
+
+            public DossierPatient(int id, string description, string denomination)
+                : base(id, denomination)
             {
                 Description = description;
             }

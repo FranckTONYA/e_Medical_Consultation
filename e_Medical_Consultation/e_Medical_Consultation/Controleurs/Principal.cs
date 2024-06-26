@@ -44,20 +44,20 @@ namespace ConsultationMedicale
 
         private void ConnexionAdmin(object sender, EventArgs e)
         {
-            initialiserConnexion(Connexion.Privilege.Administrateur); 
+            initialiserConnexion(ConsultationMedicale.Privilege.Administrateur); 
         }
 
         private void ConnexionMedecin(object sender, EventArgs e)
         {
-            initialiserConnexion(Connexion.Privilege.Medecin);
+            initialiserConnexion(ConsultationMedicale.Privilege.Medecin);
         }
 
         private void ConnexionPatient(object sender, EventArgs e)
         {
-            initialiserConnexion(Connexion.Privilege.Patient);
+            initialiserConnexion(ConsultationMedicale.Privilege.Patient);
         }
 
-        private void initialiserConnexion(Connexion.Privilege privilege)
+        private void initialiserConnexion(ConsultationMedicale.Privilege privilege)
         {
             formulaireConnexion.DefinirPrivilege(privilege);
             ConsultationMedicale.AfficherFormDansPanelCentral(formulaireConnexion);
