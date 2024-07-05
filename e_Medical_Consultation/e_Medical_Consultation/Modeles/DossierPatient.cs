@@ -156,12 +156,14 @@ namespace ConsultationMedicale
                 : base(id, description)
             {
                 Description = description;
+                m_Consultations = new List<IConsultation>();
             }
 
             public DossierPatient(int id, string description, string denomination)
                 : base(id, denomination)
             {
                 Description = description;
+                m_Consultations = new List<IConsultation>();
             }
         }
     }

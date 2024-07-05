@@ -249,6 +249,10 @@ namespace ConsultationMedicale
                 emailErrorProvider.SetError(emailTextBox, "L'Email doit être au format comme exemple@gmail.com !");
                 return false;
             }
+            else if (Api.EnumererUtilisateurParEmail(emailTextBox.Text).Count() != 0){
+                emailErrorProvider.SetError(emailTextBox, "L'Email spécifié existe déjà !");
+                return false;
+            }
             else if(adresseTextBox.Text.Length <= 0)
             {
                 adresseErrorProvider.SetError(adresseTextBox, "L'Adresse doit avoir minimun 1 caractére !");

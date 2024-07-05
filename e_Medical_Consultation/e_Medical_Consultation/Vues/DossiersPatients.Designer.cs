@@ -37,16 +37,17 @@
             this.label6 = new System.Windows.Forms.Label();
             this.panel7 = new System.Windows.Forms.Panel();
             this.dossierPanel = new System.Windows.Forms.Panel();
-            this.descriptionErrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
-            this.enregistrerButton = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.nbreConsultTextBox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.enregistrerButton = new System.Windows.Forms.Button();
+            this.descriptionErrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            this.label3 = new System.Windows.Forms.Label();
             this.panel2.SuspendLayout();
             this.panel7.SuspendLayout();
             this.dossierPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.descriptionErrorProvider)).BeginInit();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.descriptionErrorProvider)).BeginInit();
             this.SuspendLayout();
             // 
             // dossierListBox
@@ -66,7 +67,7 @@
             this.panel2.Controls.Add(this.label1);
             this.panel2.Location = new System.Drawing.Point(13, 20);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(760, 97);
+            this.panel2.Size = new System.Drawing.Size(506, 97);
             this.panel2.TabIndex = 0;
             // 
             // patientTextBox
@@ -74,7 +75,7 @@
             this.patientTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.patientTextBox.Location = new System.Drawing.Point(24, 47);
             this.patientTextBox.Name = "patientTextBox";
-            this.patientTextBox.Size = new System.Drawing.Size(716, 28);
+            this.patientTextBox.Size = new System.Drawing.Size(428, 28);
             this.patientTextBox.TabIndex = 1;
             // 
             // label1
@@ -92,7 +93,7 @@
             this.descriptionTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.descriptionTextBox.Location = new System.Drawing.Point(24, 47);
             this.descriptionTextBox.Name = "descriptionTextBox";
-            this.descriptionTextBox.Size = new System.Drawing.Size(428, 28);
+            this.descriptionTextBox.Size = new System.Drawing.Size(717, 28);
             this.descriptionTextBox.TabIndex = 1;
             // 
             // label6
@@ -111,7 +112,7 @@
             this.panel7.Controls.Add(this.label6);
             this.panel7.Location = new System.Drawing.Point(13, 153);
             this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(506, 97);
+            this.panel7.Size = new System.Drawing.Size(760, 97);
             this.panel7.TabIndex = 5;
             // 
             // dossierPanel
@@ -125,26 +126,11 @@
             this.dossierPanel.Size = new System.Drawing.Size(800, 418);
             this.dossierPanel.TabIndex = 6;
             // 
-            // descriptionErrorProvider
-            // 
-            this.descriptionErrorProvider.ContainerControl = this;
-            // 
-            // enregistrerButton
-            // 
-            this.enregistrerButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.enregistrerButton.Location = new System.Drawing.Point(625, 349);
-            this.enregistrerButton.Name = "enregistrerButton";
-            this.enregistrerButton.Size = new System.Drawing.Size(148, 34);
-            this.enregistrerButton.TabIndex = 6;
-            this.enregistrerButton.Text = "Enregistrer";
-            this.enregistrerButton.UseVisualStyleBackColor = true;
-            this.enregistrerButton.Click += new System.EventHandler(this.Enregistrer);
-            // 
             // panel1
             // 
             this.panel1.Controls.Add(this.nbreConsultTextBox);
             this.panel1.Controls.Add(this.label2);
-            this.panel1.Location = new System.Drawing.Point(539, 153);
+            this.panel1.Location = new System.Drawing.Point(539, 20);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(234, 97);
             this.panel1.TabIndex = 7;
@@ -168,10 +154,36 @@
             this.label2.TabIndex = 0;
             this.label2.Text = "Nombres de consultations";
             // 
+            // enregistrerButton
+            // 
+            this.enregistrerButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.enregistrerButton.Location = new System.Drawing.Point(625, 349);
+            this.enregistrerButton.Name = "enregistrerButton";
+            this.enregistrerButton.Size = new System.Drawing.Size(148, 34);
+            this.enregistrerButton.TabIndex = 6;
+            this.enregistrerButton.Text = "Enregistrer";
+            this.enregistrerButton.UseVisualStyleBackColor = true;
+            this.enregistrerButton.Click += new System.EventHandler(this.Enregistrer);
+            // 
+            // descriptionErrorProvider
+            // 
+            this.descriptionErrorProvider.ContainerControl = this;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(533, 25);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(283, 24);
+            this.label3.TabIndex = 7;
+            this.label3.Text = "Gestion des dossiers patients";
+            // 
             // DossiersPatients
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.dossierListBox);
             this.Controls.Add(this.dossierPanel);
             this.Margin = new System.Windows.Forms.Padding(4);
@@ -183,10 +195,11 @@
             this.panel7.ResumeLayout(false);
             this.panel7.PerformLayout();
             this.dossierPanel.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.descriptionErrorProvider)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.descriptionErrorProvider)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -205,5 +218,6 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.TextBox nbreConsultTextBox;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
     }
 }

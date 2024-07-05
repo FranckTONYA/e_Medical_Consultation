@@ -9,55 +9,6 @@ using static ConsultationMedicale.Modeles;
 
 namespace ConsultationMedicale
 {
-    /*
-    Exemples de requêtes GET :
-	    http://localhost/api_glacier/?action=enumerer&sujet=support
-		    OK
-		    BP	Baquet en plastique	O	O
-		    CO	Cornet	N	O
-		    GA	Gaufrette	N	N
-		    PB	Panier en biscuit	O	O
-	    http://localhost/api_glacier/?action=enumerer&sujet=support&type=CO
-		    OK
-		    BA	Baby	1
-		    NO	Normal	3
-		    GR	Grand	4
-		    DO	Double	4
-		    TR	Triple	7
-	    http://localhost/api_glacier/?action=enumerer&sujet=parfum
-		    OK
-		    CL	Classique
-		    AM	Avec morceau
-		    AF	Au fruit
-		    EX	Exotique
-		    SP	Spécial
-	    http://localhost/api_glacier/?action=enumerer&sujet=parfum&categorie=AM
-		    OK
-		    PR	Praliné
-		    NO	Nougat
-		    EO	Eclats d'orange confite
-		    PI	Pistache
-	    http://localhost/api_glacier/?action=enumerer&sujet=nappage
-		    OK
-		    CA	Caramel
-		    GM	Grand-marnier
-		    CF	Coulis de fraise
-		    VO	Vodka
-		    RH	Rhum
-	    http://localhost/api_glacier/?action=enumerer&sujet=saupoudrage
-		    OK
-		    BR	Brésilienne
-		    PC	Pépittes de chocolat
-	    http://localhost/api_glacier/?action=commander&type=CO&taille=GR&boules[]=CL_CN&boules[]=CL_VA&boules[]=AM_PI&boules[]=EX_PA&saupoudrage=BR&creme_fraiche
-		    OK
-	    http://localhost/api_glacier/?action=commander&type=BP&taille=PE&boules[]=CL_CN&boules[]=CL_VA&boules[]=AF_FM&saupoudrage=BR&nappage=GM
-		    OK
-	    http://localhost/api_glacier/?action=enumerer&sujet=commande
-		    OK
-		    2024-03-27 20:27:38	CO	GR	X	V	BR	CL	CN	CL	VA	AM	PI	EX	PA
-		    2024-03-27 20:29:45	BP	PE	GM	X	BR	CL	CN	CL	VA	AF	FM
-    */
-
     /// <summary>
     /// Définit l'API de l'application e-Medical Consultation (côté client)
     /// </summary>
@@ -227,7 +178,7 @@ namespace ConsultationMedicale
                 if (utilisateur.Role.Nom.Equals(ConsultationMedicale.Privilege.Patient.ToString()))
                 {
                     int idDossier = (int)m_DB.Execute(@"INSERT INTO dossier_patient
-                                            SET ref_utilisateur = {0}",
+                                            SET ref_patient = {0}",
                                             id).LastInsertedId;
                     if (idDossier == 0) return false;
                 }
@@ -279,7 +230,7 @@ namespace ConsultationMedicale
                         consultation.prescription AS consultation_prescription
                     FROM
                         dossier_patient 
-                            LEFT JOIN utilisateur ON dossier_patient.ref_utilisateur = utilisateur.id                            
+                            LEFT JOIN utilisateur ON dossier_patient.ref_patient = utilisateur.id                            
                             LEFT JOIN consultation ON consultation.ref_dossier = dossier_patient.id
                     ORDER BY
                         utilisateur.nom ASC"))
@@ -310,7 +261,6 @@ namespace ConsultationMedicale
                                         WHERE id = {0}",
                                         dossier.Id, dossier.Description).Success;
         }
-
 
         /// <summary>
         /// Tente de récupérer toutes les Consultations
@@ -358,6 +308,30 @@ namespace ConsultationMedicale
             if (consultation != null) yield return consultation;
         }
 
+        public bool SauvegarderConsultation(IConsultation consultation, bool nouveau)
+        {
+            if (nouveau)
+            {
+                return m_DB.Execute(@"INSERT INTO consultation
+                                            SET motif = {0}, rapport = {1}, prescription = {2}",
+                                            consultation.Motif, consultation.Rapport, consultation.Prescription).Success;
+            }
+            else
+            {
+                return m_DB.Execute(@"UPDATE consultation 
+                                        SET motif = {1}
+                                        SET rapport = {2}
+                                        SET prescription = {3}
+                                        WHERE id = {0}",
+                                        consultation.Id, consultation.Motif, consultation.Rapport, consultation.Prescription).Success;
+            }
+        }
+
+
+        public bool SupprimerConsultation(IConsultation consultation)
+        {
+            return m_DB.Execute("DELETE FROM consultation WHERE id = {0}", consultation.Id).Success;
+        }
 
         /// <summary>
         /// Tente de récupérer tous les Rendez-vous
@@ -375,6 +349,7 @@ namespace ConsultationMedicale
                         rendez_vous.date AS rdv_date,
                         rendez_vous.duree AS rdv_duree
                         consultation.id AS consultation_id,
+						consultation.motif AS consultation_motif,
                         consultation.prescription AS consultation_prescription,
                         consultation.rapport AS consultation_rapport,
                         statut_rendezvous.id AS statut_id,
@@ -383,7 +358,7 @@ namespace ConsultationMedicale
                     FROM
                         rendez_vous 
                             LEFT JOIN consultation ON rendez_vous.ref_consultation = consultation.id                            
-                            LEFT JOIN statut ON rendez_vous.ref_statut = statut_rendezvous.id
+                            LEFT JOIN statut_rendezvous ON rendez_vous.ref_statut = statut_rendezvous.id
                     "))
             {
                 var idRdv = enreg.GetValue<int>("rdv_id");

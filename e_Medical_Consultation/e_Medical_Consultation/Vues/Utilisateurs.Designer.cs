@@ -66,6 +66,7 @@
             this.emailErrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.adresseErrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.mdpErrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            this.label9 = new System.Windows.Forms.Label();
             this.tlpPrincipal.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -99,7 +100,7 @@
             this.tlpPrincipal.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tlpPrincipal.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tlpPrincipal.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlpPrincipal.Size = new System.Drawing.Size(1357, 611);
+            this.tlpPrincipal.Size = new System.Drawing.Size(1362, 709);
             this.tlpPrincipal.TabIndex = 0;
             // 
             // panel1
@@ -108,7 +109,7 @@
             this.panel1.Controls.Add(this.nouveauButton);
             this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(428, 587);
+            this.panel1.Size = new System.Drawing.Size(428, 685);
             this.panel1.TabIndex = 10;
             // 
             // utilisateurListBox
@@ -116,16 +117,16 @@
             this.utilisateurListBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.utilisateurListBox.FormattingEnabled = true;
             this.utilisateurListBox.ItemHeight = 22;
-            this.utilisateurListBox.Location = new System.Drawing.Point(42, 34);
+            this.utilisateurListBox.Location = new System.Drawing.Point(42, 159);
             this.utilisateurListBox.Name = "utilisateurListBox";
-            this.utilisateurListBox.Size = new System.Drawing.Size(357, 466);
+            this.utilisateurListBox.Size = new System.Drawing.Size(357, 444);
             this.utilisateurListBox.TabIndex = 5;
             this.utilisateurListBox.SelectedIndexChanged += new System.EventHandler(this.ChangeIndexListBox);
             // 
             // nouveauButton
             // 
             this.nouveauButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nouveauButton.Location = new System.Drawing.Point(285, 533);
+            this.nouveauButton.Location = new System.Drawing.Point(285, 636);
             this.nouveauButton.Name = "nouveauButton";
             this.nouveauButton.Size = new System.Drawing.Size(114, 34);
             this.nouveauButton.TabIndex = 9;
@@ -145,7 +146,7 @@
             // 
             this.panel2.Controls.Add(this.nomTextBox);
             this.panel2.Controls.Add(this.label1);
-            this.panel2.Location = new System.Drawing.Point(13, 19);
+            this.panel2.Location = new System.Drawing.Point(13, 159);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(398, 97);
             this.panel2.TabIndex = 0;
@@ -174,7 +175,7 @@
             // 
             this.panel3.Controls.Add(this.dateTimePicker);
             this.panel3.Controls.Add(this.label2);
-            this.panel3.Location = new System.Drawing.Point(13, 137);
+            this.panel3.Location = new System.Drawing.Point(13, 277);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(398, 97);
             this.panel3.TabIndex = 2;
@@ -218,7 +219,7 @@
             // 
             this.panel4.Controls.Add(this.prenomTextBox);
             this.panel4.Controls.Add(this.label3);
-            this.panel4.Location = new System.Drawing.Point(433, 19);
+            this.panel4.Location = new System.Drawing.Point(433, 159);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(393, 97);
             this.panel4.TabIndex = 3;
@@ -237,7 +238,7 @@
             // 
             this.panel5.Controls.Add(this.telephoneTextBox);
             this.panel5.Controls.Add(this.label4);
-            this.panel5.Location = new System.Drawing.Point(433, 137);
+            this.panel5.Location = new System.Drawing.Point(433, 277);
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(393, 97);
             this.panel5.TabIndex = 2;
@@ -264,7 +265,7 @@
             // 
             this.panel6.Controls.Add(this.emailTextBox);
             this.panel6.Controls.Add(this.label5);
-            this.panel6.Location = new System.Drawing.Point(13, 249);
+            this.panel6.Location = new System.Drawing.Point(13, 389);
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(398, 97);
             this.panel6.TabIndex = 4;
@@ -292,13 +293,14 @@
             // 
             this.panel7.Controls.Add(this.adresseTextBox);
             this.panel7.Controls.Add(this.label6);
-            this.panel7.Location = new System.Drawing.Point(433, 249);
+            this.panel7.Location = new System.Drawing.Point(433, 389);
             this.panel7.Name = "panel7";
             this.panel7.Size = new System.Drawing.Size(393, 97);
             this.panel7.TabIndex = 5;
             // 
             // userPanel
             // 
+            this.userPanel.Controls.Add(this.label9);
             this.userPanel.Controls.Add(this.motDePassePanel);
             this.userPanel.Controls.Add(this.SupprimerButton);
             this.userPanel.Controls.Add(this.enregistrerButton);
@@ -309,16 +311,16 @@
             this.userPanel.Controls.Add(this.panel4);
             this.userPanel.Controls.Add(this.panel3);
             this.userPanel.Controls.Add(this.panel2);
-            this.userPanel.Location = new System.Drawing.Point(437, 37);
+            this.userPanel.Location = new System.Drawing.Point(437, 3);
             this.userPanel.Name = "userPanel";
-            this.userPanel.Size = new System.Drawing.Size(861, 553);
+            this.userPanel.Size = new System.Drawing.Size(861, 685);
             this.userPanel.TabIndex = 6;
             // 
             // motDePassePanel
             // 
             this.motDePassePanel.Controls.Add(this.motDePasseTextBox);
             this.motDePassePanel.Controls.Add(this.label8);
-            this.motDePassePanel.Location = new System.Drawing.Point(436, 364);
+            this.motDePassePanel.Location = new System.Drawing.Point(436, 504);
             this.motDePassePanel.Name = "motDePassePanel";
             this.motDePassePanel.Size = new System.Drawing.Size(390, 97);
             this.motDePassePanel.TabIndex = 9;
@@ -345,7 +347,7 @@
             // SupprimerButton
             // 
             this.SupprimerButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SupprimerButton.Location = new System.Drawing.Point(705, 499);
+            this.SupprimerButton.Location = new System.Drawing.Point(705, 639);
             this.SupprimerButton.Name = "SupprimerButton";
             this.SupprimerButton.Size = new System.Drawing.Size(138, 34);
             this.SupprimerButton.TabIndex = 8;
@@ -356,7 +358,7 @@
             // enregistrerButton
             // 
             this.enregistrerButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.enregistrerButton.Location = new System.Drawing.Point(555, 499);
+            this.enregistrerButton.Location = new System.Drawing.Point(555, 639);
             this.enregistrerButton.Name = "enregistrerButton";
             this.enregistrerButton.Size = new System.Drawing.Size(138, 34);
             this.enregistrerButton.TabIndex = 7;
@@ -368,7 +370,7 @@
             // 
             this.panel8.Controls.Add(this.roleComboBox);
             this.panel8.Controls.Add(this.label7);
-            this.panel8.Location = new System.Drawing.Point(13, 364);
+            this.panel8.Location = new System.Drawing.Point(13, 504);
             this.panel8.Name = "panel8";
             this.panel8.Size = new System.Drawing.Size(398, 97);
             this.panel8.TabIndex = 6;
@@ -416,6 +418,16 @@
             // 
             this.mdpErrorProvider.ContainerControl = this;
             // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Location = new System.Drawing.Point(153, 22);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(226, 24);
+            this.label9.TabIndex = 11;
+            this.label9.Text = "Gestion des utilisateurs";
+            // 
             // Utilisateurs
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -425,7 +437,7 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MinimumSize = new System.Drawing.Size(320, 84);
             this.Name = "Utilisateurs";
-            this.Size = new System.Drawing.Size(1357, 611);
+            this.Size = new System.Drawing.Size(1362, 709);
             this.tlpPrincipal.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
@@ -441,6 +453,7 @@
             this.panel7.ResumeLayout(false);
             this.panel7.PerformLayout();
             this.userPanel.ResumeLayout(false);
+            this.userPanel.PerformLayout();
             this.motDePassePanel.ResumeLayout(false);
             this.motDePassePanel.PerformLayout();
             this.panel8.ResumeLayout(false);
@@ -493,5 +506,6 @@
         private System.Windows.Forms.ErrorProvider emailErrorProvider;
         private System.Windows.Forms.ErrorProvider adresseErrorProvider;
         private System.Windows.Forms.ErrorProvider mdpErrorProvider;
+        private System.Windows.Forms.Label label9;
     }
 }
