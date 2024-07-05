@@ -52,6 +52,31 @@ namespace ConsultationMedicale
         private void Dashboard_Load(object sender, EventArgs e)
         {
             AfficherTitre();
+
+            consultationButton.Hide();
+            rdvButton.Hide();
+            dossierButton.Hide();
+            utilisateurButton.Hide();
+            if (ConsultationMedicale.Utilisateur.Role.Nom.Equals(ConsultationMedicale.Privilege.Administrateur.ToString()))
+            {
+                consultationButton.Show();
+                rdvButton.Show();
+                dossierButton.Show();
+                utilisateurButton.Show();
+            }
+
+            if (ConsultationMedicale.Utilisateur.Role.Nom.Equals(ConsultationMedicale.Privilege.Medecin.ToString()))
+            {
+                consultationButton.Show();
+                rdvButton.Show();
+                dossierButton.Show();
+            }
+
+            if (ConsultationMedicale.Utilisateur.Role.Nom.Equals(ConsultationMedicale.Privilege.Patient.ToString()))
+            {
+                consultationButton.Show();
+                rdvButton.Show();
+            }
         }
 
         private void AfficherTitre()
@@ -59,7 +84,7 @@ namespace ConsultationMedicale
             if(ConsultationMedicale.Utilisateur != null)
             {
                 titreLabel.Text = $"Accueil - {ConsultationMedicale.Utilisateur.Role.Nom} " +
-                $"( {ConsultationMedicale.Utilisateur.Nom} )";
+                $"( {ConsultationMedicale.Utilisateur.Nom} {ConsultationMedicale.Utilisateur.Prenom} )";
             }
             
         }

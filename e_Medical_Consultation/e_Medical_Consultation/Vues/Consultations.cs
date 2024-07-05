@@ -44,6 +44,8 @@ namespace ConsultationMedicale
         {
             InitializeComponent();
             Api = api;
+
+            consultationPanel.Hide();
         }
 
 

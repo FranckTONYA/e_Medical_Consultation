@@ -48,6 +48,9 @@
             this.patientTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.patientErrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            this.label7 = new System.Windows.Forms.Label();
+            this.consultationPanel = new System.Windows.Forms.Panel();
+            this.infoLabel = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel6.SuspendLayout();
             this.panel5.SuspendLayout();
@@ -55,6 +58,7 @@
             this.panel3.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.patientErrorProvider)).BeginInit();
+            this.consultationPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupNappage
@@ -67,7 +71,7 @@
             this.groupNappage.Location = new System.Drawing.Point(0, 0);
             this.groupNappage.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
             this.groupNappage.Name = "groupNappage";
-            this.groupNappage.Size = new System.Drawing.Size(1239, 596);
+            this.groupNappage.Size = new System.Drawing.Size(1293, 713);
             this.groupNappage.TabIndex = 0;
             // 
             // consultationListBox
@@ -75,9 +79,9 @@
             this.consultationListBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.consultationListBox.FormattingEnabled = true;
             this.consultationListBox.ItemHeight = 22;
-            this.consultationListBox.Location = new System.Drawing.Point(26, 156);
+            this.consultationListBox.Location = new System.Drawing.Point(16, 32);
             this.consultationListBox.Name = "consultationListBox";
-            this.consultationListBox.Size = new System.Drawing.Size(357, 378);
+            this.consultationListBox.Size = new System.Drawing.Size(357, 422);
             this.consultationListBox.TabIndex = 1;
             this.consultationListBox.Click += new System.EventHandler(this.AfficherConsultation);
             // 
@@ -88,9 +92,9 @@
             this.panel1.Controls.Add(this.panel4);
             this.panel1.Controls.Add(this.panel3);
             this.panel1.Controls.Add(this.panel2);
-            this.panel1.Location = new System.Drawing.Point(406, 151);
+            this.panel1.Location = new System.Drawing.Point(426, 32);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(800, 418);
+            this.panel1.Size = new System.Drawing.Size(775, 418);
             this.panel1.TabIndex = 2;
             // 
             // panel6
@@ -232,17 +236,47 @@
             // 
             this.patientErrorProvider.ContainerControl = this;
             // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(540, 42);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(249, 24);
+            this.label7.TabIndex = 9;
+            this.label7.Text = "Gestion des consultations";
+            // 
+            // consultationPanel
+            // 
+            this.consultationPanel.Controls.Add(this.consultationListBox);
+            this.consultationPanel.Controls.Add(this.panel1);
+            this.consultationPanel.Location = new System.Drawing.Point(37, 203);
+            this.consultationPanel.Name = "consultationPanel";
+            this.consultationPanel.Size = new System.Drawing.Size(1221, 507);
+            this.consultationPanel.TabIndex = 10;
+            // 
+            // infoLabel
+            // 
+            this.infoLabel.AutoSize = true;
+            this.infoLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.infoLabel.Location = new System.Drawing.Point(495, 147);
+            this.infoLabel.Name = "infoLabel";
+            this.infoLabel.Size = new System.Drawing.Size(382, 26);
+            this.infoLabel.TabIndex = 11;
+            this.infoLabel.Text = "Fonctionnalité pas encore disponible...";
+            // 
             // Consultations
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.panel1);
-            this.Controls.Add(this.consultationListBox);
+            this.Controls.Add(this.infoLabel);
+            this.Controls.Add(this.consultationPanel);
+            this.Controls.Add(this.label7);
             this.Controls.Add(this.groupNappage);
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MinimumSize = new System.Drawing.Size(320, 84);
             this.Name = "Consultations";
-            this.Size = new System.Drawing.Size(1239, 596);
+            this.Size = new System.Drawing.Size(1293, 713);
             this.panel1.ResumeLayout(false);
             this.panel6.ResumeLayout(false);
             this.panel6.PerformLayout();
@@ -255,7 +289,9 @@
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.patientErrorProvider)).EndInit();
+            this.consultationPanel.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -280,5 +316,8 @@
         private System.Windows.Forms.TextBox medecinTextBox;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ErrorProvider patientErrorProvider;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Panel consultationPanel;
+        private System.Windows.Forms.Label infoLabel;
     }
 }

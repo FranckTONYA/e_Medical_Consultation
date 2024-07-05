@@ -144,30 +144,38 @@ namespace ConsultationMedicale
 
         private void Supprimer(object sender, EventArgs e)
         {
-            DialogResult reponse = MessageBox.Show(
-                "Etes vous êtes sûr de vouloir supprimer cet Utilisateur ? Notez que sa suppression entrainera également la suppression de tous les éléments liés à celui ci ",
-                "Confirmation",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question);
-
-            if (reponse == DialogResult.Yes)
+            if (utilisateurSelect.Email.Equals(ConsultationMedicale.Utilisateur.Email))
             {
-                bool result = Api.SupprimerUtilisateur(utilisateurSelect);
-                if (result)
-                {
-                    utilisateurListBox.DataSource = null;
-                    AfficherDonnees();
-                    MessageBox.Show("L'élément a bien été supprimé", "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                else
-                {
-                    MessageBox.Show("Probléme rencontré lors de la suppression de l'élément", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                MessageBox.Show("Vous ne pouvez pas supprimer cet utilisateur car il est connecté actuellement", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
-                MessageBox.Show("Vous avez annulé l'opération.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                DialogResult reponse = MessageBox.Show(
+                    "Etes vous êtes sûr de vouloir supprimer cet Utilisateur ? Notez que sa suppression entrainera également la suppression de tous les éléments liés à celui ci ",
+                    "Confirmation",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
+
+                if (reponse == DialogResult.Yes)
+                {
+                    bool result = Api.SupprimerUtilisateur(utilisateurSelect);
+                    if (result)
+                    {
+                        utilisateurListBox.DataSource = null;
+                        AfficherDonnees();
+                        MessageBox.Show("L'élément a bien été supprimé", "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Probléme rencontré lors de la suppression de l'élément", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Vous avez annulé l'opération.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
             }
+
 
         }
 
@@ -249,7 +257,7 @@ namespace ConsultationMedicale
                 emailErrorProvider.SetError(emailTextBox, "L'Email doit être au format comme exemple@gmail.com !");
                 return false;
             }
-            else if (Api.EnumererUtilisateurParEmail(emailTextBox.Text).Count() != 0){
+            else if (nouveau && Api.EnumererUtilisateurParEmail(emailTextBox.Text).Count() != 0){
                 emailErrorProvider.SetError(emailTextBox, "L'Email spécifié existe déjà !");
                 return false;
             }

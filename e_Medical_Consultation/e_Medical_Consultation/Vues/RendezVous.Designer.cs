@@ -48,6 +48,9 @@
             this.patientTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.rdvListBox = new System.Windows.Forms.ListBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.rdvPanel = new System.Windows.Forms.Panel();
+            this.infoLabel = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel7.SuspendLayout();
             this.panel6.SuspendLayout();
@@ -55,6 +58,7 @@
             this.panel4.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.rdvPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -65,9 +69,9 @@
             this.panel1.Controls.Add(this.panel4);
             this.panel1.Controls.Add(this.panel3);
             this.panel1.Controls.Add(this.panel2);
-            this.panel1.Location = new System.Drawing.Point(409, 126);
+            this.panel1.Location = new System.Drawing.Point(403, 56);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(800, 418);
+            this.panel1.Size = new System.Drawing.Size(779, 418);
             this.panel1.TabIndex = 4;
             // 
             // panel7
@@ -237,22 +241,52 @@
             this.rdvListBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rdvListBox.FormattingEnabled = true;
             this.rdvListBox.ItemHeight = 22;
-            this.rdvListBox.Location = new System.Drawing.Point(29, 131);
+            this.rdvListBox.Location = new System.Drawing.Point(19, 56);
             this.rdvListBox.Name = "rdvListBox";
             this.rdvListBox.Size = new System.Drawing.Size(357, 378);
             this.rdvListBox.TabIndex = 3;
             this.rdvListBox.Click += new System.EventHandler(this.AfficherRDV);
             // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(523, 32);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(243, 24);
+            this.label7.TabIndex = 8;
+            this.label7.Text = "Gestion des rendez-vous";
+            // 
+            // rdvPanel
+            // 
+            this.rdvPanel.Controls.Add(this.rdvListBox);
+            this.rdvPanel.Controls.Add(this.panel1);
+            this.rdvPanel.Location = new System.Drawing.Point(14, 206);
+            this.rdvPanel.Name = "rdvPanel";
+            this.rdvPanel.Size = new System.Drawing.Size(1210, 505);
+            this.rdvPanel.TabIndex = 9;
+            // 
+            // infoLabel
+            // 
+            this.infoLabel.AutoSize = true;
+            this.infoLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.infoLabel.Location = new System.Drawing.Point(485, 148);
+            this.infoLabel.Name = "infoLabel";
+            this.infoLabel.Size = new System.Drawing.Size(382, 26);
+            this.infoLabel.TabIndex = 5;
+            this.infoLabel.Text = "Fonctionnalité pas encore disponible...";
+            // 
             // RendezVous
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.panel1);
-            this.Controls.Add(this.rdvListBox);
+            this.Controls.Add(this.infoLabel);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.rdvPanel);
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MinimumSize = new System.Drawing.Size(320, 84);
             this.Name = "RendezVous";
-            this.Size = new System.Drawing.Size(1239, 671);
+            this.Size = new System.Drawing.Size(1239, 728);
             this.panel1.ResumeLayout(false);
             this.panel7.ResumeLayout(false);
             this.panel7.PerformLayout();
@@ -266,7 +300,9 @@
             this.panel3.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            this.rdvPanel.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -292,5 +328,8 @@
         private System.Windows.Forms.Panel panel7;
         private System.Windows.Forms.TextBox descriptionTextBox;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Panel rdvPanel;
+        private System.Windows.Forms.Label infoLabel;
     }
 }

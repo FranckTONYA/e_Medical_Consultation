@@ -32,7 +32,7 @@
             this.consultationButton = new System.Windows.Forms.Button();
             this.rdvButton = new System.Windows.Forms.Button();
             this.dossierButton = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.utilisateurButton = new System.Windows.Forms.Button();
             this.dashboardPanel = new System.Windows.Forms.Panel();
             this.deconnexionButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
@@ -86,18 +86,18 @@
             this.dossierButton.UseVisualStyleBackColor = false;
             this.dossierButton.Click += new System.EventHandler(this.AfficherDossiersPatients);
             // 
-            // button1
+            // utilisateurButton
             // 
-            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Location = new System.Drawing.Point(1035, 106);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(176, 39);
-            this.button1.TabIndex = 4;
-            this.button1.Text = "Utilisateurs";
-            this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.AfficherUtilisateurs);
+            this.utilisateurButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            this.utilisateurButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.utilisateurButton.ForeColor = System.Drawing.Color.White;
+            this.utilisateurButton.Location = new System.Drawing.Point(1035, 106);
+            this.utilisateurButton.Name = "utilisateurButton";
+            this.utilisateurButton.Size = new System.Drawing.Size(176, 39);
+            this.utilisateurButton.TabIndex = 4;
+            this.utilisateurButton.Text = "Utilisateurs";
+            this.utilisateurButton.UseVisualStyleBackColor = false;
+            this.utilisateurButton.Click += new System.EventHandler(this.AfficherUtilisateurs);
             // 
             // dashboardPanel
             // 
@@ -128,7 +128,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.deconnexionButton);
             this.Controls.Add(this.dashboardPanel);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.utilisateurButton);
             this.Controls.Add(this.dossierButton);
             this.Controls.Add(this.rdvButton);
             this.Controls.Add(this.consultationButton);
@@ -147,7 +147,7 @@
         private System.Windows.Forms.Button consultationButton;
         private System.Windows.Forms.Button rdvButton;
         private System.Windows.Forms.Button dossierButton;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button utilisateurButton;
         private System.Windows.Forms.Panel dashboardPanel;
         private System.Windows.Forms.Button deconnexionButton;
     }

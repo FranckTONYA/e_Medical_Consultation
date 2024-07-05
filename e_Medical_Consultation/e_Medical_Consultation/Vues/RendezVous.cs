@@ -42,7 +42,8 @@ namespace ConsultationMedicale
         {
             InitializeComponent();
             Api = api;
-          
+
+            rdvPanel.Hide();
         }
 
         private void AfficherRDV(object sender, EventArgs e)
